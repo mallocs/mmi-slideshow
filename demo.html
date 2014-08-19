@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<title>jQuery Slideshow Demo</title>
+	<link rel="stylesheet" href="slideshow.css" />
+
+</head>
+
+<body>
+
+	<div id="container">
+
+		<section id="introduction">
+			<h1>Slideshow Demo</h1>
+			<p>
+
+			</p>
+
+			<div id="example">
+
+				<div class="slideshow" data-transition="crossfade" data-loop="true" data-skip="false">
+					<ul class="carousel">
+						<li class="slide">
+							<img src="http://placebox.es/500/300/e87000/000" alt="" width="500" height="300" />
+						</li>
+						<li class="slide">
+							<img data-src="http://placebox.es/500/300/003808/000" alt="" data-width="500" data-height="300" />
+						</li>
+						<li class="slide">
+							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" data-width="500" data-height="300" />
+						</li>
+					</ul>
+				</div>
+
+
+				<div class="slideshow" data-transition="crossfade" data-loop="true" data-skip="false">
+					<ul class="carousel">
+						<li class="slide">
+							<img src="http://placebox.es/500/300/e87000/000" alt="" width="500" height="300" />
+						</li>
+						<li class="slide">
+							<img data-src="http://placebox.es/500/300/003808/000" alt="" width="500" height="300" />
+						</li>
+						<li class="slide">
+							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" width="500" height="300" />
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</section>
+
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+	<script src="slideshow.js"></script>
+	<script>
+
+
+		$(function() {
+			// Create a slideshow
+			var $s = $(".slideshow").slideshow();
+		});
+	</script>
+
+</body>
+</html>
