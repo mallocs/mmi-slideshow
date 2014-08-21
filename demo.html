@@ -3,7 +3,7 @@
 <head>
 
 	<title>jQuery Slideshow Demo</title>
-	<link rel="stylesheet" href="slideshow.css" />
+	<link rel="stylesheet" href="mrslider.css" />
 
 </head>
 
@@ -25,25 +25,24 @@
 							<img src="http://placebox.es/500/300/e87000/000" alt="" width="500" height="300" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/003808/000" alt="" data-width="500" data-height="300" />
+							<img data-src="http://placebox.es/500/300/003808/000" alt="" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" data-width="500" data-height="300" />
+							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" />
 						</li>
 					</ul>
 				</div>
 
-
 				<div class="slideshow" data-transition="crossfade" data-loop="true" data-skip="false">
 					<ul class="carousel">
 						<li class="slide">
-							<img src="http://placebox.es/500/300/e87000/000" alt="" width="500" height="300" />
+							<img src="http://placebox.es/500/300/e87001/000" alt="" width="500" height="300" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/003808/000" alt="" width="500" height="300" />
+							<img data-src="http://placebox.es/500/300/003808/000" alt="" data-width="500" data-height="300" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" width="500" height="300" />
+							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" data-width="500" data-height="300" />
 						</li>
 					</ul>
 				</div>
@@ -56,13 +55,13 @@
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 
-	<script src="slideshow.js"></script>
+	<script src="mrslider.js"></script>
 	<script>
 
+			var ss = $(".slideshow").slideshow();
 
 		$(function() {
 			// Create a slideshow
-			var $s = $(".slideshow").slideshow();
 		});
 	</script>
 

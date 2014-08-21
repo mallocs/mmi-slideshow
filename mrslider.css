@@ -54,8 +54,7 @@
 }
 
 /* controls */
-.slides-next,
-.slides-previous {
+.slides-controls {
     position: absolute;
     top: 50%;
     margin-top: -1em;
