@@ -17,8 +17,8 @@ $.widget("mmi.slideshow", {
         startSlide: 0,                        // Starting slide.
         buffer: 3,                             // Number of extra slides to buffer.
         navigation: true,
-        previousText: '&#10092;',    // Text for previous slide button.
-        nextText: '&#10093;',          // Text for next slide button.
+        previousText: '&lang;',         // Text for previous slide button.
+        nextText: '&rang;',               // Text for next slide button.
 
         // callbacks
         start: null,
@@ -40,7 +40,6 @@ $.widget("mmi.slideshow", {
         this._createCaption();
         this._bufferSlides( parseInt(this.options.buffer, 10) );
         this.showSlide(this.currentSlide);
-
     },
 
     _createWrapper: function() {
