@@ -17,9 +17,9 @@ $.widget("mmi.slideshow", {
         startSlide: 0,                        // Starting slide.
         buffer: 3,                             // Number of extra slides to buffer.
         navigation: true,
-        previousText: '&lang;',         // Text for previous slide button.
-        nextText: '&rang;',               // Text for next slide button.
-        loop: true,                           // Slides run in a loop.
+        previousText: false,               // Text for previous slide button.
+        nextText: false,                     // Text for next slide button.
+        loop: true,                            // Slides run in a loop.
 
         // callbacks
         start: null,
@@ -48,16 +48,17 @@ $.widget("mmi.slideshow", {
 
     _createNavigation: function() {
         var widget = this;
-        this.$previous = $('<a href="#" class="slideshow-previous slideshow-navigation" data-slides="previous">' + this.options.previousText + '</a>');
-        this.$next = $('<a href="#" class="slideshow-next slideshow-navigation" data-slides="next">' + this.options.nextText + '</a>');
-        this.wrapper.append(this.$next, this.$previous);
-
+        this.$previous = $('<a href="#" class="slideshow-previous slideshow-navigation" data-slides="previous"></a>');
+        this.$next = $('<a href="#" class="slideshow-next slideshow-navigation icon-right-open" data-slides="next"></a>');
+        this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass("icon-left-open");
+        this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass("icon-rigth-open");
         this._on(this.$next, {
             click: "next"
         });
         this._on(this.$previous, {
             click: "previous"
         });
+        this.wrapper.append(this.$next, this.$previous);
     },
 
     _createCaption: function() {
