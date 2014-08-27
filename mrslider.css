@@ -55,6 +55,7 @@
 .slideshow-navigation {
     position: absolute;
     font-size: 45px;
+    font-weight: 500;
     top: 50%;
     margin-top: -0.6em;
     padding: 0 1px 1px 3px;
