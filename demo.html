@@ -3,9 +3,8 @@
 <head>
 
 	<title>jQuery Slideshow Demo</title>
-	<link rel="stylesheet" href="mrslider.css" />
 	<link rel="stylesheet" href="demo.css" />
-
+	<link rel="stylesheet" href="mrslider.css" />
 
 </head>
 
@@ -16,7 +15,6 @@
 		<section id="introduction">
 			<h1>Slideshow Demo</h1>
 			<p>
-
 			</p>
 
 			<div id="demo">
@@ -24,13 +22,13 @@
 				<div class="slideshow" data-transition="crossfade" data-loop="true" data-skip="false">
 					<ul class="carousel">
 						<li class="slide">
-							<img src="http://placebox.es/500/300/e87000/000" alt="" width="500" height="300" data-caption="First picture" data-credit="mmi" />
+							<img src="http://placehold.it/500x300/e87000/000" alt="" width="500" height="300" data-caption="First picture" data-credit="mmi" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/003808/000" alt="" />
+							<img data-src="http://placehold.it/500x300/003808/000" alt="" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" />
+							<img data-src="http://placehold.it/500x300/006ce8/000" alt="" />
 						</li>
 					</ul>
 				</div>
@@ -38,13 +36,13 @@
 				<div class="slideshow" data-transition="crossfade" data-loop="true" data-skip="false">
 					<ul class="carousel">
 						<li class="slide">
-							<img src="http://placebox.es/500/300/e87001/000" alt="" width="500" height="300" />
+							<img src="http://placehold.it/500x300/e87001/000" alt="" width="500" height="300" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/003808/000" alt="" data-width="500" data-height="300" />
+							<img data-src="http://placehold.it/500x300/003808/000" alt="" data-width="500" data-height="300" />
 						</li>
 						<li class="slide">
-							<img data-src="http://placebox.es/500/300/006ce8/000" alt="" data-width="500" data-height="300" />
+							<img data-src="http://placehold.it/500x300/006ce8/000" alt="" data-width="500" data-height="300" />
 						</li>
 					</ul>
 				</div>
@@ -59,10 +57,10 @@
 
 	<script src="mrslider.js"></script>
 	<script>
+			var ss = $(".slideshow").slideshow();
 
 		$(function() {
 			// Create a slideshow
-			var ss = $(".slideshow").slideshow();
 		});
 	</script>
 

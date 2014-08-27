@@ -6,8 +6,7 @@
 
 .slideshow a {
     text-decoration: none;
-    color: #fff;
-    background: #666;
+    color: #666;
 }
 
 .slideshow a:hover,
@@ -55,20 +54,26 @@
 /* controls */
 .slideshow-navigation {
     position: absolute;
-    font: 40px/35px Arial,sans-serif;
+    font-size: 45px;
+    font-weight: 500;
     top: 50%;
     margin-top: -0.6em;
-    padding: 0 1px 4px;
+    padding: 0 1px 1px 3px;
     z-index: 12;
     opacity: 0.6;
 }
 
+a:hover.slideshow-navigation {
+    background-color: #ccc;
+    opacity: 0.6;
+}
+
 .slideshow-next {
-    right: -26px;
+    right: -33px;
 }
 
 .slideshow-previous {
-    left: -26px;
+    left: -33px;
 }
 
 .slideshow-next.disabled,
