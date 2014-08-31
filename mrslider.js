@@ -16,7 +16,11 @@ $.widget("mmi.slideshow", {
 
         startSlide: 0,                        // Starting slide.
         buffer: 3,                             // Number of extra slides to buffer.
-        navigation: true,
+
+        transition: "scroll",               // What type of transition to use. 
+        transitionSpeed: 1000,         // Speed to transition between slides.
+        transitionOptions: {},            // Extra options for transition. See jQuery UI effect options.
+        navigation: true,                  // Show the navigation arrows.
         previousText: false,               // Text for previous slide button.
         nextText: false,                     // Text for next slide button.
         loop: true,                            // Slides run in a loop.
@@ -31,25 +35,21 @@ $.widget("mmi.slideshow", {
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
         this.count = this.slides.length;
         this.scrollable = true;
-        this.carouselWidth = this._getSlideFromNumber(this.currentSlideNumber).find("img").width();
 
         this._createWrapper();
         this._createNavigation();
         this._createCaption();
-        this.setCurrentSlideNumber(this.currentSlideNumber);
+        this.setCurrentSlide(this.currentSlideNumber);
     },
 
     _createWrapper: function() {
-        this.wrapper = this.carousel.wrap('<div style="position:relative;"></div>').parent();
-        this.wrapper.css({
-            "width": this.carouselWidth + "px"
-        });
+         this.wrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
     },
 
     _createNavigation: function() {
         var widget = this;
-        this.$previous = $('<a href="#" class="slideshow-previous slideshow-navigation" data-slides="previous"></a>');
-        this.$next = $('<a href="#" class="slideshow-next slideshow-navigation icon-right-open" data-slides="next"></a>');
+        this.$previous = $('<span class="slideshow-previous slideshow-navigation" data-slides="previous"></span>');
+        this.$next = $('<span class="slideshow-next slideshow-navigation icon-right-open" data-slides="next"></span>');
         this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass("icon-left-open");
         this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass("icon-rigth-open");
         this._on(this.$next, {
@@ -58,12 +58,12 @@ $.widget("mmi.slideshow", {
         this._on(this.$previous, {
             click: "previous"
         });
-        this.wrapper.append(this.$next, this.$previous);
+        this.element.append(this.$next, this.$previous);
     },
 
     _createCaption: function() {
-        this.$caption = $('<div class="slideshow-caption"></a>');
-        this.wrapper.append(this.$caption);
+        this.$caption = $('<div class="slideshow-caption"></div>');
+        this.element.append(this.$caption);
     },
 
     _getSlideFromNumber: function(slideNumber) {
@@ -79,7 +79,7 @@ $.widget("mmi.slideshow", {
                 return;
             }
         }
-        this.setCurrentSlideNumber(slideNumber);
+        this.setCurrentSlide(slideNumber);
     },
 
     previous: function(event) {
@@ -91,7 +91,7 @@ $.widget("mmi.slideshow", {
                 return;
             }
         }
-        this.setCurrentSlideNumber(slideNumber);
+        this.setCurrentSlide(slideNumber);
     },
 
     showNavigation: function() {
@@ -126,28 +126,46 @@ $.widget("mmi.slideshow", {
         });
     },
 
-    //needs to do transition stuff.
-    setCurrentSlideNumber: function(slideNumber) {
+    setCurrentSlide: function(slideNumber) {
         var slide = this._getSlideFromNumber(slideNumber);
-        var slideTarget = $(slide.children()[0]);
-        if(typeof this.currentSlide !== "undefined") {
-            this.currentSlide.hide();
-        }
-//TODO optional resize wrapper        this.carouselWidth = this.currentSlide.find("img").width();
+        var slideTarget = $(slide.children()[0]);
+        var transitionSpeed = parseInt(this.options.transitionSpeed, 10);
+        var transitionOptions = this.options.transitionOptions;
+        var transition = this.options.transition + "";
 
-        slide.show();
+        if (typeof this.currentSlide === "undefined") {
+            slide.show();
+            this.carousel.find("li").not(slide).css({display: "none"});
+        } else if (transition === "scroll") {
+            this.carousel.css({minWidth: "1500px"});
+            this.carousel.find("li").css({float: "left", display: "list-item"});
+            var scroll = slide.position().left + this.wrapper.scrollLeft();
+            var maxScroll = this.carousel.width() - this.wrapper.width();
+            this.wrapper.stop(true, true).animate({
+                scrollLeft: scroll
+            },  transitionSpeed);
+        } else {
+            this.carousel.find("li").not(this.currentSlide).css({display: "none", position: "static"});
+            slide.show("fade", transitionOptions, transitionSpeed);
+            this.currentSlide.css({position: "absolute", top: 0, left: 0});
+            this.currentSlide.stop(true, true).hide(transition, transitionOptions, transitionSpeed);
+        }
+
         this.setCaption(slideTarget.data("caption"));
         this.currentSlide = slide;
         this.currentSlideNumber = slideNumber;
-        this.slides.not(slide).hide();  // Make sure we only show the current slide.
         this._bufferSlides( parseInt(this.options.buffer, 10) );
     },
 
     _loadSlide: function(slide) {
+        if (typeof slide.slideIsLoaded !== "undefined" || slide.slideIsLoaded === true) {
+            return;
+        }
         var slideTarget = $(slide.children()[0]);
         if (slideTarget.is("img")) {
             this._loadImage(slideTarget);
         }
+        slide.slideIsLoaded = true;
     },
 
     _loadImage: function(image) {

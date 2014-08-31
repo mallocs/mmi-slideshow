@@ -58,9 +58,12 @@
     margin-top: -1.8em;
     z-index: 12;
     opacity: 0.6;
+    text-decoration: none;
+    color: #666;
+    cursor: pointer;
 }
 
-a:hover.slideshow-navigation {
+span:hover.slideshow-navigation {
     background-color: #ccc;
     opacity: 0.6;
 }
