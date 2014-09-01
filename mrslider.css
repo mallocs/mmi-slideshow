@@ -5,13 +5,14 @@
 }
 
 .slideshow a {
+    padding: 4px 0 2px 0;
     text-decoration: none;
-    color: #666;
+    color: #222;
 }
 
 .slideshow a:hover,
-.slideshow .selected a {
-    background-color: #333;
+.slideshow  a.selected {
+    background-color: #ccc;
 }
 
 .carousel {
@@ -31,9 +32,9 @@
 
 /* pagination */
 .slides-pagination {
-    position: absolute;
-    bottom: 1em;
-    left: 1em;
+    overflow: hidden;
+    bottom: 0.4em;
+    left: 0.3em;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -48,14 +49,14 @@
     display: block;
     float: left;
     width: 2em;
-    margin-right: 5px;
+    margin-right: 0.3em;
 }
 
 /* controls */
 .slideshow-navigation {
     position: absolute;
     top: 50%;
-    margin-top: -1.8em;
+    margin-top: -3.8em;
     z-index: 12;
     opacity: 0.6;
     text-decoration: none;
@@ -69,11 +70,11 @@ span:hover.slideshow-navigation {
 }
 
 .slideshow-next {
-    right: -32px;
+    right: -2.8em;
 }
 
 .slideshow-previous {
-    left: -32px;
+    left: -2.8em;
 }
 
 .slideshow-next.disabled,
@@ -90,9 +91,9 @@ span:hover.slideshow-navigation {
 
 .slideshow-caption p {
     margin: 0;
-    padding: 5px 0 5px 10px;
+    padding: 0.4em 0 0.4em 0.7em;
     text-align: left;
-    font: 13px Arial,sans-serif;
+    font: 0.9em Arial,sans-serif;
 }
 
 /**css font sprites**/
@@ -107,8 +108,8 @@ span:hover.slideshow-navigation {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
-  font-size: 32px;
-  padding: 6px 0 0 0;
+  font-size: 2.8em;
+  padding: 0.4em 0;
   speak: none;
  
   display: inline-block;
