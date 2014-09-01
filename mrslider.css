@@ -30,6 +30,16 @@
     z-index: 11;
 }
 
+.slideshow .circles {
+    border-radius: 50%;
+    width: 0.7em;
+    height: 0.7em;
+    padding: 0;
+    margin: 0.3em 0.6em 0 0;
+    background-color: #ccc;
+    border:2px solid transparent;
+}
+
 .slides-pagination li {
     display: inline;
 }
@@ -41,13 +51,13 @@
     float: left;
     width: 2em;
     padding: 0.3em 0 0.2em 0;
-    border:1px solid transparent;
+    border:2px solid transparent;
 }
 
 .slides-pagination a:hover, 
 .slides-pagination a.selected {
     background-color: #ccc;
-    border: 1px solid #000;
+    border: 2px solid #000;
 }
 
 /* controls */

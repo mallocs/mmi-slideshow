@@ -15,7 +15,7 @@ $.widget("mmi.slideshow", {
         slides: '.slide',                      // Selector for carousel slides.
 
         startSlide: 0,                        // Starting slide.
-        buffer: 3,                             // Number of extra slides to buffer.
+        buffer: 2,                             // Number of extra slides to buffer.
 
         transition: "scroll",               // What type of transition to use. 
         transitionSpeed: 600,          // Speed to transition between slides.
@@ -24,11 +24,9 @@ $.widget("mmi.slideshow", {
         previousText: false,              // Text for previous slide button.
         nextText: false,                    // Text for next slide button.
         loop: true,                           // Slides run in a loop.
-        pagination: true,                 // Show pagination.
+        pagination: true,         // Show pagination.
+        captions: true                      // Show captions.
 
-        // callbacks
-        start: null,
-        stop: null
     },
     _create: function() { 
         this.options = $.extend({}, this.options, $(this.element).data());
@@ -39,7 +37,9 @@ $.widget("mmi.slideshow", {
 
         this._createWrapper();
         this._createNavigation();
-        this._createCaption();
+        if (this.options.captions) {
+            this._createCaption();
+        }
         if (this.options.pagination) {
             this._createPagination();
         }
@@ -48,6 +48,16 @@ $.widget("mmi.slideshow", {
 
     _createWrapper: function() {
          this.wrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
+        this._on(this.wrapper, {
+            mouseenter: "_slideshowMouseInEvent",
+            mouseout: "_slideshowMouseOutEvent"
+        });
+    },
+
+    _slideshowMouseInEvent: function(event) {
+    },
+
+    _slideshowMouseOutEvent: function(event) {
     },
 
     _createNavigation: function() {
@@ -74,10 +84,14 @@ $.widget("mmi.slideshow", {
         this.$pagination = $('<ul class="slides-pagination">');
 
         for (var i=0, len = this.count; i < len; i++) {
-            this.$pagination.append('<li><a href="#" data-slide="' + i + '">' + (i+1) + '</a></li>');
+            if (this.options.pagination === "numbers") {
+                this.$pagination.append('<li><a href="#" data-slide="' + i + '">' + (i+1) + '</a></li>');
+            } else {
+                this.$pagination.append('<li><a href="#" class="circles" data-slide="' + i + '"></a></li>');
+            }
         }
         this._on(this.$pagination, {
-            "click a": "page"
+            "click a": "_page"
         });
         this.element.append(this.$pagination);
         this.pages = this.$pagination.children(this.count);
@@ -87,7 +101,7 @@ $.widget("mmi.slideshow", {
         return $(this.slides[ parseInt(slideNumber, 10) ]);
     },
 
-    page: function(event) {
+    _page: function(event) {
         event.preventDefault();
         var page = $(event.target).data("slide");
         this.setCurrentSlide(page);
@@ -241,11 +255,8 @@ $.widget("mmi.slideshow", {
 /**
 Functions needed
 
-_createPaging
 _createPagingFromSprite
 
-_setFirstSlide
-_setPreLoadCount
 _setPauseOnHover
 _setShowNav
 _setHideNav
@@ -258,8 +269,6 @@ _setTransition
 _setTransitionSpeed
 
 _checkImgHasLoaded
-_loadImg
-_goToSlide
 _showNav
 _hideNav
 _makePicUrl
