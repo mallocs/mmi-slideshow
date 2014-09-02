@@ -24,7 +24,7 @@ $.widget("mmi.slideshow", {
         previousText: false,              // Text for previous slide button.
         nextText: false,                    // Text for next slide button.
         loop: true,                           // Slides run in a loop.
-        pagination: true,         // Show pagination.
+        pagination: true,                 // Show pagination.
         captions: true                      // Show captions.
 
     },
@@ -86,6 +86,17 @@ $.widget("mmi.slideshow", {
         for (var i=0, len = this.count; i < len; i++) {
             if (this.options.pagination === "numbers") {
                 this.$pagination.append('<li><a href="#" data-slide="' + i + '">' + (i+1) + '</a></li>');
+            } else if (this.options.pagination === "sprite" && this.options.sprite) {
+                var pageLink = $('<a href="#" class="thumbnail" data-slide="' + i + '"></a>');
+                pageLink.css({
+                    width: "40px",
+                    height: "40px",
+                    background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-40 * i) + 'px transparent'
+                });
+                var pageItem = $('<li></li>');
+                pageItem[0].appendChild(pageLink[0]);
+                this.$pagination.append(pageItem);
+
             } else {
                 this.$pagination.append('<li><a href="#" class="circles" data-slide="' + i + '"></a></li>');
             }
@@ -167,13 +178,14 @@ $.widget("mmi.slideshow", {
 
     _bufferSlides: function(count) {
         var widget = this;
-        this.slides.slice( this.currentSlideNumber, this.currentSlideNumber + count).each(function(index, el) {
+        this.slides.slice( this.currentSlideNumber + 1, this.currentSlideNumber + count + 1).each(function(index, el) {
             widget._loadSlide.call(widget, $(el));
         });
     },
 
     setCurrentSlide: function(slideNumber) {
         var slide = this._getSlideFromNumber(slideNumber);
+        this._loadSlide(slide);
         var slideTarget = $(slide.children()[0]);
         var transitionSpeed = parseInt(this.options.transitionSpeed, 10);
         var transitionOptions = this.options.transitionOptions;
@@ -203,9 +215,19 @@ $.widget("mmi.slideshow", {
             if (slide.is(":animated")) {
                 return;
             }
+            if ( slide.find("img")[0] && slide.find("img")[0].complete === false ) {
+                this.carousel.width( this.currentSlide.width() );
+                this.carousel.height( this.currentSlide.height() );
+                var widget;
+                // This is apparently inconsistent, but seems the best option.
+                slide.find("img").load(function() {
+                    widget.carousel.removeAttr("width");
+                    widget.carousel.removeAttr("height");
+                });
+            }
             this.carousel.find("li").not(this.currentSlide).css({display: "none", position: "static"});
             slide.show("fade", transitionOptions, transitionSpeed);
-            this.currentSlide.css({position: "absolute", top: 0, left: 0});
+            this.currentSlide.css({position: "absolute"});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
 
