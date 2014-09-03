@@ -1,7 +1,7 @@
 
 
 ##A work in progress. 
-[Demo](http://mallocs.github.io/mrSlider/demo.html)
+[Demo](http://mallocs.github.io/mmi-slideshow/demo.html)
 
 ##Goals
   * Configurable lazy loading of images.
