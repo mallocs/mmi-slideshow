@@ -23,13 +23,13 @@
                 <div class="slideshow" data-transition="scroll" data-loop="true">
                     <ul class="carousel">
                         <li class="slide">
-                            <img src="http://placehold.it/500x300/e87000/000" alt="" data-caption="First picture" data-credit="mmi">
+                            <img src="http://placehold.it/500x300/e87000/000" data-caption="First picture" data-credit="mmi">
                         </li>
                         <li class="slide">
-                            <img data-src="http://placehold.it/500x300/003808/000" alt="">
+                            <img data-src="http://placehold.it/500x300/003808/000" data-caption="Second picture" data-credit="mmi">
                         </li>
                         <li class="slide">
-                            <img data-src="http://placehold.it/500x300/006ce8/000" alt="">
+                            <img data-src="http://placehold.it/500x300/006ce8/000" data-caption="Third picture" data-credit="mmi">
                         </li>
                     </ul>
                 </div>
@@ -124,15 +124,14 @@
 
     </div>
 
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 
     <script src="mrslider.js"></script>
     <script>
-        var ss = $(".slideshow").slideshow();
 
         $(function() {
-            // Create a slideshow
+            var ss = $(".slideshow").slideshow();
         });
     </script>
 

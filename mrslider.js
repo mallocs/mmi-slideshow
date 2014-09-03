@@ -15,7 +15,7 @@ $.widget("mmi.slideshow", {
         slides: '.slide',                      // Selector for carousel slides.
 
         startSlide: 0,                        // Starting slide.
-        buffer: 2,                             // Number of extra slides to buffer.
+        buffer: 1,                             // Number of extra slides to buffer.
 
         transition: "scroll",               // What type of transition to use. 
         transitionSpeed: 600,          // Speed to transition between slides.
@@ -227,7 +227,7 @@ $.widget("mmi.slideshow", {
             }
             this.carousel.find("li").not(this.currentSlide).css({display: "none", position: "static"});
             slide.show("fade", transitionOptions, transitionSpeed);
-            this.currentSlide.css({position: "absolute"});
+            this.currentSlide.css({position: "absolute", top: 0, left: 0});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
 
