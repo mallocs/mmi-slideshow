@@ -81,7 +81,7 @@ $.widget("mmi.slideshow", {
     },
 
     _createPagination: function() {
-        this.$pagination = $('<ul class="slides-pagination">');
+        this.$pagination = $('<ul class="slideshow-pagination">');
 
         for (var i=0, len = this.count; i < len; i++) {
             if (this.options.pagination === "numbers") {

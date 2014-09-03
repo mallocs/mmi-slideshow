@@ -1,5 +1,5 @@
 /* slides */
-.slideshow {
+.mmi-slideshow {
     position: relative;
     margin: 0;
     padding: 0;
@@ -24,7 +24,7 @@
 }
 
 /* pagination */
-.slides-pagination {
+.slideshow-pagination {
     overflow: hidden;
     bottom: 0.4em;
     left: 0.3em;
@@ -34,28 +34,28 @@
     z-index: 11;
 }
 
-.slides-pagination .circles {
+.mmi-slideshow .circles {
     border-radius: 50%;
     width: 0.7em;
     height: 0.7em;
-    padding: 0;
     margin: 0.3em 0.6em 0 0;
+    padding: 0;
     background-color: #ccc;
     border: 2px solid transparent;
 }
 
-.slides-pagination .thumbnail {
-    padding: 0;
+.slideshow-pagination .thumbnail {
     margin: 0.7em 0.7em 0.2em 0.4em;
+    padding: 0;
     border: 2px solid #fff;
     box-shadow: 1px 1px 4px #111;
 }
 
-.slides-pagination li {
+.slideshow-pagination li {
     display: inline;
 }
 
-.slides-pagination a {
+.slideshow-pagination a {
     text-decoration: none;
     color: #222;
     display: block;
@@ -65,8 +65,8 @@
     border: 2px solid transparent;
 }
 
-.slides-pagination a:hover, 
-.slides-pagination a.selected {
+.slideshow-pagination a:hover, 
+.slideshow-pagination a.selected {
     background-color: #ccc;
     border: 2px solid #000;
 }

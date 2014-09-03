@@ -3,9 +3,9 @@
 
 <head>
 
-    <title>jQuery Slideshow Demo</title>
-    <link rel="stylesheet" href="demo.css" />
-    <link rel="stylesheet" href="mmi-slideshow.css" />
+    <title>Basic MMI Slideshow Demo</title>
+    <link rel="stylesheet" href="basic.css" />
+    <link rel="stylesheet" href="../mmi-slideshow.css" />
 
 </head>
 
@@ -20,7 +20,7 @@
 
             <div id="demo">
 
-                <div class="slideshow" data-transition="scroll" data-loop="true">
+                <div class="mmi-slideshow" data-transition="scroll" data-loop="true">
                     <ul class="carousel">
                         <li class="slide">
                             <img src="http://placehold.it/500x300/e87000/000" data-caption="First picture" data-credit="mmi">
@@ -47,7 +47,7 @@
                 </div>
 
                 <br>
-                <div class="slideshow" data-transition="fade" data-captions="false" data-loop="true" data-pagination="numbers">
+                <div class="mmi-slideshow" data-transition="fade" data-captions="false" data-loop="true" data-pagination="numbers">
                     <ul class="carousel">
                         <li class="slide">
                             <img src="http://placehold.it/500x300/e87000/000" alt="">
@@ -74,7 +74,7 @@
                 </div>
 
                 <br>
-                <div class="slideshow" data-transition="explode" data-captions="false" data-loop="true">
+                <div class="mmi-slideshow" data-transition="explode" data-captions="false" data-loop="true">
                     <ul class="carousel">
                         <li class="slide">
                             <img src="http://placehold.it/500x300/e87000/000" alt="" width="500" height="300">
@@ -98,7 +98,7 @@
                 </div>
 
                 <br>
-                <div class="slideshow" data-pagination="sprite" data-sprite="http://mallocs.net/img/20130504-euskadiko-berde/sprite.jpg" data-transition="fade" data-loop="true" style="width: 666px; margin: 20px 0px 80px -85px;">
+                <div class="mmi-slideshow" data-pagination="sprite" data-sprite="http://mallocs.net/img/20130504-euskadiko-berde/sprite.jpg" data-transition="fade" data-loop="true" style="width: 666px; margin: 20px 0px 80px -85px;">
                     <ul class="carousel">
                         <li class="slide">
                             <img data-src="http://mallocs.net/img/20130504-euskadiko-berde/680x500/01.jpg" data-caption="Nafarroa! The journey begins.">
@@ -151,11 +151,11 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 
-    <script src="mmi-slideshow.js"></script>
+    <script src="../mmi-slideshow.js"></script>
     <script>
 
         $(function() {
-            var ss = $(".slideshow").slideshow();
+            var ss = $(".mmi-slideshow").slideshow();
         });
     </script>
 
