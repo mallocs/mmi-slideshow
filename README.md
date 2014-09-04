@@ -2,6 +2,7 @@
 
 ##A work in progress. 
 [Basic Scrolling Slideshow](http://mallocs.github.io/mmi-slideshow/demos/scroll.html)   
+[Responsive Slideshow](http://mallocs.github.io/mmi-slideshow/demos/responsive.html)   
 [Multiple Slideshows](http://mallocs.github.io/mmi-slideshow/demos/multiple-slideshows.html)   
 
 ##Goals
@@ -13,8 +14,9 @@
     * ~~Captions~~ Mostly done
     * ~~Transitions~~ Mostly done
     * ~~Responsive~~ Mostly done
+    * Swipe gestures and keyboard
     * Page numbering
-    * Credit
+    * Credits
     * Play/Pause button
     * Show/hide navigation, etc on mouseIn/Out
     * Tests

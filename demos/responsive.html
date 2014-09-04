@@ -4,17 +4,30 @@
 <head>
 
     <title>Scroll MMI Slideshow Demo</title>
+    <link rel="stylesheet" href="../mmi-slideshow.css" />
+
     <style>
       #container {
         margin: auto;
-        max-width: 500px;
+        max-width: 800px;
       }
 
       #introduction {
         text-align: center;
       }
+
+     .slide img {
+       width: 100%;
+     }
+
+    .slideshow-previous {
+      left: 0;
+    }
+
+    .slideshow-next {
+      right: 0;
+    }
     </style>
-    <link rel="stylesheet" href="../mmi-slideshow.css" />
 
 </head>
 
@@ -29,7 +42,7 @@
 
             <div id="demo">
 
-                <div class="mmi-slideshow" data-transition="scroll" data-loop="true">
+                <div class="mmi-slideshow" data-transition="fade" data-loop="true">
                     <ul class="carousel">
                         <li class="slide">
                             <img src="http://placehold.it/500x300/e87000/000" data-caption="First picture" data-credit="mmi">
