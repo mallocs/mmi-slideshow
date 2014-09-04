@@ -1,7 +1,7 @@
 
 
 ##A work in progress. 
-[Basic Scrolling Slideshow](http://mallocs.github.io/mmi-slideshow/demos/scroll.html)
+[Basic Scrolling Slideshow](http://mallocs.github.io/mmi-slideshow/demos/scroll.html) 
 [Multiple Slideshows](http://mallocs.github.io/mmi-slideshow/demos/multiple-slideshows.html)
 
 ##Goals
