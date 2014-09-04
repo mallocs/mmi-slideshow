@@ -1,7 +1,8 @@
 
 
 ##A work in progress. 
-[Basic Demo](http://mallocs.github.io/mmi-slideshow/demos/basic.html)
+[Basic Scrolling Slideshow](http://mallocs.github.io/mmi-slideshow/demos/scroll.html)
+[Multiple Slideshows](http://mallocs.github.io/mmi-slideshow/demos/multiple-slideshows.html)
 
 ##Goals
   * ~~Configurable lazy loading of images.~~ Done
@@ -13,6 +14,7 @@
     * ~~Transitions~~ Mostly done
     * ~~Responsive~~ Mostly done
     * Page numbering
+    * Credit
     * Play/Pause button
-    * Show/hide navigation on mouseIn/Out, etc
+    * Show/hide navigation, etc on mouseIn/Out
     * Tests
