@@ -11,8 +11,9 @@
 $.widget("mmi.slideshow", {
     version: "0.0",
     options: {
-        carousel: '.carousel',            // Selector for carousel element.
+        carousel: '.mmi-slideshow ul',            // Selector for carousel element.
         slides: '.slide',                      // Selector for carousel slides.
+        
 
         startSlide: 0,                        // Starting slide.
         buffer: 2,                             // Number of extra slides to buffer.
@@ -28,6 +29,7 @@ $.widget("mmi.slideshow", {
         captions: true                      // Show captions.
 
     },
+
     _create: function() { 
         this.options = $.extend({}, this.options, $(this.element).data());
         this.carousel = this.element.children(this.options.carousel);
