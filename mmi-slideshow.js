@@ -12,15 +12,17 @@ $.widget("mmi.slideshow", {
     version: "0.0",
 
     /*In JS CSS Class Names*/
-    navigationCN: "slideshow-navigation",
-    previousCN: "slideshow-previous",
-    previousIconCN: "icon-left-open",
-    nextCN: "slideshow-next",
-    nextIconCN: "icon-right-open",
-    paginationCN: "slideshow-pagination",
-    paginationCircleCN: "circles",
-    paginationThumbnailCN: "thumbnail",
-    captionCN: "slideshow-caption",
+    navigationCN: "mmi-navigation",
+    previousCN: "mmi-previous",
+    previousIconCN: "mmi-icon-previous",
+    nextCN: "mmi-next",
+    nextIconCN: "mmi-icon-next",
+    paginationCN: "mmi-pagination",
+    paginationCircleCN: "mmi-circle",
+    paginationThumbnailCN: "mmi-thumbnail",
+    captionCN: "mmi-caption",
+    selectedCN: "mmi-selected",
+    disabledCN: "mmi-disabled",
 
     options: {
                                                                   /*In Markup Selectors*/
@@ -75,21 +77,20 @@ $.widget("mmi.slideshow", {
     },
 
     _createNavigation: function() {
-        var widget = this;
         this.$previous = $('<span data-slides="previous"></span>');
-        this.$next = $('<span data-slides="next"></span>');
-
         this.$previous.addClass(this.navigationCN).addClass(this.previousCN);
-        this.$next.addClass(this.navigationCN).addClass(this.nextCN);
-
         this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass(this.previousIconCN);
+        this._on(this.$previous, {
+            click: "previous"
+        });
+
+        this.$next = $('<span data-slides="next"></span>');
+        this.$next.addClass(this.navigationCN).addClass(this.nextCN);
         this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass(this.nextIconCN);
         this._on(this.$next, {
             click: "next"
         });
-        this._on(this.$previous, {
-            click: "previous"
-        });
+
         this.element.append(this.$next, this.$previous);
     },
 
@@ -141,8 +142,8 @@ $.widget("mmi.slideshow", {
             return;
         }
         var page = $(this.pages[ parseInt(slideNumber, 10) ]);
-        this.pages.not(page).find("a").removeClass("selected");
-        page.find("a").addClass("selected");       
+        this.pages.not(page).find("a").removeClass(this.selectedCN);
+        page.find("a").addClass(this.selectedCN);       
     },
 
     next: function(event) {
