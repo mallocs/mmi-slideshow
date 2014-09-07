@@ -10,30 +10,42 @@
 
 $.widget("mmi.slideshow", {
     version: "0.0",
+
+    /*In JS CSS Class Names*/
+    navigationCN: "slideshow-navigation",
+    previousCN: "slideshow-previous",
+    previousIconCN: "icon-left-open",
+    nextCN: "slideshow-next",
+    nextIconCN: "icon-right-open",
+    paginationCN: "slideshow-pagination",
+    paginationCircleCN: "circles",
+    paginationThumbnailCN: "thumbnail",
+    captionCN: "slideshow-caption",
+
     options: {
-        carousel: '.mmi-slideshow ul',            // Selector for carousel element.
-        slides: '.slide',                      // Selector for carousel slides.
-        
+                                                                  /*In Markup Selectors*/
+        carouselSel: ".mmi-slideshow ul",   // Selector for carousel element.
+        slideSel: ".mmi-slideshow li",          // Selector for carousel slides.
 
-        startSlide: 0,                        // Starting slide.
-        buffer: 2,                             // Number of extra slides to buffer.
+        startSlide: 0,                                   // Starting slide.
+        buffer: 2,                                        // Number of extra slides to buffer.
 
-        transition: "scroll",               // What type of transition to use. 
-        transitionSpeed: 600,          // Speed to transition between slides.
-        transitionOptions: {},            // Extra options for transition. See jQuery UI effect options.
-        navigation: true,                  // Show the navigation arrows.
-        previousText: false,              // Text for previous slide button.
-        nextText: false,                    // Text for next slide button.
-        loop: true,                           // Slides run in a loop.
-        pagination: true,                 // Show pagination.
-        captions: true                      // Show captions.
+        transition: "scroll",                         // What type of transition to use. 
+        transitionSpeed: 600,                    // Speed to transition between slides.
+        transitionOptions: {},                     // Extra options for transition. See jQuery UI effect options.
+        navigation: true,                            // Show the navigation arrows.
+        previousText: false,                       // Text for previous slide button.
+        nextText: false,                             // Text for next slide button.
+        loop: true,                                    // Slides run in a loop.
+        pagination: true,                           // Show pagination.
+        captions: true                               // Show captions.
 
     },
 
     _create: function() { 
         this.options = $.extend({}, this.options, $(this.element).data());
-        this.carousel = this.element.children(this.options.carousel);
-        this.slides = this.carousel.children(this.options.slides);
+        this.carousel = this.element.children(this.options.carouselSel);
+        this.slides = this.carousel.children(this.options.slideSel);
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
         this.count = this.slides.length;
 
@@ -64,10 +76,14 @@ $.widget("mmi.slideshow", {
 
     _createNavigation: function() {
         var widget = this;
-        this.$previous = $('<span class="slideshow-previous slideshow-navigation" data-slides="previous"></span>');
-        this.$next = $('<span class="slideshow-next slideshow-navigation" data-slides="next"></span>');
-        this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass("icon-left-open");
-        this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass("icon-right-open");
+        this.$previous = $('<span data-slides="previous"></span>');
+        this.$next = $('<span data-slides="next"></span>');
+
+        this.$previous.addClass(this.navigationCN).addClass(this.previousCN);
+        this.$next.addClass(this.navigationCN).addClass(this.nextCN);
+
+        this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass(this.previousIconCN);
+        this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass(this.nextIconCN);
         this._on(this.$next, {
             click: "next"
         });
@@ -78,30 +94,30 @@ $.widget("mmi.slideshow", {
     },
 
     _createCaption: function() {
-        this.$caption = $('<div class="slideshow-caption"></div>');
+        this.$caption = $("<div>", {class: this.captionCN});
         this.element.append(this.$caption);
     },
 
     _createPagination: function() {
-        this.$pagination = $('<ul class="slideshow-pagination">');
+        this.$pagination = $("<ul>", {class: this.paginationCN});
 
         for (var i=0, len = this.count; i < len; i++) {
             if (this.options.pagination === "numbers") {
-                this.$pagination.append('<li><a href="#" data-slide="' + i + '">' + (i+1) + '</a></li>');
+                var pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
-                var pageLink = $('<a href="#" class="thumbnail" data-slide="' + i + '"></a>');
+                var pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationThumbnailCN);
                 pageLink.css({
                     width: "40px",
                     height: "40px",
                     background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-40 * i) + 'px transparent'
                 });
-                var pageItem = $('<li></li>');
-                pageItem[0].appendChild(pageLink[0]);
-                this.$pagination.append(pageItem);
-
             } else {
-                this.$pagination.append('<li><a href="#" class="circles" data-slide="' + i + '"></a></li>');
+                var pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationCircleCN);
             }
+
+            var pageItem = $('<li></li>');
+            pageItem[0].appendChild(pageLink[0]);
+            this.$pagination.append(pageItem);
         }
         this._on(this.$pagination, {
             "click a": "_page"
@@ -143,7 +159,7 @@ $.widget("mmi.slideshow", {
 
     previous: function(event) {
         var slideNumber = this.currentSlideNumber - 1;
-        if(slideNumber < 0) {
+        if (slideNumber < 0) {
             if(this.options.loop) {
                 slideNumber = this.count - 1;
             } else {

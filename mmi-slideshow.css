@@ -1,4 +1,4 @@
-/* slides */
+/* general */
 .mmi-slideshow {
     position: relative;
     margin: 0;
@@ -6,18 +6,20 @@
     font: 1em Arial,sans-serif;
 }
 
-.carousel {
+/*carousel*/
+.mmi-slideshow ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
     list-style: none;
 }
 
-.slide {
+/* slides */
+.mmi-slideshow li {
     z-index: 10;
 }
 
-.slide img {
+.mmi-slideshow li img {
     display: block;
     margin-left: auto;
     margin-right: auto;
