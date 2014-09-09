@@ -21,6 +21,8 @@
 
 .mmi-slideshow li img {
     display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* pagination */
@@ -65,6 +67,20 @@
     border: 2px solid #000;
 }
 
+/* captions */
+.mmi-caption {
+    background: #ccc;
+    background: rgba(180, 180, 180, 0.6);
+    z-index: 12;
+}
+
+.mmi-caption p {
+    margin: 0;
+    padding: 0.4em 0 0.4em 0.7em;
+    text-align: left;
+    font: 0.9em Arial,sans-serif;
+}
+
 /* controls */
 .mmi-navigation {
     margin-top: -2.3em;
@@ -94,20 +110,6 @@
 .mmi-previous.mmi-disabled {
     opacity: 0.4;
     cursor: auto;
-}
-
-/* captions */
-.mmi-caption {
-    background: #ccc;
-    background: rgba(180, 180, 180, 0.6);
-    z-index: 12;
-}
-
-.mmi-caption p {
-    margin: 0;
-    padding: 0.4em 0 0.4em 0.7em;
-    text-align: left;
-    font: 0.9em Arial,sans-serif;
 }
 
 /**css font sprites**/

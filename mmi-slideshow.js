@@ -205,7 +205,7 @@ $.widget("mmi.slideshow", {
     setCurrentSlide: function(slideNumber) {
         var slide = this._getSlideFromNumber(slideNumber);
         this._loadSlide(slide);
-        var slideTarget = $(slide.children()[0]);
+        var slideTarget = $(slide.children()[0]);
         var transitionSpeed = parseInt(this.options.transitionSpeed, 10);
         var transitionOptions = this.options.transitionOptions;
         var transition = this.options.transition + "";
