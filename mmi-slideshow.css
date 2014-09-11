@@ -17,6 +17,8 @@
 /* slides */
 .mmi-slideshow li {
     z-index: 10;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .mmi-slideshow li img {

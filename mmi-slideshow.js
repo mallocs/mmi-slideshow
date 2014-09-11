@@ -40,7 +40,8 @@ $.widget("mmi.slideshow", {
         nextText: false,                             // Text for next slide button.
         loop: true,                                    // Slides run in a loop.
         pagination: true,                           // Show pagination.
-        captions: true                               // Show captions.
+        captions: true,                               // Show captions.
+        showHideNav: false                        // Show/Hide Nav on mouseIn/Out events
 
     },
 
@@ -50,6 +51,7 @@ $.widget("mmi.slideshow", {
         this.slides = this.carousel.children(this.options.slideSel);
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
         this.count = this.slides.length;
+        this.mouseovers = {};
 
         this._createWrapper();
         this._createNavigation();
@@ -71,6 +73,7 @@ $.widget("mmi.slideshow", {
     },
 
     _slideshowMouseInEvent: function(event) {
+//        $(this.mouseovers).each(function() { console.log(this); });
     },
 
     _slideshowMouseOutEvent: function(event) {
