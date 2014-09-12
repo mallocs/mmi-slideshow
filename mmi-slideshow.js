@@ -38,10 +38,10 @@ $.widget("mmi.slideshow", {
         navigation: true,                            // Show the navigation arrows.
         previousText: false,                       // Text for previous slide button.
         nextText: false,                             // Text for next slide button.
-        loop: true,                                    // Slides run in a loop.
+        loop: true,                                     // Slides run in a loop.
         pagination: true,                           // Show pagination.
         captions: true,                               // Show captions.
-        showHideNav: false                        // Show/Hide Nav on mouseIn/Out events
+        showhidenavigation: false             // Show/Hide Navigation on mouseIn/Out events
 
     },
 
@@ -51,7 +51,6 @@ $.widget("mmi.slideshow", {
         this.slides = this.carousel.children(this.options.slideSel);
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
         this.count = this.slides.length;
-        this.mouseovers = {};
 
         this._createWrapper();
         this._createNavigation();
@@ -65,7 +64,7 @@ $.widget("mmi.slideshow", {
     },
 
     _createWrapper: function() {
-         this.wrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
+        this.wrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
         this._on(this.wrapper, {
             mouseenter: "_slideshowMouseInEvent",
             mouseout: "_slideshowMouseOutEvent"
@@ -93,8 +92,22 @@ $.widget("mmi.slideshow", {
         this._on(this.$next, {
             click: "next"
         });
+        if(this.options.showhidenavigation) {
+            var widget = this;
+            this.$next.css({display: "none"});
+            this.$previous.css({display: "none"});
 
+            $(this.element).hover(  
+                function() {
+                    widget.showNavigation();
+                }, 
+                function() {
+                    widget.hideNavigation();
+                }
+            );
+        }
         this.element.append(this.$next, this.$previous);
+
     },
 
     _createCaption: function() {
@@ -161,7 +174,7 @@ $.widget("mmi.slideshow", {
         this.setCurrentSlide(slideNumber);
     },
 
-    previous: function(event) {
+    previous: function() {
         var slideNumber = this.currentSlideNumber - 1;
         if (slideNumber < 0) {
             if(this.options.loop) {
@@ -173,14 +186,16 @@ $.widget("mmi.slideshow", {
         this.setCurrentSlide(slideNumber);
     },
 
-    showNavigation: function() {
-        this.$next.show();
-        this.$previous.show();
+    showNavigation: function(duration) {
+        duration = duration || 200;
+        this.$next.show("fade", duration);
+        this.$previous.show("fade", duration);
     },
 
-    hideNavigation: function() {
-        this.$next.hide();
-        this.$previous.hide();
+    hideNavigation: function(duration) {
+        duration = duration || 200;
+        this.$next.hide("fade", duration);
+        this.$previous.hide("fade", duration);
     },
 
     setCaption: function(text) {
