@@ -62,9 +62,13 @@ $.widget("mmi.slideshow", {
         }
         this.setCurrentSlide(this.currentSlideNumber);
     },
-
+    
     _createWrapper: function() {
-        this.wrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
+        //two wrappers so we can position things outside but relative to the slideshow carousel.
+        this.carouselWrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
+
+        this.wrapper = this.carouselWrapper.wrap('<div style="position:relative;"></div>').parent();
+
         this._on(this.wrapper, {
             mouseenter: "_slideshowMouseInEvent",
             mouseout: "_slideshowMouseOutEvent"
@@ -106,7 +110,7 @@ $.widget("mmi.slideshow", {
                 }
             );
         }
-        this.element.append(this.$next, this.$previous);
+        this.wrapper.append(this.$next, this.$previous);
 
     },
 
@@ -234,25 +238,25 @@ $.widget("mmi.slideshow", {
             slide.show();
             this.carousel.find("li").not(slide).css({display: "none"});
         } else if (transition === "scroll") {
-            if (this.wrapper.is(":animated")) {
-                this.wrapper.stop();
+            if (this.carouselWrapper.is(":animated")) {
+                this.carouselWrapper.stop();
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed/2 || transitionSpeed/2;
                 var scroll = this.currentTarget;
                 animating = true;
             } else {
                 this.carousel.css({minWidth: "10000em"});
                 this.carousel.find("li").css({float: "left", display: "list-item"});
-                var scroll = this.currentTarget = slide.position().left + this.wrapper.scrollLeft();
+                var scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
-  //Is this needed?          var maxScroll = this.carousel.width() - this.wrapper.width();
-            this.wrapper.animate({
+  //Is this needed?          var maxScroll = this.carousel.width() - this.carouselWrapper.width();
+            this.carouselWrapper.animate({
                 scrollLeft: scroll
             }, transitionSpeed);
         } else {
             if (slide.is(":animated")) {
                 return;
             }
-            if ( slide.find("img")[0] && slide.find("img")[0].complete === false && !this.wrapper.is(":animated") ) {
+            if ( slide.find("img")[0] && slide.find("img")[0].complete === false && !this.carouselWrapper.is(":animated") ) {
                 this.carousel.width( this.currentSlide.width() );
                 this.carousel.height( this.currentSlide.height() );
                 var widget;
