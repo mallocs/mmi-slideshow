@@ -85,11 +85,11 @@
 
 /* controls */
 .mmi-navigation {
-    margin-top: -2.3em;
+    margin: -1em -0.1em 0em -0.1em;
     padding: 0.5em;
     position: absolute;
     top: 50%;
-    opacity: 0.6;
+    opacity: 0.7;
     text-decoration: none;
     color: #666;
     cursor: pointer;
@@ -123,7 +123,7 @@
  
 .mmi-icon-next, 
 .mmi-icon-previous {
-    margin-top: -2.8em;
+    margin: -2.8em 0 0 0;
     padding: 0;
 }
 
@@ -133,7 +133,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 2.8em;
-  padding: 0.5em 0 0.4em 0;
+  padding: 0.5em 0;
   speak: none;
  
   display: inline-block;

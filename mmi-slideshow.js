@@ -39,10 +39,13 @@ $.widget("mmi.slideshow", {
         previousText: false,                       // Text for previous slide button.
         nextText: false,                             // Text for next slide button.
         loop: true,                                     // Slides run in a loop.
-        pagination: true,                           // Show pagination.
         captions: true,                               // Show captions.
-        showhidenavigation: false             // Show/Hide Navigation on mouseIn/Out events
+        showhidenavigation: false,             // Show/Hide Navigation on mouseIn/Out events
 
+        pagination: true,                           // Show pagination.
+        sprite: false,                                  // Sprite URL.
+        spriteWidth: false,                         // Sprite width. An int measuring pixels.
+        spriteHeight: false                        // Sprite height. An int measuring pixels.
     },
 
     _create: function() { 
@@ -126,11 +129,14 @@ $.widget("mmi.slideshow", {
             if (this.options.pagination === "numbers") {
                 var pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
+                var spriteWidth = (this.options.spriteWidth) ? parseInt(this.options.spriteWidth, 10) : 40;
+                var spriteHeight = (this.options.spriteHeight) ? parseInt(this.options.spriteHeight, 10) : 40;
+
                 var pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationThumbnailCN);
                 pageLink.css({
-                    width: "40px",
-                    height: "40px",
-                    background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-40 * i) + 'px transparent'
+                    width: spriteWidth + "px",
+                    height: spriteHeight + "px",
+                    background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-spriteHeight * i) + 'px transparent'
                 });
             } else {
                 var pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationCircleCN);
