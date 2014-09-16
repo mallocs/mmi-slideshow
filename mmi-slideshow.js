@@ -35,17 +35,17 @@ $.widget("mmi.slideshow", {
         transition: "scroll",                         // What type of transition to use. 
         transitionSpeed: 600,                    // Speed to transition between slides.
         transitionOptions: {},                     // Extra options for transition. See jQuery UI effect options.
-        navigation: true,                           // Show the navigation arrows.
+        navigation: true,                            // Show the navigation arrows.
         previousText: false,                       // Text for previous slide button.
         nextText: false,                             // Text for next slide button.
-        loop: true,                                    // Slides run in a loop.
-        captions: true,                              // Show captions.
-        showhidenavigation: false,            // Show/Hide Navigation on mouseIn/Out events
+        loop: true,                                     // Slides run in a loop.
+        captions: true,                               // Show captions.
+        autoHideNavigation: false,             // Show/Hide Navigation on mouseIn/Out events
 
         pagination: true,                           // Show pagination.
         sprite: false,                                  // Sprite URL.
         spriteWidth: false,                         // Sprite width. An int measuring pixels.
-        spriteHeight: false                         // Sprite height. An int measuring pixels.
+        spriteHeight: false                        // Sprite height. An int measuring pixels.
     },
 
     _create: function() { 
@@ -99,7 +99,7 @@ $.widget("mmi.slideshow", {
         this._on(this.$next, {
             click: "next"
         });
-        if(this.options.showhidenavigation) {
+        if(this.options.autoHideNavigation) {
             var widget = this;
             this.$next.css({display: "none"});
             this.$previous.css({display: "none"});
@@ -247,20 +247,20 @@ $.widget("mmi.slideshow", {
 
         //Scroll transition
         } else if (transition === "scroll") {
+            //If it's already animated, speed up the transition. 
             if (this.carouselWrapper.is(":animated")) {
                 this.carouselWrapper.stop();
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed/2 || transitionSpeed/2;
                 var scroll = this.currentTarget;
                 animating = true;
             } else {
-//for ( var i = 0; i < this.count; i++ ) {
-//                carouselWidth+= this.$items.eq(i).outerWidth(true);
-//            }
-//                var scrollWidth = 0;
-//                $(this.slides).each(function() { 
-//                    scrollWidth += $(this).outerWidth(true);
- //               });
+                var scrollWidth = 0;
+                $(this.slides).each(function() { 
+                    scrollWidth += $(this).outerWidth(true);
+                });
                 this.carousel.css({minWidth: "10000em"});
+                
+//                this.carousel.css({minWidth: scrollWidth + "px"});
                 this.carousel.find("li").css({float: "left", display: "list-item"});
                 var scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
@@ -290,6 +290,7 @@ $.widget("mmi.slideshow", {
         }
         //Done with transitions. 
 
+
         if (animating) {
             return;
         }
@@ -313,7 +314,7 @@ $.widget("mmi.slideshow", {
     },
 
     _loadImage: function(image) {
-        if (image.attr("src") === "undefined" && image.data("src") !== "undefined") {
+        if (image.attr("src") === undefined && image.data("src") !== undefined) {
             image.attr("src", image.data("src"));
         }
     },
