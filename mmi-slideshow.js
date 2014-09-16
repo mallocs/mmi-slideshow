@@ -79,7 +79,6 @@ $.widget("mmi.slideshow", {
     },
 
     _slideshowMouseInEvent: function(event) {
-//        $(this.mouseovers).each(function() { console.log(this); });
     },
 
     _slideshowMouseOutEvent: function(event) {
@@ -99,6 +98,7 @@ $.widget("mmi.slideshow", {
         this._on(this.$next, {
             click: "next"
         });
+
         if(this.options.autoHideNavigation) {
             var widget = this;
             this.$next.css({display: "none"});
@@ -114,7 +114,6 @@ $.widget("mmi.slideshow", {
             );
         }
         this.wrapper.append(this.$next, this.$previous);
-
     },
 
     _createCaption: function() {
@@ -256,12 +255,12 @@ $.widget("mmi.slideshow", {
             } else {
                 var scrollWidth = 0;
                 $(this.slides).each(function() { 
-                    scrollWidth += $(this).outerWidth(true);
+                   //This isn't great, but some are hidden so how to calculate scrollwidth?
+                    scrollWidth += $(this).outerWidth(true) * 2;  
                 });
-                this.carousel.css({minWidth: "10000em"});
-                
-//                this.carousel.css({minWidth: scrollWidth + "px"});
                 this.carousel.find("li").css({float: "left", display: "list-item"});
+
+                this.carousel.css({minWidth: scrollWidth + "px"});
                 var scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
