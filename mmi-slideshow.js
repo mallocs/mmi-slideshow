@@ -230,6 +230,7 @@ $.widget("mmi.slideshow", {
     },
 
     setCurrentSlide: function(slideNumber) {
+
         var slide = this._getSlideFromNumber(slideNumber);
         this._loadSlide(slide);
         var slideTarget = $(slide.children()[0]);
@@ -253,14 +254,8 @@ $.widget("mmi.slideshow", {
                 var scroll = this.currentTarget;
                 animating = true;
             } else {
-                var scrollWidth = 0;
-                $(this.slides).each(function() { 
-                   //This isn't great, but some are hidden so how to calculate scrollwidth?
-                    scrollWidth += $(this).outerWidth(true) * 2;  
-                });
                 this.carousel.find("li").css({float: "left", display: "list-item"});
-
-                this.carousel.css({minWidth: scrollWidth + "px"});
+                this.carousel.css({minWidth: "10000em"});
                 var scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
@@ -276,7 +271,7 @@ $.widget("mmi.slideshow", {
                 this.carousel.width( this.currentSlide.width() );
                 this.carousel.height( this.currentSlide.height() );
                 var widget;
-                // This is apparently inconsistent, but seems the best option.
+                // The load function is apparently inconsistent, but seems the best option.
                 slide.find("img").load(function() {
                     widget.carousel.removeAttr("width");
                     widget.carousel.removeAttr("height");
@@ -288,7 +283,6 @@ $.widget("mmi.slideshow", {
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
         //Done with transitions. 
-
 
         if (animating) {
             return;
