@@ -13,6 +13,7 @@ $.widget("mmi.slideshow", {
 
     /*In JS CSS Class Names*/
     navigationCN: "mmi-navigation",
+    footerCN: "mmi-footer",
     previousCN: "mmi-previous",
     previousIconCN: "mmi-icon-previous",
     nextCN: "mmi-next",
@@ -23,6 +24,8 @@ $.widget("mmi.slideshow", {
     captionCN: "mmi-caption",
     selectedCN: "mmi-selected",
     disabledCN: "mmi-disabled",
+    insideCN: "mmi-inside",                    //This is added when elements that should be layered on top of the carousel instead of around it.
+    responsiveCN: "mmi-responsive",      //This is added when elements should behave responsively.
 
     options: {
                                                                   /*In Markup Selectors*/
@@ -41,6 +44,8 @@ $.widget("mmi.slideshow", {
         loop: true,                                     // Slides run in a loop.
         captions: true,                               // Show captions.
         autoHideNavigation: false,             // Show/Hide Navigation on mouseIn/Out events
+        autoHideFooter: false,                    // Show/Hide Footer on mouseIn/Out events
+        insideMode: false,                           // Extra elements (Nav, pagination, etc) appear inside the carousel.
 
         pagination: true,                           // Show pagination.
         sprite: false,                                  // Sprite URL.
@@ -57,6 +62,7 @@ $.widget("mmi.slideshow", {
 
         this._createWrapper();
         this._createNavigation();
+        this._createFooter();
         if (this.options.captions) {
             this._createCaption();
         }
@@ -67,7 +73,7 @@ $.widget("mmi.slideshow", {
     },
     
     _createWrapper: function() {
-        //two wrappers so we can position things outside but relative to the slideshow carousel.
+        //two wrappers so we can position things outside but relative to the slideshow carousel, like the navigation arrows.
         this.carouselWrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
 
         this.wrapper = this.carouselWrapper.wrap('<div style="position:relative;"></div>').parent();
@@ -76,6 +82,27 @@ $.widget("mmi.slideshow", {
             mouseenter: "_slideshowMouseInEvent",
             mouseout: "_slideshowMouseOutEvent"
         });
+    },
+
+    _createFooter: function() {
+        this.$footer = $('<div>', {class: this.footerCN});
+        if(this.options.autoHideFooter) {
+            var widget = this;
+            this.$footer.css({display: "none"});
+
+            $(this.element).hover(  
+                function() {
+                    widget.$footer.show({duration: 300, effect: "fade"});
+                }, 
+                function() {
+                    widget.$footer.hide({duration: 300, effect: "fade"});
+                }
+            );
+        }
+        if (this.options.insideMode) {
+            this.$footer.addClass(this.insideCN);
+        }
+        this.wrapper.append(this.$footer);
     },
 
     _slideshowMouseInEvent: function(event) {
@@ -113,12 +140,16 @@ $.widget("mmi.slideshow", {
                 }
             );
         }
+        if (this.options.insideMode) {
+            this.$next.addClass(this.insideCN);
+            this.$previous.addClass(this.insideCN);
+        }
         this.wrapper.append(this.$next, this.$previous);
     },
 
     _createCaption: function() {
         this.$caption = $("<div>", {class: this.captionCN});
-        this.element.append(this.$caption);
+        this.$footer.append(this.$caption);
     },
 
     _createPagination: function() {
@@ -148,7 +179,7 @@ $.widget("mmi.slideshow", {
         this._on(this.$pagination, {
             "click a": "_page"
         });
-        this.element.append(this.$pagination);
+        this.$footer.append(this.$pagination);
         this.pages = this.$pagination.children(this.count);
     },
 
@@ -255,6 +286,8 @@ $.widget("mmi.slideshow", {
                 animating = true;
             } else {
                 this.carousel.find("li").css({float: "left", display: "list-item"});
+                //It's complicated to set the proper width since it changes when new images are loaded.
+                //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
                 var scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }

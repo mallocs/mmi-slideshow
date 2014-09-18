@@ -155,3 +155,26 @@
 .mmi-icon-previous:before { 
   content: '\e801'; 
 } 
+
+
+
+/* Inside Mode */
+.mmi-inside.mmi-footer {
+    background-color: gray;
+    bottom: 0;
+    opacity: 0.8;
+    position: absolute;
+    width: 100%;
+}
+
+ .mmi-inside .mmi-pagination .mmi-circle {
+    margin: 0.5em 0.6em 0.5em 0.5em;
+}
+
+.mmi-inside.mmi-next {
+    right: 0;
+}
+
+.mmi-inside.mmi-previous {
+    left: 0;
+}
