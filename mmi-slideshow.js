@@ -44,8 +44,8 @@ $.widget("mmi.slideshow", {
         loop: true,                                     // Slides run in a loop.
         captions: true,                               // Show captions.
         autoHideNavigation: false,             // Show/Hide Navigation on mouseIn/Out events
-        autoHideFooter: false,                    // Show/Hide Footer on mouseIn/Out events
-        insideMode: false,                           // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        autoHideFooter: false,                   // Show/Hide Footer on mouseIn/Out events
+        insideMode: false,                          // Extra elements (Nav, pagination, etc) appear inside the carousel.
 
         pagination: true,                           // Show pagination.
         sprite: false,                                  // Sprite URL.
@@ -75,7 +75,6 @@ $.widget("mmi.slideshow", {
     _createWrapper: function() {
         //two wrappers so we can position things outside but relative to the slideshow carousel, like the navigation arrows.
         this.carouselWrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
-
         this.wrapper = this.carouselWrapper.wrap('<div style="position:relative;"></div>').parent();
 
         this._on(this.wrapper, {

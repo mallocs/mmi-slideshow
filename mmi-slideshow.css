@@ -85,7 +85,7 @@
 
 /* controls */
 .mmi-navigation {
-    margin: -1em -0.1em 0em -0.1em;
+    margin-top: -2.3em;
     padding: 0.5em;
     position: absolute;
     top: 50%;
@@ -123,7 +123,7 @@
  
 .mmi-icon-next, 
 .mmi-icon-previous {
-    margin: -2.8em 0 0 0;
+    margin-top: -4em;
     padding: 0;
 }
 
@@ -133,7 +133,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 2.8em;
-  padding: 0.5em 0;
+  padding: 0.5em 0 0.4em 0;
   speak: none;
  
   display: inline-block;
@@ -157,7 +157,6 @@
 } 
 
 
-
 /* Inside Mode */
 .mmi-inside.mmi-footer {
     background-color: gray;
@@ -171,10 +170,19 @@
     margin: 0.5em 0.6em 0.5em 0.5em;
 }
 
+.mmi-inside.mmi-navigation {
+    margin-top: -1em;
+}
+
 .mmi-inside.mmi-next {
     right: 0;
 }
 
 .mmi-inside.mmi-previous {
     left: 0;
+}
+
+.mmi-inside.mmi-icon-next, 
+.mmi-inside.mmi-icon-previous {
+    margin-top: -2.6em;
 }
