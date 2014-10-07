@@ -60,6 +60,10 @@ $.widget("mmi.slideshow", {
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
         this.count = this.slides.length;
 
+(function(){
+  var x = 1;
+})();
+
         this._createWrapper();
         this._createNavigation();
         this._createFooter();
@@ -101,7 +105,7 @@ $.widget("mmi.slideshow", {
         if (this.options.insideMode) {
             this.$footer.addClass(this.insideCN);
         }
-        this.wrapper.append(this.$footer);
+        this.element.append(this.$footer);
     },
 
     _slideshowMouseInEvent: function(event) {
