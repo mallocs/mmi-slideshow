@@ -1,10 +1,11 @@
+/* Color settings are at the bottom */
+
 /* general */
 .mmi-slideshow {
     margin: 0;
     padding: 0;
     position: relative;
-    font: 1em Arial,sans-serif;
-    color: #fff;
+    font: 1em Arial, sans-serif;
 }
 
 /*carousel*/
@@ -28,10 +29,14 @@
     margin-right: auto;
 }
 
+/* footer (pagination and captions) */
+.mmi-footer {
+    z-index: 11
+}
+
 /* pagination */
 .mmi-pagination {
     display: inline-block;
-    z-index: 11;
 }
 
 .mmi-pagination li {
@@ -39,7 +44,6 @@
 }
 
 .mmi-pagination a {
-    color: #222;
     border: 2px solid transparent;
     width: 2em;
     padding: 0.3em 0 0.2em 0;
@@ -48,7 +52,6 @@
 }
 
 .mmi-pagination .mmi-circle {
-    background-color: #222;
     width: 0.7em;
     height: 0.7em;
     margin: 0.3em 0.6em 0 0;
@@ -59,37 +62,14 @@
 .mmi-pagination .mmi-thumbnail {
     margin: 8px;
     padding: 0;
-    border: 2px solid #fff;
-    box-shadow: 1px 1px 4px #111;
-}
-
-.mmi-pagination a:hover, 
-.mmi-pagination a.mmi-selected {
-    background-color: #ccc;
-    border: 2px solid #000;
-}
-
-.mmi-pagination a:hover.mmi-circle, 
-.mmi-pagination  a.mmi-selected.mmi-circle  {
-    border: 2px solid #111;
 }
 
 /* captions */
-.mmi-caption {
-/*
-    background: #ccc;
-    background: rgba(180, 180, 180, 0.6);
-*/
-    background: #222;
-    color: #ddd;
-    z-index: 12;
-}
-
 .mmi-caption p {
     margin: 0;
     padding: 0.4em 0 0.4em 0.7em;
     text-align: left;
-    font: 0.9em Arial,sans-serif;
+    font: 0.9em Arial, sans-serif;
 }
 
 /* controls */
@@ -98,15 +78,10 @@
     padding: 0.5em;
     position: absolute;
     top: 50%;
-    opacity: 0.7;
+    opacity: 0.6;
     text-decoration: none;
-    color: #666;
     cursor: pointer;
     z-index: 12;
-}
-
-.mmi-navigation:hover {
-    background-color: #ddd;
 }
 
 .mmi-next {
@@ -168,7 +143,6 @@
 
 /* Inside Mode */
 .mmi-inside.mmi-footer {
-    background-color: #222;
     bottom: 0;
     opacity: 0.8;
     position: absolute;
@@ -179,24 +153,8 @@
     float: left;
 }
 
-.mmi-inside .mmi-pagination a {
-    color: #ddd;
-}
-
-.mmi-inside .mmi-pagination a:hover, 
-.mmi-inside .mmi-pagination a.mmi-selected  {
-    color: #222;
-}
-
- .mmi-inside .mmi-pagination .mmi-circle {
-    background-color: #ddd;
+.mmi-inside .mmi-pagination .mmi-circle {
     margin: 0.5em 0.6em 0.5em 0.5em;
-}
-
- .mmi-inside .mmi-pagination a:hover.mmi-circle, 
- .mmi-inside .mmi-pagination a.mmi-selected.mmi-circle  {
-    background-color: #222;
-    border: 2px solid #ddd;
 }
 
 .mmi-inside.mmi-navigation {
@@ -214,4 +172,77 @@
 .mmi-inside.mmi-icon-next, 
 .mmi-inside.mmi-icon-previous {
     margin-top: -2.6em;
+}
+
+
+ /*** Color settings ***/
+
+/* Base */
+.mmi-caption,
+.mmi-pagination .mmi-circle,
+.mmi-inside.mmi-navigation:hover,
+.mmi-inside.mmi-footer,
+.mmi-inside .mmi-pagination a,
+.mmi-inside .mmi-pagination a:hover.mmi-circle, 
+.mmi-inside .mmi-pagination a.mmi-selected.mmi-circle
+{
+    background-color: #222;
+}
+
+.mmi-slideshow,
+.mmi-caption p,
+.mmi-pagination .mmi-circle,
+.mmi-inside.mmi-navigation,
+.mmi-inside.mmi-footer,
+.mmi-inside .mmi-pagination a,
+.mmi-inside .mmi-pagination a:hover.mmi-circle, 
+.mmi-inside .mmi-pagination a.mmi-selected.mmi-circle,
+.mmi-inside .mmi-pagination .mmi-circle
+{
+    color: #ddd;
+}
+
+.mmi-pagination a:hover, 
+.mmi-pagination a.mmi-selected,
+.mmi-pagination a:hover.mmi-circle, 
+.mmi-pagination a.mmi-selected.mmi-circle 
+{
+    border: 2px solid #111;
+}
+
+
+.mmi-pagination .mmi-thumbnail
+{
+    box-shadow: 1px 1px 4px #111;
+}
+
+/* Contrast */
+.mmi-navigation,
+.mmi-pagination a,
+.mmi-inside .mmi-pagination a:hover, 
+.mmi-inside .mmi-pagination a.mmi-selected
+{
+    color: #222;
+}
+
+.mmi-navigation:hover,
+.mmi-pagination a:hover, 
+.mmi-pagination a.mmi-selected,
+.mmi-inside .mmi-pagination a:hover, 
+.mmi-inside .mmi-pagination a.mmi-selected,
+.mmi-inside .mmi-pagination .mmi-circle
+{
+    background-color: #ddd;
+}
+
+.mmi-pagination .mmi-thumbnail,
+.mmi-inside .mmi-pagination a:hover.mmi-circle, 
+.mmi-inside .mmi-pagination a.mmi-selected.mmi-circle
+{
+    border: 2px solid #fff;
+}
+
+.mmi-inside .mmi-pagination .mmi-thumbnail
+{
+    box-shadow: 1px 1px 4px #ddd;
 }
