@@ -62,6 +62,8 @@
 .mmi-pagination .mmi-thumbnail {
     margin: 8px;
     padding: 0;
+    border: none;
+    box-sizing: border-box;
 }
 
 /* captions */
@@ -213,7 +215,7 @@
 
 .mmi-pagination .mmi-thumbnail
 {
-    box-shadow: 1px 1px 4px #111;
+    box-shadow: 2px 2px 5px #111;
 }
 
 /* Contrast */
@@ -235,7 +237,7 @@
     background-color: #ddd;
 }
 
-.mmi-pagination .mmi-thumbnail,
+/**.mmi-pagination .mmi-thumbnail, **/
 .mmi-inside .mmi-pagination a:hover.mmi-circle, 
 .mmi-inside .mmi-pagination a.mmi-selected.mmi-circle
 {
@@ -244,5 +246,5 @@
 
 .mmi-inside .mmi-pagination .mmi-thumbnail
 {
-    box-shadow: 1px 1px 4px #ddd;
+    box-shadow: 2px 2px 5px #ddd;
 }
