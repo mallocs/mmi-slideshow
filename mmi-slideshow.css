@@ -174,6 +174,7 @@
 .mmi-inside.mmi-icon-next, 
 .mmi-inside.mmi-icon-previous {
     margin-top: -2.6em;
+    background-color: rgba(120, 120, 120, 0.4);
 }
 
 
@@ -182,11 +183,10 @@
 /* Base */
 .mmi-caption,
 .mmi-pagination .mmi-circle,
-.mmi-inside.mmi-navigation:hover,
-.mmi-inside.mmi-footer,
-.mmi-inside .mmi-pagination a,
-.mmi-inside .mmi-pagination a:hover.mmi-circle, 
-.mmi-inside .mmi-pagination a.mmi-selected.mmi-circle
+.mmi-dark.mmi-footer,
+.mmi-dark .mmi-pagination a,
+.mmi-dark .mmi-pagination a:hover.mmi-circle, 
+.mmi-dark .mmi-pagination a.mmi-selected.mmi-circle
 {
     background-color: #222;
 }
@@ -194,12 +194,12 @@
 .mmi-slideshow,
 .mmi-caption p,
 .mmi-pagination .mmi-circle,
-.mmi-inside.mmi-navigation,
-.mmi-inside.mmi-footer,
-.mmi-inside .mmi-pagination a,
-.mmi-inside .mmi-pagination a:hover.mmi-circle, 
-.mmi-inside .mmi-pagination a.mmi-selected.mmi-circle,
-.mmi-inside .mmi-pagination .mmi-circle
+.mmi-dark.mmi-navigation,
+.mmi-dark.mmi-footer,
+.mmi-dark .mmi-pagination a,
+.mmi-dark .mmi-pagination a:hover.mmi-circle, 
+.mmi-dark .mmi-pagination a.mmi-selected.mmi-circle,
+.mmi-dark .mmi-pagination .mmi-circle
 {
     color: #ddd;
 }
@@ -221,8 +221,9 @@
 /* Contrast */
 .mmi-navigation,
 .mmi-pagination a,
-.mmi-inside .mmi-pagination a:hover, 
-.mmi-inside .mmi-pagination a.mmi-selected
+.mmi-dark.mmi-navigation:hover,
+.mmi-dark .mmi-pagination a:hover, 
+.mmi-dark .mmi-pagination a.mmi-selected
 {
     color: #222;
 }
@@ -230,21 +231,22 @@
 .mmi-navigation:hover,
 .mmi-pagination a:hover, 
 .mmi-pagination a.mmi-selected,
-.mmi-inside .mmi-pagination a:hover, 
-.mmi-inside .mmi-pagination a.mmi-selected,
-.mmi-inside .mmi-pagination .mmi-circle
+.mmi-dark.mmi-navigation:hover,
+.mmi-dark .mmi-pagination a:hover, 
+.mmi-dark .mmi-pagination a.mmi-selected,
+.mmi-dark .mmi-pagination .mmi-circle
 {
     background-color: #ddd;
 }
 
 /**.mmi-pagination .mmi-thumbnail, **/
-.mmi-inside .mmi-pagination a:hover.mmi-circle, 
-.mmi-inside .mmi-pagination a.mmi-selected.mmi-circle
+.mmi-dark .mmi-pagination a:hover.mmi-circle, 
+.mmi-dark .mmi-pagination a.mmi-selected.mmi-circle
 {
     border: 2px solid #fff;
 }
 
-.mmi-inside .mmi-pagination .mmi-thumbnail
+.mmi-dark .mmi-pagination .mmi-thumbnail
 {
     box-shadow: 2px 2px 5px #ddd;
 }

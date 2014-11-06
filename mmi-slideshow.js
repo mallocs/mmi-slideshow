@@ -24,6 +24,7 @@ $.widget("mmi.slideshow", {
     captionCN: "mmi-caption",
     selectedCN: "mmi-selected",
     disabledCN: "mmi-disabled",
+    darkCN: "mmi-dark",
     insideCN: "mmi-inside",                    //This is added when elements that should be layered on top of the carousel instead of around it.
     responsiveCN: "mmi-responsive",      //This is added when elements should behave responsively.
 
@@ -45,6 +46,7 @@ $.widget("mmi.slideshow", {
         captions: true,                               // Show captions.
         autoHideNavigation: false,             // Show/Hide Navigation on mouseIn/Out events
         autoHideFooter: false,                   // Show/Hide Footer on mouseIn/Out events
+        dark: false,                                    // Use dark color scheme.
         insideMode: false,                          // Extra elements (Nav, pagination, etc) appear inside the carousel.
 
         pagination: true,                           // Show pagination.
@@ -59,10 +61,6 @@ $.widget("mmi.slideshow", {
         this.slides = this.carousel.children(this.options.slideSel);
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
         this.count = this.slides.length;
-
-(function(){
-  var x = 1;
-})();
 
         this._createWrapper();
         this._createNavigation();
@@ -104,6 +102,9 @@ $.widget("mmi.slideshow", {
         }
         if (this.options.insideMode) {
             this.$footer.addClass(this.insideCN);
+            this.$footer.addClass(this.darkCN);
+        } else if (this.options.dark) {
+            this.$footer.addClass(this.darkCN);
         }
         this.element.append(this.$footer);
     },
@@ -146,6 +147,10 @@ $.widget("mmi.slideshow", {
         if (this.options.insideMode) {
             this.$next.addClass(this.insideCN);
             this.$previous.addClass(this.insideCN);
+        } 
+        if (this.options.dark || this.options.insideMode) {
+            this.$next.addClass(this.darkCN);
+            this.$previous.addClass(this.darkCN);
         }
         this.wrapper.append(this.$next, this.$previous);
     },
