@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
     position: relative;
-    font: 1em Arial, sans-serif;
+    font: 100% Arial, sans-serif;
 }
 
 /*carousel*/
@@ -31,7 +31,11 @@
 
 /* footer (pagination and captions) */
 .mmi-footer {
-    z-index: 11
+    z-index: 11;
+}
+
+.mmi-footer ul {
+    margin-left: 0.7em;
 }
 
 /* pagination */
@@ -46,7 +50,7 @@
 .mmi-pagination a {
     border: 2px solid transparent;
     width: 2em;
-    padding: 0.3em 0 0.2em 0;
+    padding: 0.3rem 0 0.2rem 0;
     display: block; 
     text-decoration: none;
 }
@@ -69,7 +73,7 @@
 /* captions */
 .mmi-caption p {
     margin: 0;
-    padding: 0.4em 0 0.4em 0.7em;
+    padding: 0.4em 0 0.4rem 0.7em;
     text-align: left;
     font: 0.9em Arial, sans-serif;
 }
@@ -183,7 +187,7 @@
 /* Base */
 .mmi-caption,
 .mmi-pagination .mmi-circle,
-.mmi-dark.mmi-footer,
+.mmi-inside.mmi-footer,
 .mmi-dark .mmi-pagination a,
 .mmi-dark .mmi-pagination a:hover.mmi-circle, 
 .mmi-dark .mmi-pagination a.mmi-selected.mmi-circle
