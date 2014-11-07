@@ -5,6 +5,7 @@
 [Responsive Slideshow](http://mallocs.github.io/mmi-slideshow/demos/responsive.html)   
 [Multiple Slideshows](http://mallocs.github.io/mmi-slideshow/demos/multiple-slideshows.html)   
 [Inside Mode Slideshows](http://mallocs.github.io/mmi-slideshow/demos/inside-layout.html)   
+[Dark Background Slideshow](http://mallocs.github.io/mmi-slideshow/demos/dark.html)   
 
 ##Goals
   * ~~Configurable lazy loading of images.~~ Done
