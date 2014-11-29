@@ -1,0 +1,14 @@
+{
+  "name": "mmi-slideshow",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "jquery-ui": "~1.11.2"
+  },
+  "devDependencies": {
+    "qunit": "~1.12.0",
+    "jquery": "~1.11.1",
+    "jquery-ui": "~1.11.2"
+  }
+}

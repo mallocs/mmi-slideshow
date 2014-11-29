@@ -9,7 +9,7 @@
 ;(function( $ ) {
 
 $.widget("mmi.slideshow", {
-    version: "0.0",
+    version: "0.0.0",
 
     /*In JS CSS Class Names*/
     navigationCN: "mmi-navigation",
@@ -109,10 +109,10 @@ $.widget("mmi.slideshow", {
         this.element.append(this.$footer);
     },
 
-    _slideshowMouseInEvent: function(event) {
+    _slideshowMouseInEvent: function() {
     },
 
-    _slideshowMouseOutEvent: function(event) {
+    _slideshowMouseOutEvent: function() {
     },
 
     _createNavigation: function() {
@@ -163,21 +163,21 @@ $.widget("mmi.slideshow", {
     _createPagination: function() {
         this.$pagination = $("<ul>", {class: this.paginationCN});
 
-        for (var i=0, len = this.count; i < len; i++) {
+        for (var i=0, len=this.count, pageLink; i<len; i++) {
             if (this.options.pagination === "numbers") {
-                var pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
+                pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
                 var spriteWidth = (this.options.spriteWidth) ? parseInt(this.options.spriteWidth, 10) : 40;
                 var spriteHeight = (this.options.spriteHeight) ? parseInt(this.options.spriteHeight, 10) : 40;
 
-                var pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationThumbnailCN);
+                pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationThumbnailCN);
                 pageLink.css({
                     width: spriteWidth + "px",
                     height: spriteHeight + "px",
                     background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-spriteHeight * i) + 'px transparent'
                 });
             } else {
-                var pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationCircleCN);
+                pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationCircleCN);
             }
 
             var pageItem = $('<li></li>');
@@ -210,7 +210,7 @@ $.widget("mmi.slideshow", {
         page.find("a").addClass(this.selectedCN);       
     },
 
-    next: function(event) {
+    next: function() {
         var slideNumber = this.currentSlideNumber + 1;
         if(slideNumber >= this.count) {
             if(this.options.loop) {
@@ -287,17 +287,18 @@ $.widget("mmi.slideshow", {
         //Scroll transition
         } else if (transition === "scroll") {
             //If it's already animated, speed up the transition. 
+            var scroll;
             if (this.carouselWrapper.is(":animated")) {
                 this.carouselWrapper.stop();
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed/2 || transitionSpeed/2;
-                var scroll = this.currentTarget;
+                scroll = this.currentTarget;
                 animating = true;
             } else {
                 this.carousel.find("li").css({float: "left", display: "list-item"});
                 //It's complicated to set the proper width since it changes when new images are loaded.
                 //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
-                var scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
+                scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
                 scrollLeft: scroll
@@ -357,7 +358,7 @@ $.widget("mmi.slideshow", {
         this._super( key, value );
 
         if (key === "controls") {
-            value ? this.showNavigation() : this.hideNavigation();
+            value ? this.showNavigation():this.hideNavigation();
         }
         if (key === "captions") {
             value ? this.showCaption() : this.hideCaption();
