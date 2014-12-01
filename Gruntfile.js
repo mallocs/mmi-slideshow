@@ -18,8 +18,8 @@ module.exports = function (grunt) {
     // Task configuration.
     bower_concat: {
       all: {
-        dest: 'build/_bower.js',
-        cssDest: 'build/_bower.css',
+        dest: 'build/vendor.js',
+        cssDest: 'build/vendor.css',
         exclude: ['qunit'],
         mainFiles: {
           'jquery-ui': ['ui/jquery.ui.core.js', 'ui/jquery.ui.widget.js',

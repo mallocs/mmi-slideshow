@@ -19,14 +19,23 @@
       notStrictEqual(actual, expected, [message])
       throws(block, [expected], [message])
   */
-/*
-  module('jQuery#awesome', {
+
+  module('Setup', {
     // This will run before each test in this module.
     setup: function() {
-      this.elems = $('#qunit-fixture').children();
+      this.ssObj = $(".mmi-slideshow").slideshow().data("mmi-slideshow");
     }
   });
+    
+  test('count slides', function() {
+    expect(4);
+    ok(this.ssObj.count > 0, "Check that slides are found");
+    ok(this.ssObj.$pagination.length > 0, "Check that pagination is created");
+    ok(this.ssObj.$next.length > 0, "Check that next link is created");
+    ok(this.ssObj.$previous.length > 0, "Check that previous link is created");
+  });
 
+/*
   test('is chainable', function() {
     expect(1);
     // Not a bad test to run on collection methods.

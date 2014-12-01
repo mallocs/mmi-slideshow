@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2014-11-28
+/*! mmi-slideshow - v0.0.0 - 2014-11-30
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 /*!
@@ -372,6 +372,10 @@ $.widget("mmi.slideshow", {
     _destroy: function() {
     }
 
+});
+
+}( jQuery ));
+
 /**
 Functions needed
 
@@ -401,9 +405,3 @@ stop
 next
 
 **/
-
-
-
-});
-
-}( jQuery ));

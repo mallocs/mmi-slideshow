@@ -369,6 +369,10 @@ $.widget("mmi.slideshow", {
     _destroy: function() {
     }
 
+});
+
+}( jQuery ));
+
 /**
 Functions needed
 
@@ -398,9 +402,3 @@ stop
 next
 
 **/
-
-
-
-});
-
-}( jQuery ));
