@@ -1,14 +1,6 @@
-/*! mmi-slideshow - v0.0.0 - 2014-11-30
+/*! mmi-slideshow - v0.0.0 - 2014-12-01
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
-/*!
- * mallocs slider v0.0
- *
- * Copyright 2014 Marcus Ulrich 
- * Released under the MIT license.
- *
- */
-
 ;(function( $ ) {
 
 $.widget("mmi.slideshow", {

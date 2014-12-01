@@ -1,11 +1,3 @@
-/*!
- * mallocs slider v0.0
- *
- * Copyright 2014 Marcus Ulrich 
- * Released under the MIT license.
- *
- */
-
 ;(function( $ ) {
 
 $.widget("mmi.slideshow", {

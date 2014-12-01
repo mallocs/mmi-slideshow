@@ -16,17 +16,6 @@ module.exports = function (grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed MIT */\n',
     // Task configuration.
-    bower_concat: {
-      all: {
-        dest: 'build/_bower.js',
-        cssDest: 'build/_bower.css',
-        exclude: ['qunit'],
-        mainFiles: {
-          'jquery-ui': ['ui/jquery.ui.core.js', 'ui/jquery.ui.widget.js',
-'ui/jquery.ui.effect.js']
-        }
-      }
-    },
     clean: {
       dist: ['dist'],
       build: ['build']
@@ -34,15 +23,22 @@ module.exports = function (grunt) {
     concat: {
       options: {
         banner: '<%= banner %>',
-        stripBanners: true
+      },
+      jquery: {
+        src: ['bower_components/jquery/dist/jquery.js',
+              'bower_components/jquery-ui/ui/jquery.ui.core.js',
+              'bower_components/jquery-ui/ui/jquery.ui.widget.js',
+              'bower_components/jquery-ui/ui/jquery.ui.effect.js',
+              'bower_components/jquery-ui/ui/jquery.ui.effect-*.js'],
+        dest: 'build/jquery.custom.js'
       },
       dist: {
         src: ['src/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
       },
       distWithJQuery: {
-        src: ['build/_bower.js', 'src/<%= pkg.name %>.js'],
-        dest: 'build/_<%= pkg.name %>.bundle.js'
+        src: ['build/jquery.custom.js', 'src/<%= pkg.name %>.js'],
+        dest: 'dist/<%= pkg.name %>.bundle.js'
       },
     },
     cssmin: {
@@ -56,7 +52,7 @@ module.exports = function (grunt) {
     },
     uglify: {
       options: {
-        banner: '<%= banner %>'
+        banner: '<%= banner %>',
       },
       dist: {
         src: '<%= concat.dist.dest %>',
@@ -122,12 +118,12 @@ module.exports = function (grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean:dist',
-'cssmin', 'bower_concat', 'concat', 'uglify', 'clean:build']);
+  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean:dist', 'cssmin', 'concat', 'uglify', 'clean:build']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
+  grunt.registerTask('build', ['jshint', 'cssmin', 'concat', 'uglify']); //, 'clean:build']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
 };
