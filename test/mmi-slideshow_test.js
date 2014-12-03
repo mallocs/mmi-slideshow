@@ -27,10 +27,11 @@
     }
   });
     
-  test('count slides', function() {
-    expect(4);
+  test('check setup', function() {
+    expect(5);
     ok(this.ssObj.count > 0, "Check that slides are found");
     ok(this.ssObj.$pagination.length > 0, "Check that pagination is created");
+    ok(this.ssObj.$pagination.children().length === this.ssObj.count, "Check that there's a link for every slide");  
     ok(this.ssObj.$next.length > 0, "Check that next link is created");
     ok(this.ssObj.$previous.length > 0, "Check that previous link is created");
   });

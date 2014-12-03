@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-01
+/*! mmi-slideshow - v0.0.0 - 2014-12-02
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.0 - 2014-12-01
+/*! mmi-slideshow - v0.0.0 - 2014-12-02
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 /*!

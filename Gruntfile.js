@@ -16,6 +16,20 @@ module.exports = function (grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed MIT */\n',
     // Task configuration.
+/****
+    usemin: {
+      html: 'demos/dark.html',
+      options: {
+        banner: '<%= banner %>'
+      }
+    },
+    useminPrepare: {
+      html: 'test/visual/dark.html',
+      options: {
+        dest: 'demos'
+      }
+    },
+****/
     clean: {
       dist: ['dist'],
       build: ['build']
@@ -118,7 +132,8 @@ module.exports = function (grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean:dist', 'cssmin', 'concat', 'uglify', 'clean:build']);
+  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean:dist',
+'cssmin', 'concat', 'uglify', 'clean:build']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
