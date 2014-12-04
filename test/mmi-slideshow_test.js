@@ -44,9 +44,20 @@
   });
   
     test(".setCurrentSlide", function() {
- //       var slideCount = this.ssObj.count;
+        expect(3);
+
         this.ssObj.setCurrentSlide(0);
         strictEqual(this.ssObj.currentSlideNumber, 0);
+        
+        var slideCount = this.ssObj.count;
+        var randomSlide = Math.floor(Math.random() * slideCount);
+        this.ssObj.setCurrentSlide(randomSlide);
+        strictEqual(this.ssObj.currentSlideNumber, randomSlide);
+        
+        var lastSlide = this.ssObj.count - 1;
+        this.ssObj.setCurrentSlide(this.ssObj.count - 1);
+        strictEqual(this.ssObj.currentSlideNumber, lastSlide);
+
     });
   /*
   test(".next()", function() {
