@@ -40,10 +40,10 @@ module.exports = function (grunt) {
       },
       jquery: {
         src: ['bower_components/jquery/dist/jquery.js',
-              'bower_components/jquery-ui/ui/jquery.ui.core.js',
-              'bower_components/jquery-ui/ui/jquery.ui.widget.js',
-              'bower_components/jquery-ui/ui/jquery.ui.effect.js',
-              'bower_components/jquery-ui/ui/jquery.ui.effect-*.js'],
+              'bower_components/jquery-ui/ui/core.js',
+              'bower_components/jquery-ui/ui/widget.js',
+              'bower_components/jquery-ui/ui/effect.js',
+              'bower_components/jquery-ui/ui/effect-*.js'],
         dest: 'build/jquery.custom.js'
       },
       dist: {

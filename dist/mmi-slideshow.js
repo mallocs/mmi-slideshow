@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-05
+/*! mmi-slideshow - v0.0.0 - 2014-12-06
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 ;(function( $ ) {
@@ -153,12 +153,14 @@ $.widget("mmi.slideshow", {
     _createCaption: function() {
         this.$caption = $("<div>", {class: this.captionCN});
         this.$footer.append(this.$caption);
+    //should change this so the caption is attached to the image.    
+   //     this.carouselWrapper.append(this.$caption);
     },
 
     _createPagination: function() {
         this.$pagination = $("<ul>", {class: this.paginationCN});
 
-        for (var i=0, len=this.count, pageLink; i<len; i++) {
+        for (var i=0, length=this.count, pageLink; i<length; i++) {
             if (this.options.pagination === "numbers") {
                 pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
@@ -319,16 +321,14 @@ $.widget("mmi.slideshow", {
             this.currentSlide.css({position: "absolute", top: 0, left: 0});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
-        //Done with transitions. 
-
-        if (animating) {
-            return;
-        }
 
         this.setCaption(slideTarget.data("caption"));
         this.setPage(slideNumber);
         this.currentSlide = slide;
         this.currentSlideNumber = slideNumber;
+        if (animating) {
+            return;
+        }
         this._bufferSlides( parseInt(this.options.buffer, 10) );
     },
 
