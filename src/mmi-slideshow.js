@@ -150,12 +150,14 @@ $.widget("mmi.slideshow", {
     _createCaption: function() {
         this.$caption = $("<div>", {class: this.captionCN});
         this.$footer.append(this.$caption);
+    //should change this so the caption is attached to the image.    
+   //     this.carouselWrapper.append(this.$caption);
     },
 
     _createPagination: function() {
         this.$pagination = $("<ul>", {class: this.paginationCN});
 
-        for (var i=0, len=this.count, pageLink; i<len; i++) {
+        for (var i=0, length=this.count, pageLink; i<length; i++) {
             if (this.options.pagination === "numbers") {
                 pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
@@ -316,16 +318,14 @@ $.widget("mmi.slideshow", {
             this.currentSlide.css({position: "absolute", top: 0, left: 0});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
-        //Done with transitions. 
-
-        if (animating) {
-            return;
-        }
 
         this.setCaption(slideTarget.data("caption"));
         this.setPage(slideNumber);
         this.currentSlide = slide;
         this.currentSlideNumber = slideNumber;
+        if (animating) {
+            return;
+        }
         this._bufferSlides( parseInt(this.options.buffer, 10) );
     },
 
@@ -350,7 +350,7 @@ $.widget("mmi.slideshow", {
         this._super( key, value );
 
         if (key === "controls") {
-            value ? this.showNavigation():this.hideNavigation();
+            value ? this.showNavigation() : this.hideNavigation();
         }
         if (key === "captions") {
             value ? this.showCaption() : this.hideCaption();

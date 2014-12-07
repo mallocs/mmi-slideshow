@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-02
+/*! mmi-slideshow - v0.0.0 - 2014-12-05
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 ;(function( $ ) {
@@ -353,7 +353,7 @@ $.widget("mmi.slideshow", {
         this._super( key, value );
 
         if (key === "controls") {
-            value ? this.showNavigation():this.hideNavigation();
+            value ? this.showNavigation() : this.hideNavigation();
         }
         if (key === "captions") {
             value ? this.showCaption() : this.hideCaption();
