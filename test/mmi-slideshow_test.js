@@ -35,59 +35,85 @@
         ok(this.ssObj.$next.length > 0, "Check that next link is created");
         ok(this.ssObj.$previous.length > 0, "Check that previous link is created");
     });
-
-    module('Public API', {
+    
+    module('Options', {
         // This will run before each test in this module.
         setup: function () {
-            this.ssObj = $(".mmi-slideshow").slideshow().data("mmi-slideshow");
+            //nothing for now.
         }
     });
 
-    //the current slide should be set before the animation is done, so this shouldn't be async.
-    test(".setCurrentSlide()", function() {
-        expect(3);
-        var ssObj = this.ssObj;
-        
-        var slideCount = ssObj.count;
-        var randomSlide = Math.floor(Math.random() * slideCount);
-        var lastSlide = this.ssObj.count - 1;
+    test('check startSlide option', function () {
+        var startSlideNumber = 2;
+        var ssObj = $(".mmi-slideshow").slideshow({startSlide: startSlideNumber}).data("mmi-slideshow");
+        strictEqual(ssObj.currentSlideNumber, startSlideNumber, "Check start slide number");
+    });
+    
+    test('check navigation option: true', function () {
+        expect(2);
+//        var nextHTML = '<span class="mmi-navigation mmi-next mmi-icon-next mmi-dark" data-slides="next"></span>';
+//        var previousHTML = '<span class="mmi-navigation mmi-previous mmi-icon-previous mmi-dark" data-slides="previous"></span>';
+        var ssObj = $(".mmi-slideshow").slideshow({navigation: true}).data("mmi-slideshow");
+        strictEqual(ssObj.$next.length, 1, "Check next element HTML is created");
+        strictEqual(ssObj.$previous.length, 1, "Check previous element HTML is created");
+    });    
 
-        ssObj.setCurrentSlide(0);
-        strictEqual(ssObj.currentSlideNumber, 0, "Check going to the first slide ");
-        
+    test('check navigation option: false', function () {
+        expect(2);
+        var ssObj = $(".mmi-slideshow").slideshow({navigation: false}).data("mmi-slideshow");
+        strictEqual(ssObj.$next, undefined, "Check next element HTML is not created");
+        strictEqual(ssObj.$previous, undefined, "Check previous element HTML is not created");
+    });  
+    
+    module('Public API', {
+        // This will run before each test in this module.
+//        setup: function () {
+//            var ssObj = $(".mmi-slideshow").slideshow().data("mmi-slideshow");
+//        }
+    });
+
+    //the current slide should be set before the animation is done, so this shouldn't be async.
+    test(".setCurrentSlide()", function () {
+        expect(3);
+        var ssObj = $(".mmi-slideshow").slideshow({startSlide: 1}).data("mmi-slideshow");
+
+        var lastSlide = ssObj.count;
+        var randomSlide = Math.floor(Math.random() * lastSlide);
+
+        strictEqual(ssObj.currentSlideNumber, 1, "Check going to the first slide");
+
         ssObj.setCurrentSlide(randomSlide);
         strictEqual(ssObj.currentSlideNumber, randomSlide, "Check going to a random slide number " + randomSlide);
 
-        ssObj.setCurrentSlide(lastSlide);        
+        ssObj.setCurrentSlide(lastSlide);
         strictEqual(ssObj.currentSlideNumber, lastSlide, "Check going to the last slide");
     });
-    
 
-/*****  
-    test(".setCurrentSlide(lastSlide)", function(assert) {
-        var ssObj = this.ssObj;
-        var done = assert.async();
-        var lastSlide = this.ssObj.count - 1;
-
-        ssObj.setCurrentSlide(lastSlide);
-        setTimeout(function() {
-          strictEqual(ssObj.currentSlideNumber, lastSlide, "Check going to the last slide");
-          done();
-        }, ssObj.transitionSpeed+30);
+    test(".next() wrap:true", function () {
+        expect(2);
+        var ssObj = $(".mmi-slideshow").slideshow({wrap: true, startSlide: 1}).data("mmi-slideshow");
+        var slideCount = ssObj.count;
         
-    });
-    
-    test(".next()", function () {
-        var initialSlideNumber = this.ssObj.currentSlideNumber;
-        this.ssObj.next();
-        strictEqual(this.ssObj.currentSlideNumber, initalSlideNumber + 1);
+        var initialSlideNumber = ssObj.currentSlideNumber;
+        ssObj.next();
+        strictEqual(ssObj.currentSlideNumber, initialSlideNumber + 1, "Check that next() works");
+        
+        ssObj.setCurrentSlide(slideCount);
+        ssObj.next();
+        strictEqual(ssObj.currentSlideNumber, 1, "Check that next() wraps to the first slide");
     });
 
-  
-  test(".previous()", function() {
-    var initialSlideNumber = this.ssObj.currentSlideNumber;
-    this.ssObj.previous();
-    strictEqual(this.ssObj.currentSlideNumber, initalSlideNumber - 1);
-  });
-*******/
+    test(".previous() wrap:true", function () {
+        expect(2);
+        var ssObj = $(".mmi-slideshow").slideshow({wrap: true, startSlide: 2}).data("mmi-slideshow");
+        var slideCount = ssObj.count;
+        
+        var initialSlideNumber = ssObj.currentSlideNumber;
+        ssObj.previous();
+        strictEqual(ssObj.currentSlideNumber, initialSlideNumber - 1, "Check that previous() works");
+        
+        ssObj.previous();
+        strictEqual(ssObj.currentSlideNumber, slideCount, "Check that previous() wraps to the last slide");
+    });
+
 }(jQuery));

@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-06
+/*! mmi-slideshow - v0.0.0 - 2014-12-07
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 ;(function( $ ) {
@@ -21,33 +21,34 @@ $.widget("mmi.slideshow", {
     disabledCN: "mmi-disabled",
     darkCN: "mmi-dark",
     insideCN: "mmi-inside",                    //This is added when elements that should be layered on top of the carousel instead of around it.
-    responsiveCN: "mmi-responsive",      //This is added when elements should behave responsively.
+    responsiveCN: "mmi-responsive",             // This is added when elements should behave responsively.
 
+    /**NOTE: Slides are numbered starting from 1. **/
     options: {
-                                                                  /*In Markup Selectors*/
-        carouselSel: ".mmi-slideshow ul",   // Selector for carousel element.
+                                                /**In Markup Selectors**/
+        carouselSel: ".mmi-slideshow ul",       // Selector for carousel element.
         slideSel: ".mmi-slideshow li",          // Selector for carousel slides.
 
-        startSlide: 0,                                   // Starting slide.
-        buffer: 2,                                        // Number of extra slides to buffer.
+        startSlide: 1,                          // Starting slide. Count from 1.
+        buffer: 2,                              // Number of extra slides to buffer.
 
-        transition: "scroll",                         // What type of transition to use. 
-        transitionSpeed: 600,                    // Speed to transition between slides.
-        transitionOptions: {},                     // Extra options for transition. See jQuery UI effect options.
-        navigation: true,                            // Show the navigation arrows.
-        previousText: false,                       // Text for previous slide button.
-        nextText: false,                             // Text for next slide button.
-        loop: true,                                     // Slides run in a loop.
-        captions: true,                               // Show captions.
-        autoHideNavigation: false,             // Show/Hide Navigation on mouseIn/Out events
-        autoHideFooter: false,                   // Show/Hide Footer on mouseIn/Out events
-        dark: false,                                    // Use dark color scheme.
-        insideMode: false,                          // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        transition: "scroll",                   // What type of transition to use. 
+        transitionSpeed: 600,                   // Speed to transition between slides.
+        transitionOptions: {},                  // Extra options for transition. See jQuery UI effect options.
+        navigation: true,                       // Show the navigation arrows.
+        previousText: false,                    // Text for previous slide button.
+        nextText: false,                        // Text for next slide button.
+        loop: true,                             // Slides run in a loop.
+        captions: true,                         // Show captions.
+        autoHideNavigation: false,              // Show/Hide Navigation on mouseIn/Out events
+        autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
+        dark: false,                            // Use dark color scheme.
+        insideMode: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
 
-        pagination: true,                           // Show pagination.
-        sprite: false,                                  // Sprite URL.
-        spriteWidth: false,                         // Sprite width. An int measuring pixels.
-        spriteHeight: false                        // Sprite height. An int measuring pixels.
+        pagination: true,                       // Show pagination.
+        sprite: false,                          // Sprite URL.
+        spriteWidth: false,                     // Sprite width. An int measuring pixels.
+        spriteHeight: false                     // Sprite height. An int measuring pixels.
     },
 
     _create: function() { 
@@ -58,7 +59,9 @@ $.widget("mmi.slideshow", {
         this.count = this.slides.length;
 
         this._createWrapper();
-        this._createNavigation();
+        if (this.options.navigation) {
+            this._createNavigation();
+        }
         this._createFooter();
         if (this.options.captions) {
             this._createCaption();
@@ -160,9 +163,9 @@ $.widget("mmi.slideshow", {
     _createPagination: function() {
         this.$pagination = $("<ul>", {class: this.paginationCN});
 
-        for (var i=0, length=this.count, pageLink; i<length; i++) {
+        for (var i=1, length=this.count, pageLink; i<=length; i++) {
             if (this.options.pagination === "numbers") {
-                pageLink = $('<a href="#" data-slide="' + i + '">' + (i+1) + '</a>');
+                pageLink = $('<a href="#" data-slide="' + i + '">' + i + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
                 var spriteWidth = (this.options.spriteWidth) ? parseInt(this.options.spriteWidth, 10) : 40;
                 var spriteHeight = (this.options.spriteHeight) ? parseInt(this.options.spriteHeight, 10) : 40;
@@ -171,7 +174,7 @@ $.widget("mmi.slideshow", {
                 pageLink.css({
                     width: spriteWidth + "px",
                     height: spriteHeight + "px",
-                    background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-spriteHeight * i) + 'px transparent'
+                    background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-spriteHeight * (i-1)) + 'px transparent'
                 });
             } else {
                 pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationCircleCN);
@@ -189,7 +192,7 @@ $.widget("mmi.slideshow", {
     },
 
     _getSlideFromNumber: function(slideNumber) {
-        return $(this.slides[ parseInt(slideNumber, 10) ]);
+        return $(this.slides[ parseInt(slideNumber, 10) - 1 ]);
     },
 
     _page: function(event) {
@@ -202,33 +205,33 @@ $.widget("mmi.slideshow", {
         if (typeof this.pages === "undefined") {
             return;
         }
-        var page = $(this.pages[ parseInt(slideNumber, 10) ]);
+        var page = $(this.pages[ parseInt(slideNumber, 10) - 1 ]);
         this.pages.not(page).find("a").removeClass(this.selectedCN);
         page.find("a").addClass(this.selectedCN);       
     },
 
     next: function() {
-        var slideNumber = this.currentSlideNumber + 1;
-        if(slideNumber >= this.count) {
+        var nextSlideNumber = this.currentSlideNumber + 1;
+        if(nextSlideNumber > this.count) {
             if(this.options.loop) {
-                slideNumber = 0;
+                nextSlideNumber = 1;
             } else {
                 return;
             }
         }
-        this.setCurrentSlide(slideNumber);
+        this.setCurrentSlide(nextSlideNumber);
     },
 
     previous: function() {
-        var slideNumber = this.currentSlideNumber - 1;
-        if (slideNumber < 0) {
+        var previousSlideNumber = this.currentSlideNumber - 1;
+        if (previousSlideNumber < 1) {
             if(this.options.loop) {
-                slideNumber = this.count - 1;
+                previousSlideNumber = this.count;
             } else {
                 return;
             }
         }
-        this.setCurrentSlide(slideNumber);
+        this.setCurrentSlide(previousSlideNumber);
     },
 
     showNavigation: function(duration) {
@@ -260,7 +263,7 @@ $.widget("mmi.slideshow", {
 
     _bufferSlides: function(count) {
         var widget = this;
-        this.slides.slice( this.currentSlideNumber + 1, this.currentSlideNumber + count + 1).each(function(index, el) {
+        this.slides.slice( this.currentSlideNumber, this.currentSlideNumber + count).each(function(index, el) {
             widget._loadSlide.call(widget, $(el));
         });
     },
