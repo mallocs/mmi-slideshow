@@ -31,7 +31,7 @@
         expect(5);
         ok(this.ssObj.count > 0, "Check that slides are found");
         ok(this.ssObj.$pagination.length > 0, "Check that pagination is created");
-        ok(this.ssObj.$pagination.children().length === this.ssObj.count, "Check that there's a link for every slide");
+        strictEqual(this.ssObj.$pagination.children().length, this.ssObj.count, "Check that there's a link for every slide");
         ok(this.ssObj.$next.length > 0, "Check that next link is created");
         ok(this.ssObj.$previous.length > 0, "Check that previous link is created");
     });
@@ -66,10 +66,6 @@
     });  
     
     module('Public API', {
-        // This will run before each test in this module.
-//        setup: function () {
-//            var ssObj = $(".mmi-slideshow").slideshow().data("mmi-slideshow");
-//        }
     });
 
     //the current slide should be set before the animation is done, so this shouldn't be async.
@@ -89,9 +85,9 @@
         strictEqual(ssObj.currentSlideNumber, lastSlide, "Check going to the last slide");
     });
 
-    test(".next() wrap:true", function () {
+    test(".next() loop:true", function () {
         expect(2);
-        var ssObj = $(".mmi-slideshow").slideshow({wrap: true, startSlide: 1}).data("mmi-slideshow");
+        var ssObj = $(".mmi-slideshow").slideshow({loop: true, startSlide: 1}).data("mmi-slideshow");
         var slideCount = ssObj.count;
         
         var initialSlideNumber = ssObj.currentSlideNumber;
@@ -100,12 +96,21 @@
         
         ssObj.setCurrentSlide(slideCount);
         ssObj.next();
-        strictEqual(ssObj.currentSlideNumber, 1, "Check that next() wraps to the first slide");
+        strictEqual(ssObj.currentSlideNumber, 1, "Check that next() loops to the first slide");
+    });
+    
+    test(".next() loop:false", function () {
+        var ssObj = $(".mmi-slideshow").slideshow({loop: false}).data("mmi-slideshow");
+        var slideCount = ssObj.count;
+        
+        ssObj.setCurrentSlide(slideCount);
+        ssObj.next();
+        strictEqual(ssObj.currentSlideNumber, slideCount, "Check that next() does not loop");
     });
 
-    test(".previous() wrap:true", function () {
+    test(".previous() loop:true", function () {
         expect(2);
-        var ssObj = $(".mmi-slideshow").slideshow({wrap: true, startSlide: 2}).data("mmi-slideshow");
+        var ssObj = $(".mmi-slideshow").slideshow({loop: true, startSlide: 2}).data("mmi-slideshow");
         var slideCount = ssObj.count;
         
         var initialSlideNumber = ssObj.currentSlideNumber;
@@ -113,7 +118,14 @@
         strictEqual(ssObj.currentSlideNumber, initialSlideNumber - 1, "Check that previous() works");
         
         ssObj.previous();
-        strictEqual(ssObj.currentSlideNumber, slideCount, "Check that previous() wraps to the last slide");
+        strictEqual(ssObj.currentSlideNumber, slideCount, "Check that previous() loops to the last slide");
+    });
+    
+    test(".previous() loop:false", function () {
+        var ssObj = $(".mmi-slideshow").slideshow({loop: false, startSlide: 1}).data("mmi-slideshow");
+        
+        ssObj.previous();
+        strictEqual(ssObj.currentSlideNumber, 1, "Check that previous() does not loop to the last slide");
     });
 
 }(jQuery));
