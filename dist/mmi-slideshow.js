@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-08
+/*! mmi-slideshow - v0.0.0 - 2014-12-09
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 ;(function( $ ) {
@@ -261,13 +261,6 @@ $.widget("mmi.slideshow", {
         this.$caption.hide();
     },
 
-    _bufferSlides: function(count) {
-        var widget = this;
-        this.slides.slice( this.currentSlideNumber, this.currentSlideNumber + count).each(function(index, el) {
-            widget._loadSlide.call(widget, $(el));
-        });
-    },
-
     setCurrentSlide: function(slideNumber) {
 
         var slide = this._getSlideFromNumber(slideNumber);
@@ -334,21 +327,28 @@ $.widget("mmi.slideshow", {
         }
         this._bufferSlides( parseInt(this.options.buffer, 10) );
     },
-
-    _loadSlide: function(slide) {
-        if (typeof slide.slideIsLoaded !== "undefined" || slide.slideIsLoaded === true) {
-            return;
-        }
-        var slideTarget = $(slide.children()[0]);
-        if (slideTarget.is("img")) {
-            this._loadImage(slideTarget);
-        }
-        slide.slideIsLoaded = true;
+    
+    _bufferSlides: function(count) {
+        var widget = this;
+        this.slides.slice( this.currentSlideNumber, this.currentSlideNumber + count).each(function(index, el) {
+            widget._loadSlide.call(widget, $(el));
+        });
     },
 
-    _loadImage: function(image) {
-        if (image.attr("src") === undefined && image.data("src") !== undefined) {
-            image.attr("src", image.data("src"));
+    _loadSlide: function($slide) {
+        if ($slide.attr("slideIsLoaded") !== undefined || $slide.attr("slideIsLoaded") === true) {
+            return;
+        }
+        var $slideTarget = $($slide.children()[0]);
+        if ($slideTarget.is("img")) {
+            this._loadImage($slideTarget);
+        }
+        $slide.attr("slideIsLoaded", true);
+    },
+
+    _loadImage: function($image) {
+        if ($image.attr("src") === undefined && $image.data("src") !== undefined) {
+            $image.attr("src", $image.data("src"));
         }
     },
 

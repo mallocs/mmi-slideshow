@@ -48,6 +48,16 @@
         var ssObj = $(".mmi-slideshow").slideshow({startSlide: startSlideNumber}).data("mmi-slideshow");
         strictEqual(ssObj.currentSlideNumber, startSlideNumber, "Check start slide number");
     });
+     
+    test('check buffer option', function () {
+        var bufferCount = 3;
+        var ssObj = $(".mmi-slideshow").slideshow({buffer: bufferCount, startSlide: 1}).data("mmi-slideshow");
+        for (var i=1; i <= bufferCount; i++) {
+            var slideImg = $(ssObj.slides[i]).children()[0];
+            ok($(ssObj.slides[i]).attr("slideIsLoaded"), "Checking slide " + i + " is buffered");
+            ok($(slideImg).attr("src"), "Checking slide " + i + " has the image src set");
+        }
+    });
     
     test('check navigation option: true', function () {
         expect(2);
@@ -74,7 +84,7 @@
         var ssObj = $(".mmi-slideshow").slideshow({startSlide: 1}).data("mmi-slideshow");
 
         var lastSlide = ssObj.count;
-        var randomSlide = Math.floor(Math.random() * lastSlide);
+        var randomSlide = Math.floor(Math.random() * lastSlide + 1);
 
         strictEqual(ssObj.currentSlideNumber, 1, "Check going to the first slide");
 
