@@ -246,7 +246,7 @@ $.widget("mmi.slideshow", {
     setCaption: function(text) {
         text = text ? text : "&nbsp;";
         if (typeof this.$caption !== "undefined" ) {
-            this.$caption.html('<p>' + text + '</p>');
+            this.$caption.html("<p>" + text + "</p>");
         }
     },
 

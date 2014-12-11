@@ -59,13 +59,27 @@
         }
     });
     
-    test('check navigation option: true', function () {
+    test('check pagination option: true', function () {
         expect(2);
-//        var nextHTML = '<span class="mmi-navigation mmi-next mmi-icon-next mmi-dark" data-slides="next"></span>';
-//        var previousHTML = '<span class="mmi-navigation mmi-previous mmi-icon-previous mmi-dark" data-slides="previous"></span>';
+        var ssObj = $(".mmi-slideshow").slideshow({pagination: true}).data("mmi-slideshow");
+        var slideCount = ssObj.count;
+        strictEqual(ssObj.$pagination.length, 1, "Check that pagination is created");
+        strictEqual(ssObj.$pagination.children().length, slideCount, "Check that pagination has an item for each slide");
+    });
+    
+    test('check pagination option: false', function () {
+        var ssObj = $(".mmi-slideshow").slideshow({pagination: false}).data("mmi-slideshow");
+        strictEqual(ssObj.$pagination, undefined, "Check pagination is not created");
+    });
+    
+    test('check navigation option: true', function () {
+        expect(4);
         var ssObj = $(".mmi-slideshow").slideshow({navigation: true}).data("mmi-slideshow");
         strictEqual(ssObj.$next.length, 1, "Check next element HTML is created");
         strictEqual(ssObj.$previous.length, 1, "Check previous element HTML is created");
+        
+        ok(ssObj.$next.is("span.mmi-navigation.mmi-next.mmi-icon-next"), "Check that next is a span that has the correct classes");
+        ok(ssObj.$previous.is("span.mmi-navigation.mmi-previous.mmi-icon-previous"), "Check that previous is a span that has the correct classes");
     });    
 
     test('check navigation option: false', function () {
@@ -137,5 +151,13 @@
         ssObj.previous();
         strictEqual(ssObj.currentSlideNumber, 1, "Check that previous() does not loop to the last slide");
     });
+
+    test(".setCaption()", function () {
+        var ssObj = $(".mmi-slideshow").slideshow({captions: true}).data("mmi-slideshow");
+        var caption = "Some caption";
+        ssObj.setCaption(caption);
+        strictEqual(ssObj.$caption.html(), "<p>" + caption + "</p>", "Check that the caption is created");
+    });
+
 
 }(jQuery));
