@@ -232,19 +232,19 @@ $.widget("mmi.slideshow", {
     },
 
     showNavigation: function(duration) {
-        duration = duration || 200;
+        duration = arguments.length === 1 ? parseInt(duration, 10) : 200;  
         this.$next.show("fade", duration);
         this.$previous.show("fade", duration);
     },
 
     hideNavigation: function(duration) {
-        duration = duration || 200;
+        duration = arguments.length === 1 ? parseInt(duration, 10) : 200;  
         this.$next.hide("fade", duration);
         this.$previous.hide("fade", duration);
     },
 
     setCaption: function(text) {
-        text = text ? text : "&nbsp;";
+        text = arguments.length === 1 ? text : "&nbsp;";
         if (typeof this.$caption !== "undefined" ) {
             this.$caption.html("<p>" + text + "</p>");
         }
@@ -259,7 +259,6 @@ $.widget("mmi.slideshow", {
     },
 
     setCurrentSlide: function(slideNumber) {
-
         var slide = this._getSlideFromNumber(slideNumber);
         this._loadSlide(slide);
         var slideTarget = $(slide.children()[0]);
@@ -302,8 +301,7 @@ $.widget("mmi.slideshow", {
             if ( slide.find("img")[0] && slide.find("img")[0].complete === false && !this.carouselWrapper.is(":animated") ) {
                 this.carousel.width( this.currentSlide.width() );
                 this.carousel.height( this.currentSlide.height() );
-                var widget;
-                // The load function is apparently inconsistent, but seems the best option.
+                var widget = this;
                 slide.find("img").load(function() {
                     widget.carousel.removeAttr("width");
                     widget.carousel.removeAttr("height");
@@ -352,12 +350,33 @@ $.widget("mmi.slideshow", {
     _setOption: function( key, value ) {
         this._super( key, value );
 
-        if (key === "controls") {
+        if (key === "navigation") {
             value ? this.showNavigation() : this.hideNavigation();
         }
         if (key === "captions") {
             value ? this.showCaption() : this.hideCaption();
         }
+        
+/***Options
+
+        buffer: 2,                              // Number of extra slides to buffer.
+
+        transition: "scroll",                   // What type of transition to use. 
+        transitionSpeed: 600,                   // Speed to transition between slides.
+        transitionOptions: {},                  // Extra options for transition. See jQuery UI effect options.
+        previousText: false,                    // Text for previous slide button.
+        nextText: false,                        // Text for next slide button.
+        loop: true,                             // Slides run in a loop.
+        autoHideNavigation: false,              // Show/Hide Navigation on mouseIn/Out events
+        autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
+        dark: false,                            // Use dark color scheme.
+        insideMode: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
+
+        pagination: true,                       // Show pagination.
+        sprite: false,                          // Sprite URL.
+        spriteWidth: false,                     // Sprite width. An int measuring pixels.
+        spriteHeight: false                     // Sprite height. An int measuring pixels.
+**/
 
     },
 

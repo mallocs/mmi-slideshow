@@ -89,6 +89,20 @@
         strictEqual(ssObj.$previous, undefined, "Check previous element HTML is not created");
     });  
     
+    test('check nextText option', function () {
+        expect(1);
+        var nextText = "Text";
+        var ssObj = $(".mmi-slideshow").slideshow({nextText: nextText}).data("mmi-slideshow");                                    
+        strictEqual(ssObj.$next.html(), nextText, "Check next element text is set correctly");
+    });
+    
+    test('check previousText option', function () {
+        expect(1);
+        var previousText = "Text";
+        var ssObj = $(".mmi-slideshow").slideshow({previousText: previousText}).data("mmi-slideshow");                                    
+        strictEqual(ssObj.$previous.html(), previousText, "Check previous element text is set correctly");
+    });
+    
     module('Public API', {
     });
 
