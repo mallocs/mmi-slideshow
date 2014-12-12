@@ -16,20 +16,6 @@ module.exports = function (grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed MIT */\n',
     // Task configuration.
-/****
-    usemin: {
-      html: 'demos/dark.html',
-      options: {
-        banner: '<%= banner %>'
-      }
-    },
-    useminPrepare: {
-      html: 'test/visual/dark.html',
-      options: {
-        dest: 'demos'
-      }
-    },
-****/
     clean: {
       dist: ['dist'],
       build: ['build']
@@ -46,14 +32,18 @@ module.exports = function (grunt) {
               'bower_components/jquery-ui/ui/effect-*.js'],
         dest: 'build/jquery.custom.js'
       },
-      dist: {
+      jsDist: {
         src: ['src/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
       },
-      distWithJQuery: {
+      jsDistWithJQuery: {
         src: ['build/jquery.custom.js', 'src/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.bundle.js'
       },
+      cssDist: {
+        src: ['src/<%= pkg.name %>.css'],
+        dest: 'dist/<%= pkg.name %>.css'
+      }
     },
     cssmin: {
       options: {
@@ -69,11 +59,11 @@ module.exports = function (grunt) {
         banner: '<%= banner %>',
       },
       dist: {
-        src: '<%= concat.dist.dest %>',
+        src: '<%= concat.jsDist.dest %>',
         dest: 'dist/<%= pkg.name %>.min.js'
       },
       distWithJQuery: {
-        src: '<%= concat.distWithJQuery.dest %>',
+        src: '<%= concat.jsDistWithJQuery.dest %>',
         dest: 'dist/<%= pkg.name %>.bundle.min.js'
       }
     },

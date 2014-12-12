@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-10
+/*! mmi-slideshow - v0.0.0 - 2014-12-11
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.0 - 2014-12-10
+/*! mmi-slideshow - v0.0.0 - 2014-12-11
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 /*!
@@ -14021,7 +14021,7 @@ $.widget("mmi.slideshow", {
         this.setCurrentSlide(page);
     },
 
-    setPage: function(slideNumber) {
+    _setPage: function(slideNumber) {
         if (typeof this.pages === "undefined") {
             return;
         }
@@ -14067,7 +14067,7 @@ $.widget("mmi.slideshow", {
     },
 
     setCaption: function(text) {
-        text = arguments.length === 1 ? text : "&nbsp;";
+        text = typeof text !== "undefined" ? text : "&nbsp;";
         if (typeof this.$caption !== "undefined" ) {
             this.$caption.html("<p>" + text + "</p>");
         }
@@ -14137,7 +14137,7 @@ $.widget("mmi.slideshow", {
         }
 
         this.setCaption(slideTarget.data("caption"));
-        this.setPage(slideNumber);
+        this._setPage(slideNumber);
         this.currentSlide = slide;
         this.currentSlideNumber = slideNumber;
         if (animating) {
@@ -14179,13 +14179,15 @@ $.widget("mmi.slideshow", {
         if (key === "captions") {
             value ? this.showCaption() : this.hideCaption();
         }
-        
+        if (key === "buffer") {
+            this._bufferSlides( parseInt(value, 10) );
+        }
+        this._super( key, value );
+    },
+    
 /***Options
 
-        buffer: 2,                              // Number of extra slides to buffer.
-
         transition: "scroll",                   // What type of transition to use. 
-        transitionSpeed: 600,                   // Speed to transition between slides.
         transitionOptions: {},                  // Extra options for transition. See jQuery UI effect options.
         previousText: false,                    // Text for previous slide button.
         nextText: false,                        // Text for next slide button.
@@ -14200,8 +14202,6 @@ $.widget("mmi.slideshow", {
         spriteWidth: false,                     // Sprite width. An int measuring pixels.
         spriteHeight: false                     // Sprite height. An int measuring pixels.
 **/
-
-    },
 
     _destroy: function() {
     }
