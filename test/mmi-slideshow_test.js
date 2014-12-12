@@ -171,6 +171,8 @@
         var caption = "Some caption";
         ssObj.setCaption(caption);
         strictEqual(ssObj.$caption.html(), "<p>" + caption + "</p>", "Check that the caption is created");
+        ssObj.setCaption();
+        strictEqual(ssObj.$caption.html(), "<p>&nbsp;</p>", "If no caption is present, should set html to: <p>&nbsp;</p>");
     });
 
 
