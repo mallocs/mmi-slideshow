@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.0 - 2014-12-11
+/*! mmi-slideshow - v0.0.0 - 2014-12-13
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.0 - 2014-12-11
+/*! mmi-slideshow - v0.0.0 - 2014-12-13
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2014 Marcus Ulrich; Licensed MIT */
 /*!
@@ -14171,8 +14171,7 @@ $.widget("mmi.slideshow", {
     },
 
     _setOption: function( key, value ) {
-        this._super( key, value );
-
+        
         if (key === "navigation") {
             value ? this.showNavigation() : this.hideNavigation();
         }
@@ -14182,15 +14181,30 @@ $.widget("mmi.slideshow", {
         if (key === "buffer") {
             this._bufferSlides( parseInt(value, 10) );
         }
+        if (key === "nextText") {
+            if (value) {
+                this.$next.removeClass(this.nextIconCN);
+                this.$next.html(value);
+            } else {
+                this.$next.html("");
+                this.$next.addClass(this.nextIconCN);
+            }        
+        }
+        if (key === "previousText") {
+            if (value) {
+                this.$previous.removeClass(this.previousIconCN);
+                this.$previous.html(value);
+            } else {
+                this.$previous.html("");
+                this.$previous.addClass(this.previousIconCN);
+            }        
+        }
         this._super( key, value );
     },
     
 /***Options
 
         transition: "scroll",                   // What type of transition to use. 
-        transitionOptions: {},                  // Extra options for transition. See jQuery UI effect options.
-        previousText: false,                    // Text for previous slide button.
-        nextText: false,                        // Text for next slide button.
         loop: true,                             // Slides run in a loop.
         autoHideNavigation: false,              // Show/Hide Navigation on mouseIn/Out events
         autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
