@@ -322,7 +322,7 @@ $.widget("mmi.slideshow", {
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
         
-        this.wrapper.height( slide.height() );
+ //       this.wrapper.height( slide.height() );
         this.setCaption(slideTarget.data("caption"));
         this._setPage(slideNumber);
         this.currentSlide = slide;
