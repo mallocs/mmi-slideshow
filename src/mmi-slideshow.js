@@ -275,8 +275,8 @@ $.widget("mmi.slideshow", {
 
         //Scroll transition
         } else if (transition === "scroll") {
-            //If it's already animated, speed up the transition. 
             var scroll;
+            //If it's already animated, speed up the transition. 
             if (this.carouselWrapper.is(":animated")) {
                 this.carouselWrapper.stop();
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed/2 || transitionSpeed/2;
@@ -287,6 +287,7 @@ $.widget("mmi.slideshow", {
                 //It's complicated to set the proper width since it changes when new images are loaded.
                 //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
+                this.wrapper.width( $(slide.find("img")[0]).width() );
                 scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
@@ -307,12 +308,18 @@ $.widget("mmi.slideshow", {
                     widget.carousel.removeAttr("height");
                 });
             }
-            this.carousel.find("li").not(this.currentSlide).css({display: "none", position: "static"});
+            this.carousel.find("li")
+                         .not(this.currentSlide)
+                         .css({display: "none", position: "static", bottom: "", left: "", width: ""});
             slide.show("fade", transitionOptions, transitionSpeed);
-            this.currentSlide.css({position: "absolute", top: 0, left: 0});
+            //need to set the currentSlide to absolute positioning so it doesn't get in the way
+            //of the new slide.
+            var slideWidth = this.currentSlide.width();
+            this.currentSlide.css({position: "absolute", bottom: 0, left: 0, width: slideWidth + "px"});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
-
+        
+        this.wrapper.height( slide.height() );
         this.setCaption(slideTarget.data("caption"));
         this._setPage(slideNumber);
         this.currentSlide = slide;
