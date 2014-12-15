@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Scroll MMI Slideshow Demo</title>
+    <link rel="stylesheet" href="/src/mmi-slideshow.css" />
+
+    <style>
+      #container {
+        margin: auto;
+        max-width: 500px;
+      }
+
+      #introduction {
+        text-align: center;
+      }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="container">
+
+        <section id="introduction">
+            <h1>Slideshow Demo</h1>
+
+            <div id="demo">
+
+                <div class="mmi-slideshow" data-transition="scroll">
+                    <ul class="carousel">
+                        <li class="slide">
+                            <img src="http://placehold.it/500x300/e87000/000" data-caption="First picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/600x300/003808/000" data-caption="Second picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/600x600/006ce8/000" data-caption="Third picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/600x100/006c18/000" data-caption="Fourth picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/500x100/00a808/000">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/100x600/00c8c8/000">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/300x500/a064e8/000">
+                        </li>
+                    </ul>
+                </div>
+                
+                
+                <div class="mmi-slideshow" data-transition="fade">
+                    <ul class="carousel">
+                        <li class="slide">
+                            <img src="http://placehold.it/500x300/e87000/000" data-caption="First picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/600x300/003808/000" data-caption="Second picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/100x100/006ce8/000" data-caption="Third picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/600x100/006c18/000" data-caption="Fourth picture" data-credit="mmi">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/200x600/00a808/000">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/600x600/00c8c8/000">
+                        </li>
+                        <li class="slide">
+                            <img data-src="http://placehold.it/300x500/a064e8/000">
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/jquery-ui/jquery-ui.js"></script>
+
+    <script src="/src/mmi-slideshow.js"></script>             
+    <script type="text/javascript">
+        $(function() {
+            ss = $(".mmi-slideshow").slideshow().data("mmi-slideshow");
+        });
+    </script>
+
+</body>
+
+</html>
