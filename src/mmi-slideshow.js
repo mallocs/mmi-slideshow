@@ -259,6 +259,7 @@ $.widget("mmi.slideshow", {
     },
 
     setCurrentSlide: function(slideNumber) {
+        var widget = this;
         var slide = this._getSlideFromNumber(slideNumber);
         this._loadSlide(slide);
         var slideTarget = $(slide.children()[0]);
@@ -287,7 +288,6 @@ $.widget("mmi.slideshow", {
                 //It's complicated to set the proper width since it changes when new images are loaded.
                 //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
-                this.wrapper.width( $(slide.find("img")[0]).width() );
                 scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
@@ -302,10 +302,8 @@ $.widget("mmi.slideshow", {
             if ( slide.find("img")[0] && slide.find("img")[0].complete === false && !this.carouselWrapper.is(":animated") ) {
                 this.carousel.width( this.currentSlide.width() );
                 this.carousel.height( this.currentSlide.height() );
-                var widget = this;
                 slide.find("img").load(function() {
-                    widget.carousel.removeAttr("width");
-                    widget.carousel.removeAttr("height");
+                    widget.carousel.css({"width": "", height: ""});
                 });
             }
             this.carousel.find("li")
@@ -319,7 +317,12 @@ $.widget("mmi.slideshow", {
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
         
- //       this.wrapper.height( slide.height() );
+        function setDimensions() {
+            widget.wrapper.width( $(slide.find("img")[0]).width() );
+            widget.wrapper.height( slide.height() );            
+        }  
+        slide.find("img").length && slide.find("img")[0].complete  === true ? setDimensions() : slide.find("img").load(setDimensions);
+        
         this.setCaption(slideTarget.data("caption"));
         this._setPage(slideNumber);
         this.currentSlide = slide;
