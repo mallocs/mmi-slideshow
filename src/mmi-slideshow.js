@@ -4,21 +4,23 @@ $.widget("mmi.slideshow", {
     version: "0.0.0",
 
     /*In JS CSS Class Names*/
-    navigationCN: "mmi-navigation",
-    footerCN: "mmi-footer",
-    previousCN: "mmi-previous",
-    previousIconCN: "mmi-icon-previous",
-    nextCN: "mmi-next",
-    nextIconCN: "mmi-icon-next",
-    paginationCN: "mmi-pagination",
-    paginationCircleCN: "mmi-circle",
-    paginationThumbnailCN: "mmi-thumbnail",
-    captionCN: "mmi-caption",
-    selectedCN: "mmi-selected",
-    disabledCN: "mmi-disabled",
-    darkCN: "mmi-dark",
-    insideCN: "mmi-inside",                    //This is added when elements that should be layered on top of the carousel instead of around it.
-    responsiveCN: "mmi-responsive",             // This is added when elements should behave responsively.
+    CN: {
+        navigation: "mmi-navigation",
+        footer: "mmi-footer",
+        previous: "mmi-previous",
+        previousIcon: "mmi-icon-previous",
+        next: "mmi-next",
+        nextIcon: "mmi-icon-next",
+        pagination: "mmi-pagination",
+        paginationCircle: "mmi-circle",
+        paginationThumbnail: "mmi-thumbnail",
+        caption: "mmi-caption",
+        selected: "mmi-selected",
+        disabled: "mmi-disabled",
+        dark: "mmi-dark",
+        inside: "mmi-inside",                    //This is added when elements that should be layered on top of the carousel instead of around it.
+        responsive: "mmi-responsive"             // This is added when elements should behave responsively.
+    },
 
     /**NOTE: Slides are numbered starting from 1. **/
     options: {
@@ -81,7 +83,7 @@ $.widget("mmi.slideshow", {
     },
 
     _createFooter: function() {
-        this.$footer = $('<div>', {class: this.footerCN});
+        this.$footer = $('<div>', {class: this.CN.footer});
         if(this.options.autoHideFooter) {
             var widget = this;
             this.$footer.css({display: "none"});
@@ -96,10 +98,10 @@ $.widget("mmi.slideshow", {
             );
         }
         if (this.options.insideMode) {
-            this.$footer.addClass(this.insideCN);
-            this.$footer.addClass(this.darkCN);
+            this.$footer.addClass(this.CN.inside);
+            this.$footer.addClass(this.CN.dark);
         } else if (this.options.dark) {
-            this.$footer.addClass(this.darkCN);
+            this.$footer.addClass(this.CN.dark);
         }
         this.element.append(this.$footer);
     },
@@ -112,15 +114,15 @@ $.widget("mmi.slideshow", {
 
     _createNavigation: function() {
         this.$previous = $('<span data-slides="previous"></span>');
-        this.$previous.addClass(this.navigationCN).addClass(this.previousCN);
-        this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass(this.previousIconCN);
+        this.$previous.addClass(this.CN.navigation).addClass(this.CN.previous);
+        this.options.previousText ? this.$previous.html(this.options.previousText) : this.$previous.addClass(this.CN.previousIcon);
         this._on(this.$previous, {
             click: "previous"
         });
 
         this.$next = $('<span data-slides="next"></span>');
-        this.$next.addClass(this.navigationCN).addClass(this.nextCN);
-        this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass(this.nextIconCN);
+        this.$next.addClass(this.CN.navigation).addClass(this.CN.next);
+        this.options.nextText ? this.$next.html(this.options.nextText) : this.$next.addClass(this.CN.nextIcon);
         this._on(this.$next, {
             click: "next"
         });
@@ -140,25 +142,25 @@ $.widget("mmi.slideshow", {
             );
         }
         if (this.options.insideMode) {
-            this.$next.addClass(this.insideCN);
-            this.$previous.addClass(this.insideCN);
+            this.$next.addClass(this.CN.inside);
+            this.$previous.addClass(this.CN.inside);
         } 
         if (this.options.dark || this.options.insideMode) {
-            this.$next.addClass(this.darkCN);
-            this.$previous.addClass(this.darkCN);
+            this.$next.addClass(this.CN.dark);
+            this.$previous.addClass(this.CN.dark);
         }
         this.wrapper.append(this.$next, this.$previous);
     },
 
     _createCaption: function() {
-        this.$caption = $("<div>", {class: this.captionCN});
+        this.$caption = $("<div>", {class: this.CN.caption});
         this.$footer.append(this.$caption);
     //should change this so the caption is attached to the image.    
    //     this.carouselWrapper.append(this.$caption);
     },
 
     _createPagination: function() {
-        this.$pagination = $("<ul>", {class: this.paginationCN});
+        this.$pagination = $("<ul>", {class: this.CN.pagination});
 
         for (var i=1, length=this.count, pageLink; i<=length; i++) {
             if (this.options.pagination === "numbers") {
@@ -167,14 +169,14 @@ $.widget("mmi.slideshow", {
                 var spriteWidth = (this.options.spriteWidth) ? parseInt(this.options.spriteWidth, 10) : 40;
                 var spriteHeight = (this.options.spriteHeight) ? parseInt(this.options.spriteHeight, 10) : 40;
 
-                pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationThumbnailCN);
+                pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.CN.paginationThumbnail);
                 pageLink.css({
                     width: spriteWidth + "px",
                     height: spriteHeight + "px",
                     background: 'url("' + this.options.sprite + '") no-repeat scroll 0 '  + (-spriteHeight * (i-1)) + 'px transparent'
                 });
             } else {
-                pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.paginationCircleCN);
+                pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.CN.paginationCircle);
             }
 
             var pageItem = $('<li></li>');
@@ -203,8 +205,8 @@ $.widget("mmi.slideshow", {
             return;
         }
         var page = $(this.pages[ parseInt(slideNumber, 10) - 1 ]);
-        this.pages.not(page).find("a").removeClass(this.selectedCN);
-        page.find("a").addClass(this.selectedCN);       
+        this.pages.not(page).find("a").removeClass(this.CN.selected);
+        page.find("a").addClass(this.CN.selected);       
     },
 
     next: function() {
@@ -288,6 +290,7 @@ $.widget("mmi.slideshow", {
                 //It's complicated to set the proper width since it changes when new images are loaded.
                 //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
+                this.wrapper.width( $(slide.find("img")[0]).width() );
                 scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
@@ -318,7 +321,6 @@ $.widget("mmi.slideshow", {
         }
         
         function setDimensions() {
-            widget.wrapper.width( $(slide.find("img")[0]).width() );
             widget.wrapper.height( slide.height() );            
         }  
         slide.find("img").length && slide.find("img")[0].complete  === true ? setDimensions() : slide.find("img").load(setDimensions);
@@ -370,20 +372,20 @@ $.widget("mmi.slideshow", {
         }
         if (key === "nextText") {
             if (value) {
-                this.$next.removeClass(this.nextIconCN);
+                this.$next.removeClass(this.CN.nextIcon);
                 this.$next.html(value);
             } else {
                 this.$next.html("");
-                this.$next.addClass(this.nextIconCN);
+                this.$next.addClass(this.CN.nextIcon);
             }        
         }
         if (key === "previousText") {
             if (value) {
-                this.$previous.removeClass(this.previousIconCN);
+                this.$previous.removeClass(this.CN.previousIcon);
                 this.$previous.html(value);
             } else {
                 this.$previous.html("");
-                this.$previous.addClass(this.previousIconCN);
+                this.$previous.addClass(this.CN.previousIcon);
             }        
         }
         this._super( key, value );
