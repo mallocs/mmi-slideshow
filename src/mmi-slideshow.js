@@ -103,7 +103,8 @@ $.widget("mmi.slideshow", {
         } else if (this.options.dark) {
             this.$footer.addClass(this.CN.dark);
         }
-        this.element.append(this.$footer);
+        this.element.append(this.$footer);        
+        
     },
 
     _slideshowMouseInEvent: function() {
@@ -261,16 +262,13 @@ $.widget("mmi.slideshow", {
     },
 
     setCurrentSlide: function(slideNumber) {
-        var widget = this;
         var slide = this._getSlideFromNumber(slideNumber);
         this._loadSlide(slide);
         var slideTarget = $(slide.children()[0]);
         var transitionSpeed = parseInt(this.options.transitionSpeed, 10);
         var transitionOptions = this.options.transitionOptions;
         var transition = this.options.transition + "";
-
-        var animating = false;
-
+        
         //First slide when initializing
         if (typeof this.currentSlide === "undefined") {
             slide.show();
@@ -284,55 +282,69 @@ $.widget("mmi.slideshow", {
                 this.carouselWrapper.stop();
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed/2 || transitionSpeed/2;
                 scroll = this.currentTarget;
-                animating = true;
             } else {
+                
+ //               var slideWidth = this.currentSlide.width();
+ //               this.wrapper.width( slideWidth );
+                
                 this.carousel.find("li").css({float: "left", display: "list-item"});
                 //It's complicated to set the proper width since it changes when new images are loaded.
                 //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
-                this.wrapper.width( $(slide.find("img")[0]).width() );
-                scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
+//                scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
-                scrollLeft: scroll
+                scrollLeft: slide.position().left + this.carouselWrapper.scrollLeft()
             }, transitionSpeed);
 
         //Any other transition. 
         } else {
-            if (slide.is(":animated")) {
-                return;
-            }
-            if ( slide.find("img")[0] && slide.find("img")[0].complete === false && !this.carouselWrapper.is(":animated") ) {
-                this.carousel.width( this.currentSlide.width() );
-                this.carousel.height( this.currentSlide.height() );
-                slide.find("img").load(function() {
-                    widget.carousel.css({"width": "", height: ""});
-                });
-            }
             this.carousel.find("li")
                          .not(this.currentSlide)
                          .css({display: "none", position: "static", bottom: "", left: "", width: ""});
             slide.show("fade", transitionOptions, transitionSpeed);
             //need to set the currentSlide to absolute positioning so it doesn't get in the way
             //of the new slide.
-            var slideWidth = this.currentSlide.width();
-            this.currentSlide.css({position: "absolute", bottom: 0, left: 0, width: slideWidth + "px"});
+            this.currentSlide.css({position: "absolute", bottom: 0, left: 0, width: this.currentSlide.width() + "px"});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
-        
-        function setDimensions() {
-            widget.wrapper.height( slide.height() );            
-        }  
-        slide.find("img").length && slide.find("img")[0].complete  === true ? setDimensions() : slide.find("img").load(setDimensions);
+        this._setDimensions(slide, true, true);
         
         this.setCaption(slideTarget.data("caption"));
         this._setPage(slideNumber);
         this.currentSlide = slide;
         this.currentSlideNumber = slideNumber;
-        if (animating) {
-            return;
-        }
         this._bufferSlides( parseInt(this.options.buffer, 10) );
+    },
+    
+    _setDimensions: function(slide, width, height) {
+        var widget = this;
+        slide = slide || this.currentSlide;
+        if (slide.find("img").length && slide.find("img")[0].complete  !== true) {
+            //what if slide img never loads?
+            slide.find("img").load( function() { widget._setDimensions(slide, height, width); } );
+            return;
+        } 
+
+        width = width === true ? (slide.find("img").width() || slide.width()) : width;
+
+        if (typeof width !== "undefined") {
+            this.wrapper.width(width);
+            this.$footer.width(width);
+//            if (this.options.resizeImageWidth) {
+//                slide.find("img").each(function(index, item) { item.style.width = width; });
+//            }
+        }
+        
+        height = height === true ? slide.height() : height;
+
+        if (arguments.length === 3 && typeof height !== "undefined") {
+            this.carouselWrapper.height(height);  
+//            if (this.options.resizeImageHeight) {
+//                slide.find("img").each(function(index, item) { item.style.height = height; });   
+//            }
+        }
+
     },
     
     _bufferSlides: function(count) {
