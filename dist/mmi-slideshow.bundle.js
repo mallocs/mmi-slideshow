@@ -13868,7 +13868,7 @@ $.widget("mmi.slideshow", {
         autoHideNavigation: false,              // Show/Hide Navigation on mouseIn/Out events
         autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
         dark: false,                            // Use dark color scheme.
-        insideMode: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        inside: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
         responsive: false,                      // Images will automatically be size responsibly to carousel width.
 
         pagination: true,                       // Show pagination.
@@ -13924,7 +13924,7 @@ $.widget("mmi.slideshow", {
                 }
             );
         }
-        if (this.options.insideMode) {
+        if (this.options.inside) {
             this.$footer.addClass(this.CN.inside);
             this.$footer.addClass(this.CN.dark);
         } else if (this.options.dark) {
@@ -13969,11 +13969,11 @@ $.widget("mmi.slideshow", {
                 }
             );
         }
-        if (this.options.insideMode) {
+        if (this.options.inside) {
             this.$next.addClass(this.CN.inside);
             this.$previous.addClass(this.CN.inside);
         } 
-        if (this.options.dark || this.options.insideMode) {
+        if (this.options.dark || this.options.inside) {
             this.$next.addClass(this.CN.dark);
             this.$previous.addClass(this.CN.dark);
         }
@@ -14237,7 +14237,7 @@ $.widget("mmi.slideshow", {
         autoHideNavigation: false,              // Show/Hide Navigation on mouseIn/Out events
         autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
         dark: false,                            // Use dark color scheme.
-        insideMode: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        inside: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
 
         pagination: true,                       // Show pagination.
         sprite: false,                          // Sprite URL.
