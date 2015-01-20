@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2015-01-16
+/*! mmi-slideshow - v0.0.0 - 2015-01-20
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 ;(function( $ ) {
@@ -33,6 +33,9 @@ $.widget("mmi.slideshow", {
 
         startSlide: 1,                          // Starting slide. Count from 1.
         buffer: 2,                              // Number of extra slides to buffer.
+        
+        width: true,                            // Carousel will resize according to the size of the slide or 
+        height: true,                           // a fixed width/height.
 
         transition: "scroll",                   // What type of transition to use. 
         transitionSpeed: 600,                   // Speed to transition between slides.
@@ -46,6 +49,7 @@ $.widget("mmi.slideshow", {
         autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
         dark: false,                            // Use dark color scheme.
         insideMode: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        responsive: false,                      // Images will automatically be size responsibly to carousel width.
 
         pagination: true,                       // Show pagination.
         sprite: false,                          // Sprite URL.
@@ -276,7 +280,7 @@ $.widget("mmi.slideshow", {
         if (typeof this.currentSlide === "undefined") {
             slide.show();
             this.carousel.find("li").not(slide).css({display: "none"});
-
+            
         //Scroll transition
         } else if (transition === "scroll") {
             var scroll;
@@ -286,15 +290,10 @@ $.widget("mmi.slideshow", {
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed/2 || transitionSpeed/2;
                 scroll = this.currentTarget;
             } else {
-                
- //               var slideWidth = this.currentSlide.width();
- //               this.wrapper.width( slideWidth );
-                
-                this.carousel.find("li").css({float: "left", display: "list-item"});
+                this.carousel.find("li").css({float: "left", position: "static", display: "list-item"});
                 //It's complicated to set the proper width since it changes when new images are loaded.
                 //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                 this.carousel.css({minWidth: "10000em"});
-//                scroll = this.currentTarget = slide.position().left + this.carouselWrapper.scrollLeft();
             }
             this.carouselWrapper.animate({
                 scrollLeft: slide.position().left + this.carouselWrapper.scrollLeft()
@@ -304,14 +303,14 @@ $.widget("mmi.slideshow", {
         } else {
             this.carousel.find("li")
                          .not(this.currentSlide)
-                         .css({display: "none", position: "static", bottom: "", left: "", width: ""});
+                         .css({display: "none", position: "static", bottom: "", left: "", width: ""});            
             slide.show("fade", transitionOptions, transitionSpeed);
             //need to set the currentSlide to absolute positioning so it doesn't get in the way
             //of the new slide.
             this.currentSlide.css({position: "absolute", bottom: 0, left: 0, width: this.currentSlide.width() + "px"});
             this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
         }
-        this._setDimensions(slide, true, true);
+        this._setDimensions(slide, this.options.width, this.options.height);
         
         this.setCaption(slideTarget.data("caption"));
         this._setPage(slideNumber);
@@ -325,27 +324,32 @@ $.widget("mmi.slideshow", {
         slide = slide || this.currentSlide;
         if (slide.find("img").length && slide.find("img")[0].complete  !== true) {
             //what if slide img never loads?
-            slide.find("img").load( function() { widget._setDimensions(slide, height, width); } );
+            slide.find("img").load( function() { widget._setDimensions(slide, width, height); } );
             return;
         } 
-
-        width = width === true ? (slide.find("img").width() || slide.width()) : width;
-
+        
+        width = width === true ? slide.width() : width;
         if (typeof width !== "undefined") {
             this.wrapper.width(width);
             this.$footer.width(width);
-//            if (this.options.resizeImageWidth) {
-//                slide.find("img").each(function(index, item) { item.style.width = width; });
-//            }
         }
-        
+      
         height = height === true ? slide.height() : height;
-
         if (arguments.length === 3 && typeof height !== "undefined") {
             this.carouselWrapper.height(height);  
-//            if (this.options.resizeImageHeight) {
-//                slide.find("img").each(function(index, item) { item.style.height = height; });   
-//            }
+        }
+        
+        if (this.options.responsive) {
+            var carouselAspectRatio = this.wrapper.width()/this.carouselWrapper.height();
+            var el = slide.find("img")[0];  
+            var elAspectRatio = $(el).width()/$(el).height();
+            if (elAspectRatio >= carouselAspectRatio) {
+                $(el).css({width: "100%"});    
+                this.carouselWrapper.height($(el).height());
+            } else {
+                $(el).css({position: "static", height: this.carouselWrapper.height() + "px", width: "auto"});                                   
+            }
+                          
         }
 
     },

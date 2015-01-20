@@ -321,7 +321,7 @@ $.widget("mmi.slideshow", {
         slide = slide || this.currentSlide;
         if (slide.find("img").length && slide.find("img")[0].complete  !== true) {
             //what if slide img never loads?
-            slide.find("img").load( function() { widget._setDimensions(slide, height, width); } );
+            slide.find("img").load( function() { widget._setDimensions(slide, width, height); } );
             return;
         } 
         
