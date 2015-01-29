@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.0 - 2015-01-20
+/*! mmi-slideshow - v0.0.0 - 2015-01-29
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.0 - 2015-01-20
+/*! mmi-slideshow - v0.0.0 - 2015-01-29
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 /*!
@@ -13868,7 +13868,8 @@ $.widget("mmi.slideshow", {
         autoHideNavigation: false,              // Show/Hide Navigation on mouseIn/Out events
         autoHideFooter: false,                  // Show/Hide Footer on mouseIn/Out events
         dark: false,                            // Use dark color scheme.
-        inside: false,                      // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        inside: false,                          // Extra elements (Nav, pagination, etc) appear inside the carousel.
+        insideNavigation: false,                // Just the previous and next arrows appear inside the carousel.
         responsive: false,                      // Images will automatically be size responsibly to carousel width.
 
         pagination: true,                       // Show pagination.
@@ -13969,11 +13970,11 @@ $.widget("mmi.slideshow", {
                 }
             );
         }
-        if (this.options.inside) {
+        if (this.options.inside || this.options.insideNavigation) {
             this.$next.addClass(this.CN.inside);
             this.$previous.addClass(this.CN.inside);
         } 
-        if (this.options.dark || this.options.inside) {
+        if (this.options.dark || this.options.inside || this.options.insideNavigation) {
             this.$next.addClass(this.CN.dark);
             this.$previous.addClass(this.CN.dark);
         }
