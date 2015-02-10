@@ -29,9 +29,9 @@
 
     test('check setup', function () {
         expect(5);
-        ok(this.ssObj.count > 0, "Check that slides are found");
+        ok(this.ssObj.slides.length > 0, "Check that slides are found");
         ok(this.ssObj.$pagination.length > 0, "Check that pagination is created");
-        strictEqual(this.ssObj.$pagination.children().length, this.ssObj.count, "Check that there's a link for every slide");
+        strictEqual(this.ssObj.$pagination.children().length, this.ssObj.slides.length, "Check that there's a link for every slide");
         ok(this.ssObj.$next.length > 0, "Check that next link is created");
         ok(this.ssObj.$previous.length > 0, "Check that previous link is created");
     });
@@ -62,7 +62,7 @@
     test('check pagination option: true', function () {
         expect(2);
         var ssObj = $(".mmi-slideshow").slideshow({pagination: true}).data("mmi-slideshow");
-        var slideCount = ssObj.count;
+        var slideCount = ssObj.slides.length;
         strictEqual(ssObj.$pagination.length, 1, "Check that pagination is created");
         strictEqual(ssObj.$pagination.children().length, slideCount, "Check that pagination has an item for each slide");
     });
@@ -111,7 +111,7 @@
         expect(3);
         var ssObj = $(".mmi-slideshow").slideshow({startSlide: 1}).data("mmi-slideshow");
 
-        var lastSlide = ssObj.count;
+        var lastSlide = ssObj.slides.length;
         var randomSlide = Math.floor(Math.random() * lastSlide + 1);
 
         strictEqual(ssObj.currentSlideNumber, 1, "Check going to the first slide");
@@ -126,7 +126,7 @@
     test(".next() loop:true", function () {
         expect(2);
         var ssObj = $(".mmi-slideshow").slideshow({loop: true, startSlide: 1}).data("mmi-slideshow");
-        var slideCount = ssObj.count;
+        var slideCount = ssObj.slides.length;
         
         var initialSlideNumber = ssObj.currentSlideNumber;
         ssObj.next();
@@ -139,7 +139,7 @@
     
     test(".next() loop:false", function () {
         var ssObj = $(".mmi-slideshow").slideshow({loop: false}).data("mmi-slideshow");
-        var slideCount = ssObj.count;
+        var slideCount = ssObj.slides.length;
         
         ssObj.setCurrentSlide(slideCount);
         ssObj.next();
@@ -149,7 +149,7 @@
     test(".previous() loop:true", function () {
         expect(2);
         var ssObj = $(".mmi-slideshow").slideshow({loop: true, startSlide: 2}).data("mmi-slideshow");
-        var slideCount = ssObj.count;
+        var slideCount = ssObj.slides.length;
         
         var initialSlideNumber = ssObj.currentSlideNumber;
         ssObj.previous();
