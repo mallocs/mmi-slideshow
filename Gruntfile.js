@@ -20,6 +20,17 @@ module.exports = function (grunt) {
       dist: ['dist'],
       build: ['build']
     },
+    copy: {
+      main: {
+        files: [
+          // includes files within path
+          { 
+             expand: true, 
+             src: ['fonts/*'], 
+             dest: 'dist/fonts/'}
+        ],
+      },
+    },
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -124,12 +135,12 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean:dist',
-'cssmin', 'concat', 'uglify', 'clean:build']);
+'cssmin', 'concat', 'uglify', 'copy', 'clean:build']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
-  grunt.registerTask('build', ['jshint', 'cssmin', 'concat', 'uglify']); //, 'clean:build']);
+  grunt.registerTask('build', ['jshint', 'cssmin', 'concat', 'uglify', 'copy']); //, 'clean:build']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
 };

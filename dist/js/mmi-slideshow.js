@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.0 - 2015-01-29
+/*! mmi-slideshow - v0.0.1 - 2015-02-10
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 ;(function( $ ) {
@@ -63,7 +63,6 @@ $.widget("mmi.slideshow", {
         this.carousel = this.element.children(this.options.carouselSel);
         this.slides = this.carousel.children(this.options.slideSel);
         this.currentSlideNumber = parseInt(this.options.startSlide, 10);
-        this.count = this.slides.length;
 
         this._createWrapper();
         if (this.options.navigation) {
@@ -171,7 +170,7 @@ $.widget("mmi.slideshow", {
     _createPagination: function() {
         this.$pagination = $("<ul>", {class: this.CN.pagination});
 
-        for (var i=1, length=this.count, pageLink; i<=length; i++) {
+        for (var i=1, length=this.slides.length, pageLink; i<=length; i++) {
             if (this.options.pagination === "numbers") {
                 pageLink = $('<a href="#" data-slide="' + i + '">' + i + '</a>');
             } else if (this.options.pagination === "sprite" && this.options.sprite) {
@@ -196,7 +195,7 @@ $.widget("mmi.slideshow", {
             "click a": "_page"
         });
         this.$footer.append(this.$pagination);
-        this.pages = this.$pagination.children(this.count);
+        this.pages = this.$pagination.children(this.slides.length);
     },
 
     _getSlideFromNumber: function(slideNumber) {
@@ -220,7 +219,7 @@ $.widget("mmi.slideshow", {
 
     next: function() {
         var nextSlideNumber = this.currentSlideNumber + 1;
-        if(nextSlideNumber > this.count) {
+        if(nextSlideNumber > this.slides.length) {
             if(this.options.loop) {
                 nextSlideNumber = 1;
             } else {
@@ -234,7 +233,7 @@ $.widget("mmi.slideshow", {
         var previousSlideNumber = this.currentSlideNumber - 1;
         if (previousSlideNumber < 1) {
             if(this.options.loop) {
-                previousSlideNumber = this.count;
+                previousSlideNumber = this.slides.length;
             } else {
                 return;
             }
@@ -348,7 +347,7 @@ $.widget("mmi.slideshow", {
                 $(el).css({width: "100%"});    
                 this.carouselWrapper.height($(el).height());
             } else {
-                $(el).css({position: "static", height: this.carouselWrapper.height() + "px", width: "auto"});                                   
+                $(el).css({maxHeight: this.carouselWrapper.height() + "px", width: "auto"});                                   
             }
                           
         }
