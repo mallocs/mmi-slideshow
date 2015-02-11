@@ -34,15 +34,15 @@ module.exports = function (grunt) {
       },
       jsDist: {
         src: ['src/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/js/<%= pkg.name %>.js'
       },
       jsDistWithJQuery: {
         src: ['build/jquery.custom.js', 'src/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.bundle.js'
+        dest: 'dist/js/<%= pkg.name %>.bundle.js'
       },
       cssDist: {
         src: ['src/<%= pkg.name %>.css'],
-        dest: 'dist/<%= pkg.name %>.css'
+        dest: 'dist/css/<%= pkg.name %>.css'
       }
     },
     cssmin: {
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
       },
       dist: {
         src: 'src/<%= pkg.name %>.css',
-        dest: 'dist/<%= pkg.name %>.min.css'
+        dest: 'dist/css/<%= pkg.name %>.min.css'
       }
     },
     uglify: {
@@ -60,11 +60,11 @@ module.exports = function (grunt) {
       },
       dist: {
         src: '<%= concat.jsDist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'dist/js/<%= pkg.name %>.min.js'
       },
       distWithJQuery: {
         src: '<%= concat.jsDistWithJQuery.dest %>',
-        dest: 'dist/<%= pkg.name %>.bundle.min.js'
+        dest: 'dist/js/<%= pkg.name %>.bundle.min.js'
       }
     },
     qunit: {
@@ -115,7 +115,8 @@ module.exports = function (grunt) {
       server: {
         options: {
           hostname: 'localhost',
-          port: 9000
+          port: 9000,
+          debug: true
         }
       }
     }
