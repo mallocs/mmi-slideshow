@@ -1,19 +1,17 @@
-/*! mmi-slideshow - v0.0.1 - 2015-02-12
+/*! mmi-slideshow - v0.0.1 - 2015-02-18
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 ;(function (factory) {
 
-    if (typeof define === 'function' && define.amd) {
-        define(['jquery'], factory);
-    } else if (typeof exports !== 'undefined') {
-        module.exports = factory(require('jquery'));
+    if (typeof define === "function" && define.amd) {
+        define(["jquery"], factory);
     } else {
         factory(jQuery);
     }
 
-})(function ($) {
+}(function ($) {
 
-    $.widget("mmi.slideshow", {
+    return $.widget("mmi.slideshow", {
         version: "0.0.0",
 
         /*In JS CSS Class Names*/
@@ -73,6 +71,9 @@
             this.carousel = this.element.children(this.options.carouselSel);
             this.slides = this.carousel.children(this.options.slideSel);
             this.currentSlideNumber = parseInt(this.options.startSlide, 10);
+            this.supportsTransitions = this._cssSupportTest("transition");
+            this.supportsTransformations = this._cssSupportTest("transform");
+
 
             this._createWrapper();
             if (this.options.navigation) {
@@ -104,7 +105,7 @@
                 class: this.CN.footer
             });
             if (this.options.autoHideFooter) {
-                var widget = this;
+                var widget = this;      
                 this.$footer.css({
                     display: "none"
                 });
@@ -196,7 +197,7 @@
                 class: this.CN.pagination
             });
 
-            for (var i = 1, length = this.slides.length, pageLink; i <= length; i++) {
+            for (var i=1, length=this.slides.length, pageLink; i <= length; i++) {
                 if (this.options.pagination === "numbers") {
                     pageLink = $('<a href="#" data-slide="' + i + '">' + i + '</a>');
                 } else if (this.options.pagination === "sprite" && this.options.sprite) {
@@ -223,6 +224,25 @@
             this.$footer.append(this.$pagination);
             this.pages = this.$pagination.children(this.slides.length);
         },
+        
+        _cssSupportTest: function (prop) {
+            var b = document.body || document.documentElement,
+                s = b.style;
+ 
+            // No css support detected
+            if(typeof s === "undefined") { return false; }
+ 
+            // Tests for standard prop
+            if(typeof s[prop] === "string") { return true; }
+ 
+            // Tests for vendor specific prop
+            var v = ["Moz", "Webkit", "Khtml", "O", "ms", "Icab"];
+            prop = prop.charAt(0).toUpperCase() + prop.substr(1);
+            for(var i=0, length=v.length; i<length; i++) {
+                if(typeof s[v[i] + prop] === "string") { return true; }
+            }
+            return false;
+        }, 
 
         _getSlideFromNumber: function (slideNumber) {
             return $(this.slides[parseInt(slideNumber, 10) - 1]);
@@ -481,7 +501,7 @@
 
     });
 
-})();
+}));
 
 
 /**
