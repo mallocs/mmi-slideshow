@@ -222,6 +222,7 @@
             this.pages = this.$pagination.children(this.slides.length);
         },
         
+        /*adapted from: https://gist.github.com/jackfuchs/556448*/
         _cssSupportTest: function (prop) {
             var b = document.body || document.documentElement,
                 s = b.style;
