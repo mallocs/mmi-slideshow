@@ -319,15 +319,15 @@
             var transitionSpeed = parseInt(this.options.transitionSpeed, 10);
             var transitionOptions = this.options.transitionOptions;
             var transition = this.options.transition + "";
-
+            
+            this.carousel.find("li").not(this.currentSlide).removeClass("active");
+            slide.addClass("active");
+            
             //First slide when initializing
             if (typeof this.currentSlide === "undefined") {
-                slide.show();
-                this.carousel.find("li").not(slide).css({
-                    display: "none"
-                });
+      //          slide.show();
 
-                //Scroll transition
+            //Scroll transition
             } else if (transition === "scroll") {
                 var scroll;
                 //If it's already animated, speed up the transition. 
@@ -336,11 +336,7 @@
                     transitionSpeed = this.transitionSpeed = this.transitionSpeed / 2 || transitionSpeed / 2;
                     scroll = this.currentTarget;
                 } else {
-                    this.carousel.find("li").css({
-                        float: "left",
-                        position: "static",
-                        display: "list-item"
-                    });
+                    this.carousel.find("li").addClass("scroll"); 
                     //It's complicated to set the proper width since it changes when new images are loaded.
                     //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
                     this.carousel.css({
@@ -353,24 +349,12 @@
 
                 //Any other transition. 
             } else {
-                this.carousel.find("li")
-                    .not(this.currentSlide)
-                    .css({
-                        display: "none",
-                        position: "static",
-                        bottom: "",
-                        left: "",
-                        width: ""
-                    });
+                this.carousel.find("li").not(this.currentSlide).removeClass("active");
+
                 slide.show("fade", transitionOptions, transitionSpeed);
                 //need to set the currentSlide to absolute positioning so it doesn't get in the way
                 //of the new slide.
-                this.currentSlide.css({
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    width: this.currentSlide.width() + "px"
-                });
+                this.currentSlide.css({width: this.currentSlide.width() + "px"});
                 this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
             }
             this._setDimensions(slide, this.options.width, this.options.height);
