@@ -19,27 +19,55 @@
 /* slides */
 .mmi-slideshow .slide {
     z-index: 10;
-    position: absolute;
     display: none;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.mmi-slideshow .slide.active {
-    display: inline-block;
-    position: "absolute";
+.mmi-slideshow .mmi-fade .slide {
+    position: absolute;
     bottom: 0;
     left: 0;
+    width: 100%;
+}
+
+/***
+Animate with js
+   opacity: 1;
+   display: block;
+***/
+.mmi-slideshow .mmi-fade .slide.active {
+    z-index: 11;
+}
+
+/*
+Set this through js/css to do css transition
+*/
+.mmi-slideshow .mmi-fade.fadecss .slide {
+    opacity: 0;
+    display: block;
+    transition: opacity 600ms ease-in-out;
+    -webkit-transition: opacity 600ms ease-in-out;
+    -moz-transition: opacity 600ms ease-in-out;
+    -o-transition: opacity 600ms ease-in-out;
+}
+
+.mmi-slideshow .mmi-fade.fadecss .slide.active {
+    opacity: 1;
+    position: static;
 }
 
 .mmi-slideshow .slide.scroll {
     float: left;
     position: static;
-    display: inline-block;
+    display: block;
+}
+
+.mmi-slideshow .slide.transition {
+	transition-property: right, left, margin;
 }
 
 .mmi-slideshow .slide img {
     display: block;
+    position: relative;    
     margin-left: auto;
     margin-right: auto;
 }

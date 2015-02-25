@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.1 - 2015-02-18
+/*! mmi-slideshow - v0.0.1 - 2015-02-25
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 /* Color settings are at the bottom */
@@ -12,7 +12,7 @@
 }
 
 /*carousel*/
-.mmi-slideshow ul {
+.mmi-slideshow .carousel {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -20,40 +20,84 @@
 }
 
 /* slides */
-.mmi-slideshow li {
+.mmi-slideshow .slide {
     z-index: 10;
+    display: none;
+}
+
+.mmi-slideshow .mmi-fade .slide {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+/***
+Animate with js
+   opacity: 1;
+   display: block;
+***/
+.mmi-slideshow .mmi-fade .slide.active {
+    z-index: 11;
+}
+
+/*
+Set this through js/css to do css transition
+*/
+.mmi-slideshow .mmi-fade.fadecss .slide {
+    opacity: 0;
+    display: block;
+    transition: opacity 600ms ease-in-out;
+    -webkit-transition: opacity 600ms ease-in-out;
+    -moz-transition: opacity 600ms ease-in-out;
+    -o-transition: opacity 600ms ease-in-out;
+}
+
+.mmi-slideshow .mmi-fade.fadecss .slide.active {
+    opacity: 1;
+    position: static;
+}
+
+.mmi-slideshow .slide.scroll {
+    float: left;
+    position: static;
+    display: block;
+}
+
+.mmi-slideshow .slide.transition {
+	transition-property: right, left, margin;
+}
+
+.mmi-slideshow .slide img {
+    display: block;
+    position: relative;    
     margin-left: auto;
     margin-right: auto;
 }
 
-.mmi-slideshow li img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 /* footer (pagination and captions) */
 .mmi-footer {
     z-index: 11;
 }
 
-.mmi-footer ul {
-    margin-left: 0.7em;
-}
 
 /* pagination */
 .mmi-pagination {
     display: inline-block;
+    list-style: none;
+    margin: 0 0 0 0.7em;
+    padding: 0;
 }
 
 .mmi-pagination li {
-  float: left;
+    float: left;
 }
 
 .mmi-pagination a {
     border: 2px solid transparent;
     width: 2em;
-    padding: 0.3rem 0 0.2rem 0;
+    padding: 0.3em 0 0.2em 0;
     display: block; 
     text-decoration: none;
 }
@@ -76,7 +120,7 @@
 /* captions */
 .mmi-caption p {
     margin: 0;
-    padding: 0.4em 0 0.4rem 0.7em;
+    padding: 0.4em 0 0.4em 0.7em;
     text-align: left;
     font: 0.9em Arial, sans-serif;
 }
