@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.1 - 2015-02-25
+/*! mmi-slideshow - v0.0.1 - 2015-03-05
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.1 - 2015-02-25
+/*! mmi-slideshow - v0.0.1 - 2015-03-05
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 /*!
@@ -13885,18 +13885,36 @@ return $.effects.effect.transfer = function( o, done ) {
             spriteWidth: false, // Sprite width. An int measuring pixels.
             spriteHeight: false // Sprite height. An int measuring pixels.
         },
+        
+        _setOptions: function() {
+            this.optionDefaults = this.options; //TODO
+            this.options = $.extend({}, this.optionDefaults, $(this.element).data());
+            this.options.startSlide = parseInt(this.options.startSlide, 10) || this.optionDefaults.startSlide;
+            this.options.buffer = parseInt(this.options.buffer, 10) || this.optionDefaults.buffer;
+            this.options.transition = this.options.transition + "";
+            this.options.transitionSpeed = parseInt(this.options.transitionSpeed, 10) || this.optionDefaults.transitionSpeed;
+        },
 
         _create: function () {
-            this.options = $.extend({}, this.options, $(this.element).data());
+            this._setOptions();
             this.carousel = this.element.children(this.options.carouselSel);
             this.slides = this.carousel.children(this.options.slideSel);
-            this.currentSlideNumber = parseInt(this.options.startSlide, 10);
+            this.currentSlideNumber = this.options.startSlide;
             this.cssTransitions = this._cssSupportTest("transition");
             this.cssTransforms = this._cssSupportTest("transform");
 
             if (this.cssTransitions) {
                 this._setCssTransitionDuration(this.options.transitionSpeed);
+                this.carousel.addClass("csstransitions");
+            } else {
+                this.carousel.addClass("jstransitions");
             }
+            
+            if (this.options.transition === "scroll") {
+                this.carousel.addClass("mmi-scroll");                                   
+            } else {
+                this.carousel.addClass("mmi-fade");                   
+            }            
             
             this._createWrapper();
             if (this.options.navigation) {
@@ -13924,7 +13942,7 @@ return $.effects.effect.transfer = function( o, done ) {
         },
 
         _createFooter: function () {
-            this.$footer = $('<div>', {
+            this.$footer = $("<div>", {
                 class: this.CN.footer
             });
             if (this.options.autoHideFooter) {
@@ -14037,7 +14055,7 @@ return $.effects.effect.transfer = function( o, done ) {
                     pageLink = $('<a href="#" data-slide="' + i + '"></a>').addClass(this.CN.paginationCircle);
                 }
 
-                var pageItem = $('<li></li>');
+                var pageItem = $("<li></li>");
                 pageItem[0].appendChild(pageLink[0]);
                 this.$pagination.append(pageItem);
             }
@@ -14077,7 +14095,7 @@ return $.effects.effect.transfer = function( o, done ) {
         },
 
         _getSlideFromNumber: function (slideNumber) {
-            return $(this.slides[parseInt(slideNumber, 10) - 1]);
+            return $(this.slides[slideNumber - 1]);
         },
 
         _page: function (event) {
@@ -14090,7 +14108,7 @@ return $.effects.effect.transfer = function( o, done ) {
             if (typeof this.pages === "undefined") {
                 return;
             }
-            var page = $(this.pages[parseInt(slideNumber, 10) - 1]);
+            var page = $(this.pages[slideNumber - 1]);
             this.pages.not(page).find("a").removeClass(this.CN.selected);
             page.find("a").addClass(this.CN.selected);
         },
@@ -14143,58 +14161,70 @@ return $.effects.effect.transfer = function( o, done ) {
         },
 
         hideCaption: function () {
-            this.$caption.hide();
+            this.$caption.hide(); 
         },
-
+        
+        _doCssScroll: function (slide) {
+            var side = "left";
+            var otherside = "right";
+            var oldSlide;
+        
+            for (var i=0, totalSlides=this.slides.length, updateSlide; i<totalSlides; i++) {
+                updateSlide = $(this.slides[i]);
+                if (updateSlide.is(slide)) {
+                    side = "right";
+                    otherside = "left";
+                } else {
+                    updateSlide.removeClass(otherside);
+                    updateSlide.addClass(side);
+                }
+            }
+            if (this.currentSlide) {
+                oldSlide = this.currentSlide;
+                setTimeout(function() {oldSlide.removeClass("active");}, 1);
+            }
+            slide.addClass("active");
+        },
+        
+        _doJsScroll: function (slide) {
+            var transitionSpeed = this.options.transitionSpeed;
+            //If it's already animated, speed up the transition. 
+            if (this.carouselWrapper.is(":animated")) {
+                this.carouselWrapper.stop();
+                transitionSpeed = this.transitionSpeed = this.transitionSpeed / 2 || transitionSpeed / 2;
+            } 
+            this.carouselWrapper.animate({
+                scrollLeft: slide.position().left + this.carouselWrapper.scrollLeft()
+            }, transitionSpeed);            
+        },
+        
+        _doCssFade: function (slide) {
+            this.carousel.find(".slide").not(slide).removeClass("active");
+            slide.addClass("active");            
+        },
+        
+        _doJsFade: function (slide) {
+            var transitionSpeed = this.options.transitionSpeed;
+            var transitionOptions = this.options.transitionOptions;
+            slide.show("fade", transitionOptions, transitionSpeed);
+            this.currentSlide.hide("fade", transitionOptions, transitionSpeed);            
+        },
+        
         setCurrentSlide: function (slideNumber) {
             var slide = this._getSlideFromNumber(slideNumber);
             this._loadSlide(slide);
             var slideTarget = $(slide.children()[0]);
-            var transitionSpeed = parseInt(this.options.transitionSpeed, 10);
-            var transitionOptions = this.options.transitionOptions;
-            var transition = this.options.transition + "";
+            var transition = this.options.transition;
                         
-            //First slide when initializing
-            if (typeof this.currentSlide === "undefined") {
-                if (transition === "scroll") {
-
-                } else {
-                    this.carousel.addClass("mmi-fade");
-                    if (this.cssTransitions) {
-                        this.carousel.addClass("fadecss");
-                    }                    
-                }
-                slide.addClass("active");
-                slide.show();
-
-            //Scroll transition
+            if (transition === "scroll" && this.cssTransitions) {
+                this._doCssScroll(slide);
             } else if (transition === "scroll") {
-                var scroll;
-                //If it's already animated, speed up the transition. 
-                if (this.carouselWrapper.is(":animated")) {
-                    this.carouselWrapper.stop();
-                    transitionSpeed = this.transitionSpeed = this.transitionSpeed / 2 || transitionSpeed / 2;
-                    scroll = this.currentTarget;
-                } else {
-                    this.carousel.find(".slide").addClass("scroll"); 
-                    //It's complicated to set the proper width since it changes when new images are loaded.
-                    //Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
-                    this.carousel.css({
-                        minWidth: "10000em"
-                    });
-                }
-                this.carouselWrapper.animate({
-                    scrollLeft: slide.position().left + this.carouselWrapper.scrollLeft()
-                }, transitionSpeed);
-
-            //Any other transition. 
+                this._doJsScroll(slide);
+            //Fade transition. 
+            } else if (this.cssTransitions) {
+                this._doCssFade(slide);
             } else {
-                this.carousel.find(".slide").not(slide).removeClass("active");
-                slide.addClass("active");
-                if (!this.cssTransitions) {
-                    slide.show("fade", transitionOptions, transitionSpeed);
-                    this.currentSlide.hide(transition, transitionOptions, transitionSpeed);
-                }
+                this._doJsFade(slide);
             }
             this._setDimensions(slide, this.options.width, this.options.height);
 
@@ -14202,7 +14232,7 @@ return $.effects.effect.transfer = function( o, done ) {
             this._setPage(slideNumber);
             this.currentSlide = slide;
             this.currentSlideNumber = slideNumber;
-            this._bufferSlides(parseInt(this.options.buffer, 10));
+            this._bufferSlides(this.options.buffer);
         },
 
         _setDimensions: function (slide, width, height) {
