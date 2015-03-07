@@ -1,4 +1,4 @@
-/*! mmi-slideshow - v0.0.1 - 2015-03-06
+/*! mmi-slideshow - v0.0.1 - 2015-03-07
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 /* Color settings are at the bottom */
@@ -30,7 +30,8 @@
 }
 
 /*****fade*****/
-.mmi-fade .slide {
+.mmi-fade .slide,
+.mmi-fade-js .slide {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -38,17 +39,17 @@
     width: 100%;
 }
 
-/***
-Animate with js
+/*
+Fade with js, animate to:
    opacity: 1;
    display: block;
-***/
+*/
 
 /*
-Animate with css.
+Fade with css.
 Set this through js/css to do css transition
 */
-.mmi-fade.csstransitions .slide {
+.mmi-fade .slide {
     opacity: 0;
     display: block;
     transition: opacity 600ms ease-in-out;
@@ -57,54 +58,45 @@ Set this through js/css to do css transition
     -o-transition: opacity 600ms ease-in-out;
 }
 
-.mmi-fade.csstransitions .slide.mmi-active {
+.mmi-fade .slide.mmi-active {
     opacity: 1;
 }
 
-/*****scroll*****/
-/* 
- * .slide.left and .slide.right set-up
- * the to-be-animated slide so that it can slide
- * into view. For example, a slide that is about 
- * to slide in from the right will:
- * 1. Be positioned to the right of the viewport (right:-100%)
- * 2. Slide in when the style is superseded with a more specific style (right:0%)
- *
- */
-.mmi-scroll .slide {
-    display: block;
-}
-
-/*animate with js*/
-.mmi-scroll.jstransitions .slide {
-    float: left;
-    position: static;
-}
-
+/*scroll with js*/
 /*It's complicated to set the proper width since it changes when new images are loaded.
   Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
 */
-.mmi-scroll.jstransitions {
+.mmi-scroll-js {
     min-width: 10000em;
 }
 
-.mmi-scroll.csstransitions .slide.left.mmi-active {
+.mmi-scroll-js .slide {
+    float: left;
+    position: static;
+    display: block;
+}
+
+/*scroll with css*/
+.mmi-scroll .slide {
+    display: block;
+}
+.mmi-left.mmi-active.slide {
     left: 0;
 }
 
-.mmi-scroll.csstransitions .slide.right.mmi-active {
+.mmi-right.mmi-active.slide {
     right: 0;
 }
 
-.mmi-scroll.csstransitions .slide.left {
+.mmi-left.slide {
 	left: -100%;
 }
 
-.mmi-scroll.csstransitions .slide.right {
+.mmi-right.slide {
 	right: -100%;
 }
 
-.mmi-scroll.csstransitions .slide {
+.mmi-scroll .slide {
     position: absolute;
     width: 100%; 
     bottom: 0;

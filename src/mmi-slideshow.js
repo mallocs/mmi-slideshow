@@ -13,7 +13,14 @@
 
         /*In JS CSS Class Names*/
         CN: {
+            slide: "slide",
+            left: "mmi-left",
+            right: "mmi-right",
             active: "mmi-active",
+            scroll: "mmi-scroll",
+            scrollJS: "mmi-scroll-js",
+            fade: "mmi-fade",
+            fadeJS: "mmi-fade-js",
             navigation: "mmi-navigation",
             footer: "mmi-footer",
             previous: "mmi-previous",
@@ -34,8 +41,8 @@
         /**NOTE: Slides are numbered starting from 1. **/
         options: {
             /**In Markup Selectors**/
-            carouselSel: ".mmi-slideshow ul", // Selector for carousel element.
-            slideSel: ".mmi-slideshow li", // Selector for carousel slides.
+            carouselSel: ".mmi-slideshow .carousel", // Selector for carousel element.
+            slideSel: ".mmi-slideshow .slide", // Selector for carousel slides.
 
             startSlide: 1, // Starting slide. Count from 1.
             buffer: 2, // Number of extra slides to buffer.
@@ -79,20 +86,24 @@
             this.slides = this.carousel.children(this.options.slideSel);
             this.currentSlideNumber = this.options.startSlide;
             this.cssTransitions = this._cssSupportTest("transition");
-            this.cssTransforms = this._cssSupportTest("transform");
-            this.cssTransitions = false;
-
+        //    this.cssTransforms = this._cssSupportTest("transform");
+            
             if (this.cssTransitions) {
                 this._setCssTransitionDuration(this.options.transitionSpeed);
-                this.carousel.addClass("csstransitions");
-            } else {
-                this.carousel.addClass("jstransitions");
-            }
+            } 
             
             if (this.options.transition === "scroll") {
-                this.carousel.addClass("mmi-scroll");                                   
+                if (this.cssTransitions) {
+                    this.carousel.addClass(this.CN.scroll);                                   
+                } else {
+                    this.carousel.addClass(this.CN.scrollJS);
+                }
             } else {
-                this.carousel.addClass("mmi-fade");                   
+                if (this.cssTransitions) {
+                    this.carousel.addClass(this.CN.fade);    
+                } else {
+                    this.carousel.addClass(this.CN.fadeJS);    
+                }
             }            
             
             this._createWrapper();
@@ -268,7 +279,7 @@
         _setCssTransitionDuration: function (duration) {
             duration = arguments.length === 1 ? duration : this.options.transitionSpeed;
             var widget = this;
-		    this.carousel.find(".slide").each(function(){
+		    this.slides.each(function(){
 			    this.style[widget.cssTransitions+"Duration"] = duration + "ms";
 		    });
         },
@@ -344,14 +355,14 @@
         },
         
         _doCssScroll: function (slide) {
-            var side = "left";
-            var otherside = "right";
+            var side = this.CN.left;
+            var otherside = this.CN.right;
         
             for (var i=0, totalSlides=this.slides.length, updateSlide; i<totalSlides; i++) {
                 updateSlide = $(this.slides[i]);
                 if (updateSlide.is(slide)) {
-                    side = "right";
-                    otherside = "left";
+                    side = this.CN.right;
+                    otherside = this.CN.left;
                 } else {
                     updateSlide.removeClass(otherside);
                     updateSlide.addClass(side);
