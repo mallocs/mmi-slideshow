@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.1 - 2015-03-05
+/*! mmi-slideshow - v0.0.1 - 2015-03-06
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.1 - 2015-03-05
+/*! mmi-slideshow - v0.0.1 - 2015-03-06
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 /*!
@@ -13836,6 +13836,7 @@ return $.effects.effect.transfer = function( o, done ) {
 
         /*In JS CSS Class Names*/
         CN: {
+            active: "mmi-active",
             navigation: "mmi-navigation",
             footer: "mmi-footer",
             previous: "mmi-previous",
@@ -13902,6 +13903,7 @@ return $.effects.effect.transfer = function( o, done ) {
             this.currentSlideNumber = this.options.startSlide;
             this.cssTransitions = this._cssSupportTest("transition");
             this.cssTransforms = this._cssSupportTest("transform");
+            this.cssTransitions = false;
 
             if (this.cssTransitions) {
                 this._setCssTransitionDuration(this.options.transitionSpeed);
@@ -14167,7 +14169,6 @@ return $.effects.effect.transfer = function( o, done ) {
         _doCssScroll: function (slide) {
             var side = "left";
             var otherside = "right";
-            var oldSlide;
         
             for (var i=0, totalSlides=this.slides.length, updateSlide; i<totalSlides; i++) {
                 updateSlide = $(this.slides[i]);
@@ -14180,10 +14181,10 @@ return $.effects.effect.transfer = function( o, done ) {
                 }
             }
             if (this.currentSlide) {
-                oldSlide = this.currentSlide;
-                setTimeout(function() {oldSlide.removeClass("active");}, 1);
+                var widget=this, oldSlide=this.currentSlide;
+                setTimeout(function() { oldSlide.removeClass(widget.CN.active); }, 1);
             }
-            slide.addClass("active");
+            slide.addClass(this.CN.active);
         },
         
         _doJsScroll: function (slide) {
@@ -14199,15 +14200,17 @@ return $.effects.effect.transfer = function( o, done ) {
         },
         
         _doCssFade: function (slide) {
-            this.carousel.find(".slide").not(slide).removeClass("active");
-            slide.addClass("active");            
+            this.slides.not(slide).removeClass(this.CN.active);
+            slide.addClass(this.CN.active);            
         },
         
         _doJsFade: function (slide) {
             var transitionSpeed = this.options.transitionSpeed;
             var transitionOptions = this.options.transitionOptions;
             slide.show("fade", transitionOptions, transitionSpeed);
-            this.currentSlide.hide("fade", transitionOptions, transitionSpeed);            
+            if (this.currentSlide) {
+                this.currentSlide.hide("fade", transitionOptions, transitionSpeed);  
+            }
         },
         
         setCurrentSlide: function (slideNumber) {
@@ -14272,9 +14275,7 @@ return $.effects.effect.transfer = function( o, done ) {
                         width: "auto"
                     });
                 }
-
             }
-
         },
 
         _bufferSlides: function (count) {

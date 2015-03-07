@@ -22,12 +22,12 @@
     display: none;
 }
 
-.mmi-slideshow .slide.active {
+.mmi-slideshow .slide.mmi-active {
     z-index: 11;
 }
 
 /*****fade*****/
-.mmi-slideshow .mmi-fade .slide {
+.mmi-fade .slide {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -45,7 +45,7 @@ Animate with js
 Animate with css.
 Set this through js/css to do css transition
 */
-.mmi-slideshow .mmi-fade.csstransitions .slide {
+.mmi-fade.csstransitions .slide {
     opacity: 0;
     display: block;
     transition: opacity 600ms ease-in-out;
@@ -54,7 +54,7 @@ Set this through js/css to do css transition
     -o-transition: opacity 600ms ease-in-out;
 }
 
-.mmi-slideshow .mmi-fade.csstransitions .slide.active {
+.mmi-fade.csstransitions .slide.mmi-active {
     opacity: 1;
 }
 
@@ -68,12 +68,12 @@ Set this through js/css to do css transition
  * 2. Slide in when the style is superseded with a more specific style (right:0%)
  *
  */
-.mmi-slideshow .mmi-scroll .slide {
+.mmi-scroll .slide {
     display: block;
 }
 
 /*animate with js*/
-.mmi-slideshow .mmi-scroll.jstransitions .slide {
+.mmi-scroll.jstransitions .slide {
     float: left;
     position: static;
 }
@@ -81,27 +81,27 @@ Set this through js/css to do css transition
 /*It's complicated to set the proper width since it changes when new images are loaded.
   Setting minWidth really high doesn't seem (??) to have drawbacks and is not complicated.
 */
-.mmi-slideshow .mmi-scroll.jstransitions {
+.mmi-scroll.jstransitions {
     min-width: 10000em;
 }
 
-.mmi-slideshow .mmi-scroll.csstransitions .slide.left.active {
+.mmi-scroll.csstransitions .slide.left.mmi-active {
     left: 0;
 }
 
-.mmi-slideshow .mmi-scroll.csstransitions .slide.right.active {
+.mmi-scroll.csstransitions .slide.right.mmi-active {
     right: 0;
 }
 
-.mmi-slideshow .mmi-scroll.csstransitions .slide.left {
+.mmi-scroll.csstransitions .slide.left {
 	left: -100%;
 }
 
-.mmi-slideshow .mmi-scroll.csstransitions .slide.right {
+.mmi-scroll.csstransitions .slide.right {
 	right: -100%;
 }
 
-.mmi-slideshow .mmi-scroll.csstransitions .slide {
+.mmi-scroll.csstransitions .slide {
     position: absolute;
     width: 100%; 
     bottom: 0;

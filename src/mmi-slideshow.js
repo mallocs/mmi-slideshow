@@ -13,6 +13,7 @@
 
         /*In JS CSS Class Names*/
         CN: {
+            active: "mmi-active",
             navigation: "mmi-navigation",
             footer: "mmi-footer",
             previous: "mmi-previous",
@@ -79,6 +80,7 @@
             this.currentSlideNumber = this.options.startSlide;
             this.cssTransitions = this._cssSupportTest("transition");
             this.cssTransforms = this._cssSupportTest("transform");
+            this.cssTransitions = false;
 
             if (this.cssTransitions) {
                 this._setCssTransitionDuration(this.options.transitionSpeed);
@@ -344,7 +346,6 @@
         _doCssScroll: function (slide) {
             var side = "left";
             var otherside = "right";
-            var oldSlide;
         
             for (var i=0, totalSlides=this.slides.length, updateSlide; i<totalSlides; i++) {
                 updateSlide = $(this.slides[i]);
@@ -357,10 +358,10 @@
                 }
             }
             if (this.currentSlide) {
-                oldSlide = this.currentSlide;
-                setTimeout(function() {oldSlide.removeClass("active");}, 1);
+                var widget=this, oldSlide=this.currentSlide;
+                setTimeout(function() { oldSlide.removeClass(widget.CN.active); }, 1);
             }
-            slide.addClass("active");
+            slide.addClass(this.CN.active);
         },
         
         _doJsScroll: function (slide) {
@@ -376,15 +377,17 @@
         },
         
         _doCssFade: function (slide) {
-            this.carousel.find(".slide").not(slide).removeClass("active");
-            slide.addClass("active");            
+            this.slides.not(slide).removeClass(this.CN.active);
+            slide.addClass(this.CN.active);            
         },
         
         _doJsFade: function (slide) {
             var transitionSpeed = this.options.transitionSpeed;
             var transitionOptions = this.options.transitionOptions;
             slide.show("fade", transitionOptions, transitionSpeed);
-            this.currentSlide.hide("fade", transitionOptions, transitionSpeed);            
+            if (this.currentSlide) {
+                this.currentSlide.hide("fade", transitionOptions, transitionSpeed);  
+            }
         },
         
         setCurrentSlide: function (slideNumber) {
@@ -449,9 +452,7 @@
                         width: "auto"
                     });
                 }
-
             }
-
         },
 
         _bufferSlides: function (count) {
