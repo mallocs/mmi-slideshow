@@ -11,6 +11,13 @@
     font: 100% Arial, sans-serif;
 }
 
+.mmi-slideshow .slide img {
+    display: block;
+    position: relative;    
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /*carousel*/
 .mmi-slideshow .carousel {
     margin: 0;
@@ -106,13 +113,6 @@ Set this through js/css to do css transition
     -o-transition: right 600ms linear, left 600ms linear;
 }
 /******end scroll*********/
-
-.mmi-slideshow .slide img {
-    display: block;
-    position: relative;    
-    margin-left: auto;
-    margin-right: auto;
-}
 
 
 /* footer (pagination and captions) */
@@ -286,7 +286,6 @@ Set this through js/css to do css transition
     background-color: #222;
 }
 
-.mmi-slideshow,
 .mmi-caption p,
 .mmi-pagination .mmi-circle,
 .mmi-dark.mmi-navigation,
@@ -348,9 +347,6 @@ Set this through js/css to do css transition
 
 .mmi-navigation:hover {
     opacity: 1;
-}
-
-.mmi-navigation {
 }
 
 .mmi-icon-next:before, 
