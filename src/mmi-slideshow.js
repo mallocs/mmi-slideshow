@@ -79,9 +79,13 @@
             this.optionDefaults = this.options; //TODO
             this.options = $.extend({}, this.optionDefaults, $(this.element).data());
             this.options.startSlide = parseInt(this.options.startSlide, 10) || this.optionDefaults.startSlide;
-            this.options.buffer = parseInt(this.options.buffer, 10) || this.optionDefaults.buffer;
             this.options.transition = this.options.transition + "";
             this.options.transitionSpeed = parseInt(this.options.transitionSpeed, 10) || this.optionDefaults.transitionSpeed;
+            if ( typeof (parseInt(this.options.buffer, 10)) !== "number" ||
+                isNaN(parseInt(this.options.buffer, 10)) ||
+                parseInt(this.options.buffer, 10) < 0) {
+                this.options.buffer = this.optionDefaults.buffer;
+            }
         },
 
         _create: function () {
