@@ -95,7 +95,7 @@ Set this through js/css to do css transition
 
 .mmi-scroll .slide {
     position: absolute;
-    width: 100%; 
+    width: 100%; /* with current js can't do height: 100%*/
     bottom: 0;
 	transition: right 600ms linear, left 600ms linear;
     -webkit-transition: right 600ms linear, left 600ms linear;

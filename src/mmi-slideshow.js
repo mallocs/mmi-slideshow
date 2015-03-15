@@ -63,7 +63,7 @@
             dark: false, // Use dark color scheme.
             inside: false, // Extra elements (Nav, pagination, etc) appear inside the carousel.
             insideNavigation: false, // Just the previous and next arrows appear inside the carousel.
-            responsive: false, // Images will automatically be size responsibly to carousel width.
+            responsive: false, // Images will automatically be size responsively to carousel width.
 
             pagination: true, // Show pagination.
             sprite: false, // Sprite URL.
@@ -131,7 +131,10 @@
             this._on(this.wrapper, {
                 mouseenter: "_slideshowMouseInEvent",
                 mouseout: "_slideshowMouseOutEvent"
+//                ,
+   //             keypress: function(e) {console.log("hi"); }
             });
+
         },
 
         _createFooter: function () {
@@ -510,20 +513,15 @@
         },
 
         _loadSlide: function ($slide) {
-            if ($slide.attr("slideIsLoaded") !== undefined || $slide.attr("slideIsLoaded") === true) {
+            if ($slide.data("slideIsLoaded") !== undefined && $slide.data("slideIsLoaded") === true) {
                 return;
             }
-            var $slideTarget = $($slide.children()[0]);
-            if ($slideTarget.is("img")) {
-                this._loadImage($slideTarget);
-            }
-            $slide.attr("slideIsLoaded", true);
-        },
-
-        _loadImage: function ($image) {
-            if ($image.attr("src") === undefined && $image.data("src") !== undefined) {
-                $image.attr("src", $image.data("src"));
-            }
+            $slide.find( "*" ).filter( function() {
+                return $(this).data("src") && $(this).attr("src") === undefined;
+            }).each( function() {
+                $(this).attr("src", $(this).data("src"));
+            });
+            $slide.data("slideIsLoaded", true);
         },
 
         _setOption: function (key, value) {

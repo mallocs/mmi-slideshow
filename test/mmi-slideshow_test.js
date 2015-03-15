@@ -54,7 +54,7 @@
         var ssObj = $(".mmi-slideshow").slideshow({buffer: bufferCount, startSlide: 1}).data("mmi-slideshow");
         for (var i=1; i <= bufferCount; i++) {
             var slideImg = $(ssObj.slides[i]).children()[0];
-            ok($(ssObj.slides[i]).attr("slideIsLoaded"), "Checking slide " + i + " is buffered");
+            ok($(ssObj.slides[i]).data("slideIsLoaded"), "Checking slide " + i + " is buffered");
             ok($(slideImg).attr("src"), "Checking slide " + i + " has the image src set");
         }
     });

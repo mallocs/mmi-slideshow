@@ -1,7 +1,7 @@
-/*! mmi-slideshow - v0.0.1 - 2015-03-07
+/*! mmi-slideshow - v0.0.1 - 2015-03-15
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
-/*! mmi-slideshow - v0.0.1 - 2015-03-07
+/*! mmi-slideshow - v0.0.1 - 2015-03-15
 * https://github.com/mallocs/mmi-slideshow
 * Copyright (c) 2015 Marcus Ulrich; Licensed MIT */
 /*!
@@ -13886,7 +13886,7 @@ return $.effects.effect.transfer = function( o, done ) {
             dark: false, // Use dark color scheme.
             inside: false, // Extra elements (Nav, pagination, etc) appear inside the carousel.
             insideNavigation: false, // Just the previous and next arrows appear inside the carousel.
-            responsive: false, // Images will automatically be size responsibly to carousel width.
+            responsive: false, // Images will automatically be size responsively to carousel width.
 
             pagination: true, // Show pagination.
             sprite: false, // Sprite URL.
@@ -13894,6 +13894,10 @@ return $.effects.effect.transfer = function( o, done ) {
             spriteHeight: false // Sprite height. An int measuring pixels.
         },
         
+        /**
+        * Clean up the widget options and set them to sensible defaults if they aren't configured.
+        * @private
+        */
         _setOptions: function() {
             this.optionDefaults = this.options; //TODO
             this.options = $.extend({}, this.optionDefaults, $(this.element).data());
@@ -13909,7 +13913,6 @@ return $.effects.effect.transfer = function( o, done ) {
             this.slides = this.carousel.children(this.options.slideSel);
             this.currentSlideNumber = this.options.startSlide;
             this.cssTransitions = this._cssSupportTest("transition");
-        //    this.cssTransforms = this._cssSupportTest("transform");
             
             if (this.cssTransitions) {
                 this._setCssTransitionDuration(this.options.transitionSpeed);
@@ -13951,7 +13954,10 @@ return $.effects.effect.transfer = function( o, done ) {
             this._on(this.wrapper, {
                 mouseenter: "_slideshowMouseInEvent",
                 mouseout: "_slideshowMouseOutEvent"
+//                ,
+   //             keypress: function(e) {console.log("hi"); }
             });
+
         },
 
         _createFooter: function () {
@@ -14042,7 +14048,7 @@ return $.effects.effect.transfer = function( o, done ) {
                 class: this.CN.caption
             });
             this.$footer.append(this.$caption);
-            //should change this so the caption is attached to the image.    
+            //could change this so the caption is attached to the image.    
             //     this.carouselWrapper.append(this.$caption);
         },
 
@@ -14079,7 +14085,12 @@ return $.effects.effect.transfer = function( o, done ) {
             this.pages = this.$pagination.children(this.slides.length);
         },
         
-        /*adapted from: https://gist.github.com/jackfuchs/556448*/
+        
+        /**
+        * adapted from: https://gist.github.com/jackfuchs/556448
+        * @returns {Boolean|String} The name of the css property with the proper vendor prefix if it exists.
+        * @private
+        */
         _cssSupportTest: function (prop) {
             var b = document.body || document.documentElement,
                 s = b.style;
@@ -14126,6 +14137,9 @@ return $.effects.effect.transfer = function( o, done ) {
             page.find("a").addClass(this.CN.selected);
         },
 
+        /**
+        * Move to the next slide in the carousel.
+        */
         next: function () {
             var nextSlideNumber = this.currentSlideNumber + 1;
             if (nextSlideNumber > this.slides.length) {
@@ -14138,6 +14152,9 @@ return $.effects.effect.transfer = function( o, done ) {
             this.setCurrentSlide(nextSlideNumber);
         },
 
+        /**
+        * Move to the previous slide in the carousel.
+        */
         previous: function () {
             var previousSlideNumber = this.currentSlideNumber - 1;
             if (previousSlideNumber < 1) {
@@ -14150,18 +14167,30 @@ return $.effects.effect.transfer = function( o, done ) {
             this.setCurrentSlide(previousSlideNumber);
         },
 
+        /**
+        * Show the navigation arrows.
+        * @param {number} duration The duration of the show transition.
+        */
         showNavigation: function (duration) {
             duration = arguments.length === 1 ? parseInt(duration, 10) : 200;
             this.$next.show("fade", duration);
             this.$previous.show("fade", duration);
         },
 
+        /**
+        * Hide the navigation arrows.
+        * @param {number} duration The duration of the hide transition.
+        */
         hideNavigation: function (duration) {
             duration = arguments.length === 1 ? parseInt(duration, 10) : 200;
             this.$next.hide("fade", duration);
             this.$previous.hide("fade", duration);
         },
 
+        /**
+        * Set the carousel caption.
+        * @param {string} text The html/text for the caption. Will be wrapped in a p tag.
+        */
         setCaption: function (text) {
             text = typeof text !== "undefined" ? text : "&nbsp;";
             if (typeof this.$caption !== "undefined") {
@@ -14169,10 +14198,16 @@ return $.effects.effect.transfer = function( o, done ) {
             }
         },
 
+        /**
+        * Show the carousel captions.
+        */
         showCaption: function () {
             this.$caption.show();
         },
 
+        /**
+        * Hide the carousel captions.
+        */
         hideCaption: function () {
             this.$caption.hide(); 
         },
@@ -14224,6 +14259,10 @@ return $.effects.effect.transfer = function( o, done ) {
             }
         },
         
+        /**
+        * Sets the current carousel slide. Also sets features associated with the slide: captions, page, and forward buffer.
+        * @param {number} slideNumber The slide to transition to. Slides are numbered starting from 1.
+        */
         setCurrentSlide: function (slideNumber) {
             var slide = this._getSlideFromNumber(slideNumber);
             this._loadSlide(slide);
@@ -14297,20 +14336,15 @@ return $.effects.effect.transfer = function( o, done ) {
         },
 
         _loadSlide: function ($slide) {
-            if ($slide.attr("slideIsLoaded") !== undefined || $slide.attr("slideIsLoaded") === true) {
+            if ($slide.data("slideIsLoaded") !== undefined && $slide.data("slideIsLoaded") === true) {
                 return;
             }
-            var $slideTarget = $($slide.children()[0]);
-            if ($slideTarget.is("img")) {
-                this._loadImage($slideTarget);
-            }
-            $slide.attr("slideIsLoaded", true);
-        },
-
-        _loadImage: function ($image) {
-            if ($image.attr("src") === undefined && $image.data("src") !== undefined) {
-                $image.attr("src", $image.data("src"));
-            }
+            $slide.find( "*" ).filter( function() {
+                return $(this).data("src") && $(this).attr("src") === undefined;
+            }).each( function() {
+                $(this).attr("src", $(this).data("src"));
+            });
+            $slide.data("slideIsLoaded", true);
         },
 
         _setOption: function (key, value) {
