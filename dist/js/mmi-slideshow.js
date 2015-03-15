@@ -73,12 +73,12 @@
             spriteWidth: false, // Sprite width. An int measuring pixels.
             spriteHeight: false // Sprite height. An int measuring pixels.
         },
-        
+
         /**
-        * Clean up the widget options and set them to sensible defaults if they aren't configured.
-        * @private
-        */
-        _setOptions: function() {
+         * Clean up the widget options and set them to sensible defaults if they aren't configured.
+         * @private
+         */
+        _setOptions: function () {
             this.optionDefaults = this.options; //TODO
             this.options = $.extend({}, this.optionDefaults, $(this.element).data());
             this.options.startSlide = parseInt(this.options.startSlide, 10) || this.optionDefaults.startSlide;
@@ -93,25 +93,25 @@
             this.slides = this.carousel.children(this.options.slideSel);
             this.currentSlideNumber = this.options.startSlide;
             this.cssTransitions = this._cssSupportTest("transition");
-            
+
             if (this.cssTransitions) {
                 this._setCssTransitionDuration(this.options.transitionSpeed);
-            } 
-            
+            }
+
             if (this.options.transition === "scroll") {
                 if (this.cssTransitions) {
-                    this.carousel.addClass(this.CN.scroll);                                   
+                    this.carousel.addClass(this.CN.scroll);
                 } else {
                     this.carousel.addClass(this.CN.scrollJS);
                 }
             } else {
                 if (this.cssTransitions) {
-                    this.carousel.addClass(this.CN.fade);    
+                    this.carousel.addClass(this.CN.fade);
                 } else {
-                    this.carousel.addClass(this.CN.fadeJS);    
+                    this.carousel.addClass(this.CN.fadeJS);
                 }
-            }            
-            
+            }
+
             this._createWrapper();
             if (this.options.navigation) {
                 this._createNavigation();
@@ -128,14 +128,18 @@
 
         _createWrapper: function () {
             //two wrappers so we can position things outside but relative to the slideshow carousel, like the navigation arrows.
-            this.carouselWrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
+            if (this.options.transition === "fade") {
+                this.carouselWrapper = this.carousel.wrap('<div style="position:relative;"></div>').parent();
+            } else {
+                this.carouselWrapper = this.carousel.wrap('<div style="position:relative; overflow: hidden;"></div>').parent();
+            }
             this.wrapper = this.carouselWrapper.wrap('<div style="position:relative;"></div>').parent();
 
             this._on(this.wrapper, {
                 mouseenter: "_slideshowMouseInEvent",
                 mouseout: "_slideshowMouseOutEvent"
-//                ,
-   //             keypress: function(e) {console.log("hi"); }
+                //                ,
+                //             keypress: function(e) {console.log("hi"); }
             });
 
         },
@@ -145,7 +149,7 @@
                 class: this.CN.footer
             });
             if (this.options.autoHideFooter) {
-                var widget = this;      
+                var widget = this;
                 this.$footer.css({
                     display: "none"
                 });
@@ -237,7 +241,7 @@
                 class: this.CN.pagination
             });
 
-            for (var i=1, length=this.slides.length, pageLink; i <= length; i++) {
+            for (var i = 1, length = this.slides.length, pageLink; i <= length; i++) {
                 if (this.options.pagination === "numbers") {
                     pageLink = $('<a href="#" data-slide="' + i + '">' + i + '</a>');
                 } else if (this.options.pagination === "sprite" && this.options.sprite) {
@@ -264,38 +268,44 @@
             this.$footer.append(this.$pagination);
             this.pages = this.$pagination.children(this.slides.length);
         },
-        
-        
+
+
         /**
-        * adapted from: https://gist.github.com/jackfuchs/556448
-        * @returns {Boolean|String} The name of the css property with the proper vendor prefix if it exists.
-        * @private
-        */
+         * adapted from: https://gist.github.com/jackfuchs/556448
+         * @returns {Boolean|String} The name of the css property with the proper vendor prefix if it exists.
+         * @private
+         */
         _cssSupportTest: function (prop) {
             var b = document.body || document.documentElement,
                 s = b.style;
- 
+
             // No css support detected
-            if(typeof s === "undefined") { return false; }
- 
+            if (typeof s === "undefined") {
+                return false;
+            }
+
             // Tests for standard prop
-            if(typeof s[prop] === "string") { return prop; }
- 
+            if (typeof s[prop] === "string") {
+                return prop;
+            }
+
             // Tests for vendor specific prop
             var v = ["Moz", "Webkit", "Khtml", "O", "ms", "Icab"];
             prop = prop.charAt(0).toUpperCase() + prop.substr(1);
-            for(var i=0, length=v.length; i<length; i++) {
-                if(typeof s[v[i] + prop] === "string") { return (v[i] + prop); }
+            for (var i = 0, length = v.length; i < length; i++) {
+                if (typeof s[v[i] + prop] === "string") {
+                    return (v[i] + prop);
+                }
             }
             return false;
-        }, 
-    
+        },
+
         _setCssTransitionDuration: function (duration) {
             duration = arguments.length === 1 ? duration : this.options.transitionSpeed;
             var widget = this;
-		    this.slides.each(function(){
-			    this.style[widget.cssTransitions+"Duration"] = duration + "ms";
-		    });
+            this.slides.each(function () {
+                this.style[widget.cssTransitions + "Duration"] = duration + "ms";
+            });
         },
 
         _getSlideFromNumber: function (slideNumber) {
@@ -318,8 +328,8 @@
         },
 
         /**
-        * Move to the next slide in the carousel.
-        */
+         * Move to the next slide in the carousel.
+         */
         next: function () {
             var nextSlideNumber = this.currentSlideNumber + 1;
             if (nextSlideNumber > this.slides.length) {
@@ -333,8 +343,8 @@
         },
 
         /**
-        * Move to the previous slide in the carousel.
-        */
+         * Move to the previous slide in the carousel.
+         */
         previous: function () {
             var previousSlideNumber = this.currentSlideNumber - 1;
             if (previousSlideNumber < 1) {
@@ -348,9 +358,9 @@
         },
 
         /**
-        * Show the navigation arrows.
-        * @param {number} duration The duration of the show transition.
-        */
+         * Show the navigation arrows.
+         * @param {number} duration The duration of the show transition.
+         */
         showNavigation: function (duration) {
             duration = arguments.length === 1 ? parseInt(duration, 10) : 200;
             this.$next.show("fade", duration);
@@ -358,9 +368,9 @@
         },
 
         /**
-        * Hide the navigation arrows.
-        * @param {number} duration The duration of the hide transition.
-        */
+         * Hide the navigation arrows.
+         * @param {number} duration The duration of the hide transition.
+         */
         hideNavigation: function (duration) {
             duration = arguments.length === 1 ? parseInt(duration, 10) : 200;
             this.$next.hide("fade", duration);
@@ -368,9 +378,9 @@
         },
 
         /**
-        * Set the carousel caption.
-        * @param {string} text The html/text for the caption. Will be wrapped in a p tag.
-        */
+         * Set the carousel caption.
+         * @param {string} text The html/text for the caption. Will be wrapped in a p tag.
+         */
         setCaption: function (text) {
             text = typeof text !== "undefined" ? text : "&nbsp;";
             if (typeof this.$caption !== "undefined") {
@@ -379,24 +389,24 @@
         },
 
         /**
-        * Show the carousel captions.
-        */
+         * Show the carousel captions.
+         */
         showCaption: function () {
             this.$caption.show();
         },
 
         /**
-        * Hide the carousel captions.
-        */
+         * Hide the carousel captions.
+         */
         hideCaption: function () {
-            this.$caption.hide(); 
+            this.$caption.hide();
         },
-        
+
         _doCssScroll: function (slide) {
             var side = this.CN.left;
             var otherside = this.CN.right;
-        
-            for (var i=0, totalSlides=this.slides.length, updateSlide; i<totalSlides; i++) {
+
+            for (var i = 0, totalSlides = this.slides.length, updateSlide; i < totalSlides; i++) {
                 updateSlide = $(this.slides[i]);
                 if (updateSlide.is(slide)) {
                     side = this.CN.right;
@@ -407,53 +417,55 @@
                 }
             }
             if (this.currentSlide) {
-                var widget=this, oldSlide=this.currentSlide;
-                setTimeout(function() { oldSlide.removeClass(widget.CN.active); }, 1);
+                var widget = this,
+                    oldSlide = this.currentSlide;
+                setTimeout(function () {
+                    oldSlide.removeClass(widget.CN.active);
+                }, 1);
             }
             slide.addClass(this.CN.active);
         },
-        
+
         _doJsScroll: function (slide) {
             var transitionSpeed = this.options.transitionSpeed;
             //If it's already animated, speed up the transition. 
             if (this.carouselWrapper.is(":animated")) {
                 this.carouselWrapper.stop();
                 transitionSpeed = this.transitionSpeed = this.transitionSpeed / 2 || transitionSpeed / 2;
-            } 
+            }
             this.carouselWrapper.animate({
                 scrollLeft: slide.position().left + this.carouselWrapper.scrollLeft()
-            }, transitionSpeed);            
+            }, transitionSpeed);
         },
-        
+
         _doCssFade: function (slide) {
             this.slides.not(slide).removeClass(this.CN.active);
-            slide.addClass(this.CN.active);            
+            slide.addClass(this.CN.active);
         },
-        
+
         _doJsFade: function (slide) {
             var transitionSpeed = this.options.transitionSpeed;
             var transitionOptions = this.options.transitionOptions;
             slide.show("fade", transitionOptions, transitionSpeed);
             if (this.currentSlide) {
-                this.currentSlide.hide("fade", transitionOptions, transitionSpeed);  
+                this.currentSlide.hide("fade", transitionOptions, transitionSpeed);
             }
         },
-        
+
         /**
-        * Sets the current carousel slide. Also sets features associated with the slide: captions, page, and forward buffer.
-        * @param {number} slideNumber The slide to transition to. Slides are numbered starting from 1.
-        */
+         * Sets the current carousel slide. Also sets features associated with the slide: captions, page, and forward buffer.
+         * @param {number} slideNumber The slide to transition to. Slides are numbered starting from 1.
+         */
         setCurrentSlide: function (slideNumber) {
             var slide = this._getSlideFromNumber(slideNumber);
             this._loadSlide(slide);
             var slideTarget = $(slide.children()[0]);
-            var transition = this.options.transition;
-                        
-            if (transition === "scroll" && this.cssTransitions) {
+
+            if (this.options.transition === "scroll" && this.cssTransitions) {
                 this._doCssScroll(slide);
-            } else if (transition === "scroll") {
+            } else if (this.options.transition === "scroll") {
                 this._doJsScroll(slide);
-            //Fade transition. 
+                //Fade transition. 
             } else if (this.cssTransitions) {
                 this._doCssFade(slide);
             } else {
@@ -519,9 +531,9 @@
             if ($slide.data("slideIsLoaded") !== undefined && $slide.data("slideIsLoaded") === true) {
                 return;
             }
-            $slide.find( "*" ).filter( function() {
+            $slide.find("*").filter(function () {
                 return $(this).data("src") && $(this).attr("src") === undefined;
-            }).each( function() {
+            }).each(function () {
                 $(this).attr("src", $(this).data("src"));
             });
             $slide.data("slideIsLoaded", true);
